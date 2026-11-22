@@ -12,3 +12,5 @@ Later
 
 --- Build log ---
 
+[demo page] Space did nothing after "Read these comments": focus stayed on the hidden Read button > after reading, move focus to the first card so the keyboard works right away
+[demo page] CSS display rules beat the hidden attribute, so the loading line never went away > one global [hidden]{display:none} rule
