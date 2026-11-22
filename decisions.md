@@ -154,6 +154,7 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 - **Considered:** injecting underlines into Instagram's page, a separate panel
 - **Chose:** Chrome side panel. Underlines are drawn over Instagram's text (CSS Highlight) without changing its code, if time allows.
 - **Why:** Instagram's code changes often and re-renders. Changing it breaks easily. A panel next to it stays stable.
+- **Update (v0.2):** Moved from Chrome's side panel to a panel floating over the right edge of the page (an extension page inside a frame). Chrome's side panel adds its own header with the name again, so the logo showed twice. The floating panel shows one clean header and a close button. Instagram's own page is still never changed.
 
 ## D18. Paste first, extension second
 

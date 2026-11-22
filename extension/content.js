@@ -27,7 +27,7 @@
     const seen = new Set();
     found = [];
     root.querySelectorAll('span[dir="auto"], h1[dir="auto"]').forEach((el) => {
-      if (el.closest("a, button, h2, [role='button'], time")) return;        // usernames, buttons, headers
+      if (el.closest("a, button, h2, [role='button'], time, #iykyk-panel")) return; // usernames, buttons, headers, our panel
       if (el.querySelector('span[dir="auto"]')) return;                        // take the innermost text only
       const text = (el.innerText || "").replace(/\s+/g, " ").trim();
       if (text.length < 2 || UI_WORDS.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
@@ -87,8 +87,27 @@
 
   function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
 
+  // ---- the iykyk panel: an extension page in a frame on the right, over the page ----
+  let frameBox = null;
+  function openPanel() {
+    if (frameBox) { frameBox.style.display = "block"; return; }
+    frameBox = document.createElement("div");
+    frameBox.id = "iykyk-panel";
+    frameBox.style.cssText = "position:fixed;top:12px;right:12px;bottom:12px;width:400px;z-index:2147483647;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08);background:#F4F4F4";
+    const f = document.createElement("iframe");
+    f.src = chrome.runtime.getURL("sidepanel.html");
+    f.title = "iykyk";
+    f.style.cssText = "width:100%;height:100%;border:0;display:block";
+    frameBox.appendChild(f);
+    document.documentElement.appendChild(frameBox);
+  }
+  function closePanel() { if (frameBox) frameBox.style.display = "none"; clear(); }
+  function panelOpen() { return !!frameBox && frameBox.style.display !== "none"; }
+
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
-    if (msg.type === "read") reply({ comments: readComments(), url: location.href });
+    if (msg.type === "toggle") { panelOpen() ? closePanel() : openPanel(); reply({ ok: true }); }
+    else if (msg.type === "close") { closePanel(); reply({ ok: true }); }
+    else if (msg.type === "read") reply({ comments: readComments(), url: location.href });
     else if (msg.type === "highlight") reply({ drawn: highlight(msg.items, msg.focus) });
     else if (msg.type === "focus") { focus(msg.i, msg.scroll); reply({ ok: true }); }
     else if (msg.type === "clear") { clear(); reply({ ok: true }); }

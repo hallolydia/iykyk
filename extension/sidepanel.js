@@ -142,6 +142,7 @@
 
   // ---- events ----
   $("read-btn").addEventListener("click", read);
+  $("close-btn").addEventListener("click", async () => { const t = await tab(); if (t) chrome.tabs.sendMessage(t.id, { type: "close" }).catch(() => {}); });
   $("again-btn").addEventListener("click", read);
   // "Explaining for ..." + Change: a neutral picker, never a guess
   const COUNTRIES = [["", "🌐", "Anywhere outside the US"], ["KR", "🇰🇷", "Korea"], ["JP", "🇯🇵", "Japan"], ["CN", "🇨🇳", "China"], ["IN", "🇮🇳", "India"], ["VN", "🇻🇳", "Vietnam"], ["BR", "🇧🇷", "Brazil"], ["MX", "🇲🇽", "Mexico"], ["FR", "🇫🇷", "France"]];

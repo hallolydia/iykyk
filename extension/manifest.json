@@ -1,15 +1,17 @@
 {
   "manifest_version": 3,
   "name": "iykyk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "If you know, you know. Now you know. Finds the cultural context you're missing in English comments.",
   "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "action": { "default_title": "Open iykyk", "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png" } },
-  "side_panel": { "default_path": "sidepanel.html" },
   "background": { "service_worker": "background.js" },
-  "permissions": ["sidePanel", "activeTab", "tabs"],
+  "permissions": ["activeTab", "tabs"],
   "host_permissions": ["https://www.instagram.com/*", "https://iykyk-eta.vercel.app/*"],
   "content_scripts": [
     { "matches": ["https://www.instagram.com/*"], "js": ["content.js"], "run_at": "document_idle" }
+  ],
+  "web_accessible_resources": [
+    { "resources": ["sidepanel.html", "sidepanel.js", "style.css", "icons/*"], "matches": ["https://www.instagram.com/*"] }
   ]
 }
