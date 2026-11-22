@@ -259,7 +259,7 @@ The desktop scale is too loud next to Instagram. Instagram's comment text is abo
 | Meta (hints, sub lines) | 12 | Inter 400, --sub |
 | Labels | 10.5 | IBM Plex Mono, uppercase |
 
-- Spacing on a 4px grid: tag > phrase 8, phrase > answer 6, answer > More 10, More > actions 12, card padding 16, card gap 8.
+- Spacing on a 4px grid, with clear air between levels: tag > phrase 12, phrase > answer 8, answer > emoji box / More 14, More > details 14, between details 14 (hairline in the middle), label > text 6, last block > actions 16, card padding 18, card gap 8.
 - Buttons 34px tall. Chips 28 to 32px.
 - One banner line ("4 things you might miss.") with the ↑ ↓ hint on the right. No second title saying the same thing.
 - Only the focused card shows its actions and "Still confused". Other cards show tag, phrase, answer.
