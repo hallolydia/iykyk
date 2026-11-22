@@ -1,0 +1,179 @@
+IYKYK TEST SET
+20 real comments. Text only. No usernames, no profile photos.
+
+Mix
+- didnt-get: 10  (I didn't get it)
+- easy:       5  (I got it fully. Checks the AI doesn't underline for nothing)
+- unclear:    3  (I half got it)
+- sensitive:  2  (sad or personal. Checks the AI stays gentle)
+
+How to fill each block
+- group:     didnt-get / easy / unclear / sensitive
+- source:    where it's from + one line about the scene (no usernames)
+- comment:   paste the exact text
+- my_gaps:   the exact phrases I didn't get, separated by " | "  (leave empty for easy ones)
+- my_guess:  what I thought it meant before looking it up
+- notes:     anything else (optional)
+
+my_gaps and my_guess = the answer key. Fill them by hand. Not with AI.
+
+
+=== c01 ===
+group: unclear
+source: Instagram Reel. A dad and his toddler daughter standing on a mall escalator. Caption: "Daddy's girl, always." On-screen text: "He has no idea what's coming"
+comment: Yall so lucky to have dads. Like real dads, not just fathers.
+my_gaps:
+my_guess:
+notes:
+
+=== c02 ===
+group:
+source: same Reel as c01
+comment: Had to hold BOTH my daughters bare feet with one hand while driving with the other because she needed me to hold her on the freeway
+my_gaps:
+my_guess:
+notes:
+
+=== c03 ===
+group: sensitive
+source: same Reel as c01
+comment: I had the most amazing dad. 6 months since he passed and my heart is still very broken. 💔
+my_gaps:
+my_guess:
+notes: should be explained gently, no jokes
+
+=== c04 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c05 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c06 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c07 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c08 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c09 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c10 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c11 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c12 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c13 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c14 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c15 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c16 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c17 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c18 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c19 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:
+
+=== c20 ===
+group:
+source:
+comment:
+my_gaps:
+my_guess:
+notes:

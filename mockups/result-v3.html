@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>IYKYK result v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F4F4;--surface:#fff;--ink:#111;--sub:#5E5E5E;--muted:#9A9A95;--line:#E8E8E5;--lime:#D4FF3A;--amber:#B07A00;--amber-bg:#FFF4D6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;background:var(--paper);font-family:Inter,sans-serif;color:var(--ink);overflow:hidden;position:relative;-webkit-font-smoothing:antialiased;letter-spacing:-0.006em}
+.top{height:72px;display:flex;align-items:center;padding:0 40px;justify-content:space-between;border-bottom:1px solid var(--line)}
+.logo{position:relative;font-family:"Bagel Fat One";font-size:40px;letter-spacing:-1.25px;line-height:1}
+.logo svg{position:absolute;right:-12.5px;top:0}
+.pill{height:38px;padding:0 16px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500}
+.pill b{font-family:'Inter Tight';font-weight:700}
+.wrap{display:grid;grid-template-columns:1fr 500px;height:828px}
+/* left */
+.left{padding:32px 64px 0 80px;position:relative}
+.src{font-size:13px;color:var(--sub);margin-bottom:18px;display:flex;gap:8px;align-items:center}
+.src .tag{background:#fff;border-radius:999px;padding:4px 10px;color:var(--ink);font-weight:500}
+.banner{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+.big{font-family:'Inter Tight';font-weight:800;font-size:64px;letter-spacing:-0.045em;line-height:1}
+.btxt{font-family:'Inter Tight';font-weight:700;font-size:24px;letter-spacing:-0.02em;line-height:1.2}
+.btxt small{display:block;font-family:Inter;font-weight:400;font-size:15px;color:var(--sub);letter-spacing:-0.006em;margin-top:4px}
+.c{display:flex;gap:14px;padding:20px 0;border-top:1px solid var(--line)}
+.av{width:36px;height:36px;border-radius:50%;background:#E4E4E1;flex:none}
+.cb{flex:1}
+.who{font-size:13px;color:var(--muted);margin-bottom:6px}
+.txt{font-size:20px;line-height:1.9;max-width:640px;letter-spacing:-0.01em}
+.meta{font-size:13px;color:var(--sub);margin-top:4px;display:flex;gap:14px;align-items:center}
+.why{font-size:13px;font-weight:500;background:#fff;color:var(--ink);border-radius:999px;padding:5px 12px 5px 10px;display:inline-flex;gap:6px;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.why i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 1.5px var(--ink)}
+/* soft highlighter: feathered edges */
+.m{position:relative;padding:2px 8px;border-radius:6px;background:linear-gradient(90deg,#D4FF3A 0%,#D4FF3A 30%,#E9FFA0 100%)}
+.m .n{position:absolute;left:-9px;top:-11px;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:11px;font-weight:600;line-height:16px;text-align:center;letter-spacing:0}
+.m.on{box-shadow:0 0 0 1.5px var(--ink)}
+.m.check{background:none;box-shadow:none;border-bottom:2px dashed #E0A100;border-radius:0;padding-left:8px}
+.m.check .n{background:var(--amber-bg)}
+.hover{position:absolute;width:300px;background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 10px 30px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.06);font-size:15px;line-height:1.55;z-index:3}
+.hover .k{font-size:13px;color:var(--sub);margin-bottom:4px;display:flex;gap:6px;align-items:center}
+.hover .f{font-size:13px;color:var(--muted);margin-top:8px}
+/* panel */
+.panel{padding:28px 32px;position:relative;border-left:1px solid var(--line)}
+.ph{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.ph h3{font-size:15px;font-weight:600}
+.ph span{font-size:13px;color:var(--sub)}
+.card{background:#fff;border-radius:22px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;left:0;right:0;top:0;height:340px;background:linear-gradient(180deg,rgba(212,255,58,.26) 0%,rgba(212,255,58,.08) 28%,rgba(212,255,58,0) 55%);pointer-events:none;z-index:0;opacity:0}
+.card.on:before{opacity:1}
+.card.on{box-shadow:0 0 0 1.5px var(--ink),0 8px 24px rgba(0,0,0,.06)}
+.card > *{position:relative;z-index:1}
+.stackc{display:flex;flex-direction:column;gap:12px}
+.more{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--sub);margin-top:2px}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:6px;background:#fff;border:1px solid var(--line);box-shadow:0 1px 0 var(--line);font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub)}
+.b1 .kbd{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25);box-shadow:none;color:#fff;margin-left:8px;height:20px;font-size:10.5px}
+.hint{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.row1{position:relative;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.badge{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:12px;font-weight:600;line-height:19px;text-align:center}
+.qtag{font-size:13px;font-weight:500;color:var(--ink);background:rgba(17,17,17,.06);border-radius:999px;padding:4px 10px}
+.phrase{font-family:'Inter Tight';font-weight:700;font-size:28px;letter-spacing:-0.025em;line-height:1.15;margin-bottom:12px}
+.answer{font-size:18px;line-height:1.55;letter-spacing:-0.01em;margin-bottom:12px}
+.emo{display:flex;align-items:center;gap:14px;background:var(--paper);border-radius:14px;padding:12px 14px;margin-bottom:6px}
+.sel{position:relative;width:50px;height:50px;border:1.25px dashed var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+.sel img{width:36px;height:36px}
+.sel i{position:absolute;width:6px;height:6px;background:#fff;border:1.25px solid var(--ink)}
+.emo .et{font-size:15px;line-height:1.45;color:var(--sub)}
+.emo .et b{color:var(--ink);font-weight:600}
+.det{padding:12px 0 0}
+.det + .det{border-top:1px solid var(--line);margin-top:12px}
+.lab{font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.cm{font-family:Inter;font-size:12px;letter-spacing:0;text-transform:none;color:var(--sub);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.det p{font-size:15px;line-height:1.6;color:#2A2A2A}
+.acts{display:flex;align-items:center;gap:8px;margin-top:14px}
+.b1{height:42px;padding:0 14px 0 20px;border-radius:999px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;display:flex;align-items:center}
+.b2{height:42px;padding:0 18px;border-radius:999px;background:var(--paper);font-size:15px;font-weight:500;display:flex;align-items:center}
+.b3{margin-left:auto;font-size:14px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
+.next{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.mini{background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.mini .r{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.mini .badge{width:20px;height:20px;font-size:11px;line-height:17px}
+.mini .p{font-weight:600;font-size:16px;letter-spacing:-0.01em}
+.mini .q{margin-left:auto;font-size:12.5px;color:var(--sub)}
+.mini .pre{font-size:14px;color:var(--sub);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini.ck .badge{background:var(--amber-bg)}
+.mini.ck .q{color:var(--amber);background:var(--amber-bg);border-radius:999px;padding:2px 8px;font-weight:500}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g></defs></svg>
+<div class="top">
+  <div class="logo">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16"><use href="#ast"/></svg></div>
+  <div style="display:flex;gap:10px"><div class="pill">🇰🇷 Grew up in Korea</div><div class="pill">Now you know <b>12</b></div></div>
+</div>
+<div class="wrap">
+  <div class="left">
+    <div class="src"><span class="tag">Instagram Reel</span> Family gift swap · 6 comments</div>
+    <div class="banner"><div class="big">3</div><div class="btxt">things you might miss.<small>2 hidden because you already know them.</small></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 1</div>
+      <div class="txt">Not the <span class="m on"><span class="n">1</span>Christmas heist</span> 💀</div>
+      <div class="meta">♡ 12.4k <span class="why"><i></i>Why is this funny?</span></div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 2</div>
+      <div class="txt">Grandma plays <span class="m"><span class="n">2</span>white elephant</span> like it's a contact sport</div>
+      <div class="meta">♡ 8.1k</div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 3</div>
+      <div class="txt">My uncle every year: "I'll just take the gift card" 😭</div>
+      <div class="meta">♡ 3.2k</div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 4</div>
+      <div class="txt">This is giving <span class="m check"><span class="n">3</span>Clark Griswold</span> energy</div>
+      <div class="meta">♡ 1.9k</div></div></div>
+
+    <div class="hover" style="left:664px;top:300px;width:262px"><div class="k"><span class="badge" style="width:18px;height:18px;font-size:10px;line-height:15px">2</span>white elephant</div>The American name for a gift swap where you can steal someone else's gift.<div class="f">Click for the full story</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="ph"><h3>3 things in this post</h3><span class="hint"><span class="kbd">↑</span><span class="kbd">↓</span> to move</span></div>
+    <div class="stackc">
+    <div class="card on">
+      <div class="row1"><span class="badge">1</span><span class="qtag">Why is this funny?</span></div>
+      <div class="phrase">Christmas heist</div>
+      <p class="answer">Taking someone's 🎁 in a gift swap, described like a movie robbery.</p>
+      <div class="emo"><div class="sel"><i style="left:-3.5px;top:-3.5px"></i><i style="right:-3.5px;top:-3.5px"></i><i style="left:-3.5px;bottom:-3.5px"></i><i style="right:-3.5px;bottom:-3.5px"></i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Skull/3D/skull_3d.png" alt="skull"></div><div class="et"><b>Not actual death.</b><br>It means "I'm dying laughing."</div></div>
+      <div class="more" style="margin-top:12px">More: where it comes from · closest in Korea ▾</div>
+      <div class="acts"><div class="b1">Got it<span class="kbd">space</span></div><div class="b2">I knew this</div><div class="b3">Still confused</div></div>
+    </div>
+    <div class="card">
+      <div class="row1"><span class="badge">2</span><span class="qtag">What's the reference?</span></div>
+      <div class="phrase">white elephant</div>
+      <p class="answer">The American name for a gift swap where you can steal someone else's gift.</p>
+      <div class="more">More: where it comes from · closest in Korea ▾</div>
+    </div>
+    <div class="card">
+      <div class="row1"><span class="badge" style="background:var(--amber-bg)">3</span><span class="qtag">What's the reference?</span><span class="qtag" style="background:var(--amber-bg);color:var(--amber)">⚠ Needs checking</span></div>
+      <div class="phrase">Clark Griswold</div>
+      <p class="answer">Probably the dad from a classic Christmas movie. Not sure.</p>
+    </div>
+    </div>
+  </div>
+</div>
+</body></html>

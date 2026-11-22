@@ -1,0 +1,14 @@
+IYKYK CHALLENGES LOG
+Write one line every time something goes wrong while building. Real ones only.
+
+Format
+[time] what went wrong > how I fixed it (or what I decided)
+
+Later
+- Pitch video: pick the best 1, tell it in 10 seconds
+- README "Challenges I hit": 2 to 3
+- Interview: "What was the hardest part?"
+
+
+--- Build log ---
+

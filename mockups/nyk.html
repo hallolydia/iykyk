@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>IYKYK now you know</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F4F4;--ink:#111;--sub:#5E5E5E;--muted:#9A9A95;--line:#E4E4E1;--lime:#D4FF3A;--amber:#B07A00;--amber-bg:#FFF4D6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;background:var(--paper);font-family:Inter,sans-serif;color:var(--ink);overflow:hidden;position:relative;-webkit-font-smoothing:antialiased;letter-spacing:-0.006em}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.grid{display:grid;grid-template-columns:400px 1fr;height:900px}
+/* sidebar */
+.sb{padding:28px 40px 32px;display:flex;flex-direction:column;border-right:1px solid var(--line)}
+.logo{position:relative;font-family:"Bagel Fat One";font-size:40px;letter-spacing:-1.25px;line-height:1;align-self:flex-start}
+.logo svg{position:absolute;right:-12.5px;top:0}
+.back{margin-top:44px;font-size:14px;color:var(--sub)}
+h1{font-family:'Inter Tight';font-weight:800;font-size:64px;letter-spacing:-0.045em;line-height:.98;margin-top:14px}
+.wit{font-size:18px;color:var(--sub);line-height:1.5;margin-top:14px}
+.wit b{color:var(--ink);font-weight:600;background:linear-gradient(90deg,#D4FF3A,#D4FF3A 30%,#E9FFA0);padding:1px 6px;border-radius:5px}
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.bx{border-radius:20px;padding:16px 16px 14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.bx.dk{background:var(--ink);color:#fff}
+.bx .n{font-family:'Inter Tight';font-weight:800;font-size:32px;letter-spacing:-0.03em;line-height:1.1;margin-top:8px}
+.bx .l{font-size:13px;color:var(--sub);margin-top:2px}
+.bx.dk .l{color:#B5B5B0}
+.bx.dk .mono{color:#8E8E89}
+.bars{display:flex;align-items:flex-end;gap:5px;height:34px;margin-top:10px}
+.bars i{flex:1;border-radius:4px;background:#3A3A38}
+.bars i.on{background:var(--lime)}
+.fil{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px}
+.f{height:36px;padding:0 14px;border-radius:999px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500}
+.f em{font-style:normal;color:var(--muted);font-weight:400}
+.f.on{background:var(--ink);color:#fff;border-color:var(--ink)}.f.on em{color:#B5B5B0}
+.srch{margin-top:10px;height:42px;border-radius:999px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;padding:0 16px;font-size:15px;color:var(--muted)}
+/* content */
+.ct{padding:28px 48px 0 48px;overflow:hidden}
+.topr{display:flex;justify-content:flex-end;gap:10px;margin-bottom:22px}
+.pill{height:38px;padding:0 16px;border-radius:999px;background:#fff;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500}
+.conf{background:#fff;border-radius:22px;padding:18px 20px;box-shadow:0 1px 2px rgba(0,0,0,.04);margin-bottom:26px}
+.conf .hd{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.conf .hd b{font-size:15px;font-weight:600}
+.tagA{font-size:12.5px;font-weight:500;color:var(--amber);background:var(--amber-bg);border-radius:999px;padding:2px 9px}
+.crow{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.crow:first-of-type{border-top:0}
+.crow .p{font-weight:600;font-size:16px}
+.crow .s{font-size:14px;color:var(--sub)}
+.ask{margin-left:auto;height:34px;padding:0 14px;border-radius:999px;background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;display:flex;align-items:center}
+.tl{position:relative;padding-left:26px}
+.tl:before{content:"";position:absolute;left:8px;top:10px;bottom:-40px;border-left:1.5px dashed #CFCFCB}
+.day{position:relative;margin:0 0 10px -26px;display:flex;align-items:center;gap:10px}
+.day span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--sub);background:var(--paper);border:1.5px dashed #CFCFCB;border-radius:999px;padding:3px 10px}
+.group{background:#fff;border-radius:22px;padding:4px 20px;box-shadow:0 1px 2px rgba(0,0,0,.04);margin-bottom:22px}
+.it{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.it:first-child{border-top:0}
+.av{width:44px;height:44px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.tx{min-width:0;flex:1}
+.tx .p{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+.tx .a{font-size:15px;color:var(--sub);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx .mono{margin-top:5px;font-size:11px}
+.st{flex:none;display:flex;align-items:center;gap:6px;height:30px;padding:0 4px 0 12px;border-radius:999px;font-size:13px;font-weight:500;background:var(--paper)}
+.st i{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:11px;background:#fff;border-radius:999px;padding:2px 8px;color:var(--sub)}
+.st.g{background:var(--ink);color:#fff}.st.g i{background:var(--lime);color:var(--ink)}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g></defs></svg>
+<div class="grid">
+  <aside class="sb">
+    <div class="logo">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16"><use href="#ast"/></svg></div>
+    <div class="back">← Back to reading</div>
+    <h1>Now you<br>know.</h1>
+    <p class="wit">You're in on <b>24 inside jokes</b> you didn't get a month ago.</p>
+    <div class="bento">
+      <div class="bx dk"><div class="mono">Gaps per post</div><div class="n">5 → 2</div><div class="bars"><i style="height:100%"></i><i style="height:84%"></i><i style="height:70%"></i><i style="height:58%"></i><i class="on" style="height:40%"></i></div></div>
+      <div class="bx"><div class="mono">This week</div><div class="n">+9</div><div class="l">new to you</div><div class="l" style="margin-top:10px">15 you already knew</div></div>
+    </div>
+    <div class="fil">
+      <div class="f on">All <em>24</em></div><div class="f">Jokes <em>9</em></div><div class="f">References <em>11</em></div><div class="f">Tone <em>4</em></div>
+    </div>
+    <div class="srch">⌕ &nbsp;Search what you know</div>
+  </aside>
+  <main class="ct">
+    <div class="topr"><div class="pill">🇰🇷 Grew up in Korea</div></div>
+    <div class="conf">
+      <div class="hd"><b>Still confused</b><span class="tagA">2</span><span style="margin-left:auto;font-size:13px;color:var(--muted)">I'll try a different way</span></div>
+      <div class="crow"><span class="p">Clark Griswold</span><span class="s">"This is giving Clark Griswold energy"</span><span class="ask">Explain again</span></div>
+      <div class="crow"><span class="p">touch grass</span><span class="s">"Bro needs to touch grass"</span><span class="ask">Explain again</span></div>
+    </div>
+    <div class="tl">
+      <div class="day"><span>NOV 21 · TODAY</span></div>
+      <div class="group">
+        <div class="it"><div class="av">🎁</div><div class="tx"><div class="p">Christmas heist</div><div class="a">Taking someone's gift in a gift swap, described like a movie robbery.</div><div class="mono">Instagram Reel · Family gift swap</div></div><div class="st g">Got it <i>new</i></div></div>
+        <div class="it"><div class="av">🐘</div><div class="tx"><div class="p">white elephant</div><div class="a">The American name for a gift swap where you can steal someone else's gift.</div><div class="mono">Instagram Reel · Family gift swap</div></div><div class="st g">Got it <i>new</i></div></div>
+        <div class="it"><div class="av">💀</div><div class="tx"><div class="p">💀 in a comment</div><div class="a">Not actual death. It means "I'm dying laughing."</div><div class="mono">Instagram Reel · Family gift swap</div></div><div class="st">Knew it <i>hidden</i></div></div>
+      </div>
+      <div class="day"><span>NOV 19</span></div>
+      <div class="group">
+        <div class="it"><div class="av">🏈</div><div class="tx"><div class="p">Hail Mary</div><div class="a">A desperate last-chance try. From a long, hopeful pass in American football.</div><div class="mono">Reddit · r/nba</div></div><div class="st g">Got it <i>new</i></div></div>
+        <div class="it"><div class="av">🙋‍♀️</div><div class="tx"><div class="p">Karen</div><div class="a">Someone who acts entitled and asks for the manager. Closest match: 진상 손님.</div><div class="mono">Instagram Reel · Coffee shop</div></div><div class="st g">Got it <i>new</i></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+</body></html>

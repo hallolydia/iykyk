@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>IYKYK result</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F4F4;--surface:#fff;--ink:#111;--sub:#5E5E5E;--line:#E4E4E0;--lime:#D4FF3A;--lime-soft:#EEFFB0;--note:#2B2B2B;--muted:#9A9A95}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;background:var(--paper);font-family:Inter,sans-serif;color:var(--ink);overflow:hidden;position:relative}
+.top{height:72px;display:flex;align-items:center;padding:0 40px;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--paper)}
+.logo{position:relative;font-family:"Bagel Fat One";font-size:40px;letter-spacing:-1.25px;line-height:1}
+.logo svg{position:absolute;right:-12.5px;top:0}
+.pill{height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500}
+.pill b{font-family:'Inter Tight';font-weight:700}
+.wrap{display:grid;grid-template-columns:1fr 460px;height:828px}
+.left{padding:30px 64px 0 80px;position:relative}
+.src{font-size:13px;color:var(--sub);margin-bottom:14px;display:flex;gap:8px;align-items:center}
+.src .tag{background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--ink);font-weight:500}
+.banner{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+.big{font-family:'Inter Tight';font-weight:800;font-size:64px;letter-spacing:-0.045em;line-height:1}
+.btxt{font-family:'Inter Tight';font-weight:700;font-size:24px;letter-spacing:-0.02em;line-height:1.2}
+.btxt small{display:block;font-family:Inter;font-weight:400;font-size:15px;color:var(--sub);letter-spacing:0;margin-top:4px}
+.c{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--line)}
+.av{width:36px;height:36px;border-radius:50%;background:#E7E7E2;flex:none}
+.cb{flex:1}
+.who{font-size:13px;color:var(--muted);margin-bottom:4px}
+.txt{font-size:20px;line-height:1.9;max-width:640px}
+.meta{font-size:13px;color:var(--sub);margin-top:2px;display:flex;gap:14px;align-items:center}
+.why{font-size:13px;font-weight:600;background:var(--ink);color:#fff;border-radius:999px;padding:5px 11px}
+.m{position:relative;background:var(--lime);padding:2px 5px 2px 11px;border-radius:4px;cursor:pointer}
+.m .n{position:absolute;left:-9px;top:-11px;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:11px;font-weight:600;line-height:16px;text-align:center}
+.m.on{box-shadow:0 0 0 2px var(--ink)}
+.m.check{background:transparent;border-bottom:2.5px dashed #E0A100;border-radius:0;padding-left:11px}
+.m.check .n{background:#FFF3C4}
+.hover{position:absolute;width:290px;background:#fff;border:1.5px solid var(--ink);border-radius:14px;padding:12px 14px;box-shadow:0 8px 20px rgba(0,0,0,.08);font-size:15px;line-height:1.5;z-index:3}
+.hover .k{font-size:13px;color:var(--sub);margin-bottom:3px}
+.hover .f{font-size:13px;color:var(--sub);margin-top:6px}
+/* panel */
+.panel{background:#fff;border-left:1px solid var(--line);padding:24px 28px;position:relative}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:13px;color:var(--sub)}
+.card{border:1.5px solid var(--ink);border-radius:18px;padding:20px 20px 18px}
+.quote{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin-bottom:12px}
+.quote .n{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:12px;line-height:19px;text-align:center}
+.qt{display:inline-block;font-family:'Inter Tight';font-weight:800;font-size:32px;letter-spacing:-0.03em;line-height:1.1;background:var(--ink);color:#fff;border-radius:999px;padding:6px 16px 8px;margin-bottom:14px}
+.first{font-size:20px;font-weight:500;line-height:1.45;margin-bottom:16px}
+.sec{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.lab{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--sub);margin-bottom:5px}
+.sec p{font-size:15px;line-height:1.55}
+.cm{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--sub);margin-left:6px;vertical-align:1px}
+.acts{display:flex;gap:8px;margin-top:18px}
+.acts div{height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;padding:0 12px;white-space:nowrap}
+.a1{background:var(--ink);color:#fff;flex:1.2}.a2,.a3{border:1px solid var(--line);flex:1}
+.emo{display:flex;align-items:center;gap:16px;margin:4px 0 6px}
+.sel{position:relative;width:64px;height:64px;border:1.5px dashed var(--ink);display:flex;align-items:center;justify-content:center;flex:none}
+.sel img{width:46px;height:46px}
+.sel i{position:absolute;width:7px;height:7px;background:#fff;border:1.5px solid var(--ink)}
+.emo .et{font-size:15px;line-height:1.45}
+.emo .et b{font-weight:600}
+.mini{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.mc{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:15px}
+.mc .n{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:11px;line-height:17px;text-align:center;font-weight:600}
+.mc.ck .n{background:#FFF3C4}
+.mc span.s{margin-left:auto;font-size:13px;color:var(--sub)}
+.sticker{position:absolute;right:34px;top:300px;transform:rotate(-6deg);background:var(--lime);border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:'Inter Tight';font-weight:800;font-size:15px}
+.mk{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--note);color:#fff;font-size:12px;font-weight:700;line-height:22px;text-align:center;z-index:5}
+.legend{position:absolute;left:80px;top:736px;width:840px;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;font-size:12.5px;color:#fff;background:var(--note);border-radius:12px;padding:14px 18px;line-height:1.4}
+.mk,.legend,.note{display:none!important}</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g></defs></svg>
+<div class="top">
+  <div class="logo">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16"><use href="#ast"/></svg></div>
+  <div style="display:flex;gap:10px"><div class="pill">🇰🇷 Grew up in Korea</div><div class="pill">Now you know <b>12</b></div></div>
+</div>
+<div class="wrap">
+  <div class="left">
+    <div class="src"><span class="tag">Instagram Reel</span> Family gift swap · 6 comments</div>
+    <div class="banner"><div class="big">3</div><div class="btxt">things you might miss.<small>2 hidden because you already know them.</small></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 1</div>
+      <div class="txt">Not the <span class="m on"><span class="n">1</span>Christmas heist</span> 💀</div>
+      <div class="meta">♡ 12.4k <span class="why">Why is this funny?</span></div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 2</div>
+      <div class="txt">Grandma plays <span class="m"><span class="n">2</span>white elephant</span> like it's a contact sport</div>
+      <div class="meta">♡ 8.1k</div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 3</div>
+      <div class="txt">My uncle every year: "I'll just take the gift card" 😭</div>
+      <div class="meta">♡ 3.2k</div></div></div>
+
+    <div class="c"><div class="av"></div><div class="cb"><div class="who">Comment 4</div>
+      <div class="txt">This is giving <span class="m check"><span class="n">3</span>Clark Griswold</span> energy</div>
+      <div class="meta">♡ 1.9k</div></div></div>
+
+    <div class="hover" style="left:672px;top:300px"><div class="k">② white elephant</div>The American name for a gift swap where you can steal someone else's gift.<div class="f">Click for the full story</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="ph"><span>1 of 3</span><span>‹ &nbsp; ›</span></div>
+    <div class="card">
+      <div class="quote"><span class="n">1</span>"Christmas heist"</div>
+      <div class="qt">Why is this funny?</div>
+      <p class="first">Taking someone's 🎁 in a gift swap, described like a movie robbery.</p>
+      <div class="emo"><div class="sel"><i style="left:-4px;top:-4px"></i><i style="right:-4px;top:-4px"></i><i style="left:-4px;bottom:-4px"></i><i style="right:-4px;bottom:-4px"></i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@main/assets/Skull/3D/skull_3d.png" alt="skull"></div><div class="et"><b>Not actual death.</b><br>It means "I'm dying laughing."</div></div>
+      <div class="sec"><div class="lab">Where it comes from</div><p>"Heist" is the word for big, planned robberies in movies like <i>Ocean's Eleven</i>. Using it for a tiny gift steal is the joke.</p></div>
+      <div class="sec"><div class="lab">Closest thing in Korea <span class="cm">closest match</span></div><p>Calling something tiny a "대작전" (a big operation).</p></div>
+      <div class="acts"><div class="a1">Got it</div><div class="a2">I knew this</div><div class="a3">Still confused</div></div>
+    </div>
+    <div class="mini">
+      <div class="mc"><span class="n">2</span>white elephant<span class="s">What's the reference?</span></div>
+      <div class="mc ck"><span class="n">3</span>Clark Griswold<span class="s">⚠ Needs checking</span></div>
+    </div>
+  </div>
+</div>
+<div class="mk" style="left:44px;top:160px">1</div>
+<div class="mk" style="left:44px;top:282px">2</div>
+<div class="mk" style="left:658px;top:360px">3</div>
+<div class="mk" style="left:44px;top:518px">4</div>
+<div class="mk" style="left:44px;top:628px">5</div>
+<div class="mk" style="left:990px;top:150px">6</div>
+<div class="mk" style="left:990px;top:250px">7</div>
+<div class="mk" style="left:990px;top:462px">8</div>
+<div class="legend">
+<div>① 큰 숫자 배너: 놓칠 만한 것 3개, 이미 알아서 숨긴 것 2개</div>
+<div>⑤ 확신이 낮으면 점선 + 노란 배지, 카드에 Needs checking</div>
+<div>② 선택된 표시는 검은 테두리, 패널의 같은 카드가 열림</div>
+<div>⑥ 카드 맨 위에 원문 인용, 질문은 검은 알약 제목</div>
+<div>③ 마우스 올리기: 첫 줄만 말풍선으로. 눈 이동 0</div>
+<div>⑦ 이모지 하나로 바로 떠올리기 (이 화면의 위트 1개)</div>
+<div>④ 쉬운 댓글은 표시 없음. 조용하게</div>
+<div>⑧ 한국 비유는 진짜 비슷할 때만, closest match 표시</div>
+</div>
+</body></html>

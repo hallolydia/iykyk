@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>IYKYK main flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F4F4;--ink:#111;--sub:#5E5E5E;--muted:#9A9A95;--line:#E4E4E1;--lime:#D4FF3A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1800px;height:1240px;background:var(--paper);font-family:Inter,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;letter-spacing:-0.006em;padding:56px 64px}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px}
+.logo{position:relative;font-family:"Bagel Fat One";font-size:40px;letter-spacing:-1.25px;line-height:1;display:inline-block}
+.logo svg{position:absolute;right:-12.5px;top:0}
+h1{font-family:'Inter Tight';font-weight:800;font-size:44px;letter-spacing:-0.04em;line-height:1.05;margin-top:18px}
+.lead{font-size:18px;color:var(--sub);margin-top:8px}
+.legend{display:flex;gap:16px;font-size:14px;color:var(--sub)}
+.legend span{display:flex;align-items:center;gap:8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:56px;row-gap:44px}
+.st{position:relative}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.n{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Inter Tight';font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center}
+.t{font-family:'Inter Tight';font-weight:700;font-size:22px;letter-spacing:-0.02em}
+.tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;background:var(--lime);border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px}
+.shot{position:relative;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.07)}
+.shot img{display:block;width:100%}
+.st.key .shot{box-shadow:0 0 0 2px var(--ink),0 10px 30px rgba(0,0,0,.08)}
+.cap{font-size:16px;line-height:1.5;color:var(--sub);margin-top:14px;max-width:500px}
+.cap b{color:var(--ink);font-weight:600}
+.ar{position:absolute;right:-44px;top:200px;font-size:26px;color:#BDBDB8}
+.sticker{position:absolute;right:22px;bottom:22px;transform:rotate(-6deg);background:var(--lime);border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;font-family:'Inter Tight';font-weight:800;font-size:16px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs><g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g></defs></svg>
+<div class="hd">
+  <div>
+    <div class="logo">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16"><use href="#ast"/></svg></div>
+    <h1>Main flow: find, explain, remember.</h1>
+    <p class="lead">From one pasted comment to a feed that gets quieter the more you know.</p>
+  </div>
+  <div class="legend"><span><span class="tag" style="margin:0">THE MOMENT</span> where it pays off</span></div>
+</div>
+<div class="grid">
+  <div class="st"><div class="top"><span class="n">1</span><span class="t">Paste</span></div>
+    <div class="shot"><img src="home-clean.png"></div>
+    <p class="cap"><b>Paste comments, or tap an example.</b> No account, no setup.</p><span class="ar">→</span></div>
+  <div class="st"><div class="top"><span class="n">2</span><span class="t">Read</span></div>
+    <div class="shot"><img src="reading.png"></div>
+    <p class="cap"><b>AI reads it like someone who didn't grow up here,</b> and only flags the hinge of each joke.</p><span class="ar">→</span></div>
+  <div class="st"><div class="top"><span class="n">3</span><span class="t">Find</span></div>
+    <div class="shot"><img src="tune.png"></div>
+    <p class="cap"><b>3 things you might miss, every card already open.</b> One question, after the value: "Grew up in Korea?"</p></div>
+  <div class="st"><div class="top"><span class="n">4</span><span class="t">Explain</span></div>
+    <div class="shot"><img src="result-v3.png"><span class="sticker">Now you know.</span></div>
+    <p class="cap"><b>Got it moves you to the next one.</b> I knew this hides it for good. Still confused becomes a test case.</p><span class="ar">→</span></div>
+  <div class="st key"><div class="top"><span class="n">5</span><span class="t">Remember</span><span class="tag">THE MOMENT</span></div>
+    <div class="shot"><img src="quiet.png"></div>
+    <p class="cap"><b>The next post is quieter.</b> 1 thing to miss, 4 hidden because you already know them.</p><span class="ar">→</span></div>
+  <div class="st"><div class="top"><span class="n">6</span><span class="t">Look back</span></div>
+    <div class="shot"><img src="nyk-v3.png"></div>
+    <p class="cap"><b>Everything you picked up,</b> and the ones you've already seen again out in the wild.</p></div>
+</div>
+</body></html>
