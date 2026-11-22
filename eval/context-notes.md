@@ -47,3 +47,22 @@ They are **not** the answer key. Lydia labels `my_gaps` in comments.txt first, t
 - **Sarcasm where tone flips** ("Love that for you", "Sure, Jan") — tests *Is this rude or friendly?*
 - **Reddit long-form** — longer text, inside jokes per subreddit
 - One more **easy** comment, so we can see if the AI over-flags
+
+---
+
+## Synthetic items (c28 to c39, written by Claude)
+
+Marked SYNTHETIC in comments.txt. Score them separately from the real comments, and never mix them into the headline number.
+
+**c28** *Hail Mary* = a long, desperate last-second pass in American football; used for any last-chance attempt.
+**c29** *Jets energy* = the New York Jets, an NFL team known for long losing streaks. Being compared to them is an insult.
+**c30** *March Madness* = the NCAA college basketball tournament; fans fill out *brackets* predicting winners. *Busted* = your predictions already failed.
+**c31** *LeBron of X* = the best at X (LeBron James, NBA star). *Tailgating* = parking-lot parties before a game.
+**c32** *Lame duck* = an official near the end of their term who has little power, so they have less to lose.
+**c33** *Swing state* = a state that can go either party; election results there are tense and unpredictable.
+**c34** *401(k)* = a US retirement savings account. The joke: even retirement savings refuse to help.
+**c35** *Paycheck to paycheck* = no savings left before the next pay; *but make it fashion* = doing something bad in style (internet slang).
+**c36** *Love that for you* = can be sincere OR sarcastic; here, after an ex moves on fast, it's sarcastic. A tone test.
+**c37** *Sure, Jan* = sarcastic disbelief, from a 1990s Brady Bunch movie scene that became a meme.
+**c38** *Bless your heart* = Southern US phrase that sounds kind but is often a polite insult. A tone flip.
+**c39** Easy, no context needed. Should get zero flags.

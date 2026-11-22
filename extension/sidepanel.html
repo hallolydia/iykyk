@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iykyk</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
   /* side panel fit: narrow column, no left feed */
@@ -16,10 +17,23 @@
   .btxt{font-size:20px}
   .phrase{font-size:24px}
   .answer{font-size:17px}
-  .acts{flex-wrap:wrap}
-  .acts .link{margin-left:4px}
+  .morerow{display:flex;align-items:center;justify-content:space-between;margin-top:2px}
+  .morerow .link{font-size:13.5px}
+  .card:not(.on) .acts{display:none}
   .start-title{font-size:21px}
   .toast{right:18px;top:70px}
+  .tune{padding:12px 14px;margin-bottom:20px}
+  .tune-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .tune .t1{font-size:13px;color:var(--sub);line-height:1.45}
+  .tune .t1 b{color:var(--ink);font-weight:600}
+  .tune .link{font-size:13px;flex:none}
+  .tune .t3{font-size:13px;color:var(--sub);margin:12px 0 10px}
+  .tchips{display:flex;flex-wrap:wrap;gap:6px}
+  .tchip{height:32px;padding:0 12px;border-radius:999px;background:var(--paper);font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+  .tchip[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .read-list{margin-top:18px;font-size:13px;color:var(--sub)}
+  .read-list summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .read-list ol{margin:10px 0 0 18px;display:flex;flex-direction:column;gap:6px;line-height:1.45}
   .err{font-size:14px;color:var(--amber);background:var(--amber-bg);border-radius:14px;padding:12px 14px;margin-top:12px}
 </style>
 </head>
@@ -44,10 +58,12 @@
     <span class="dot"></span><span id="loading-text">Reading like someone who didn't grow up here…</span>
   </div>
   <div id="panel-results" hidden>
-    <div class="tune" id="tune" hidden>
-      <p class="t1">Explaining for anyone raised outside the US.</p>
-      <p class="t2">Grew up in 🇰🇷 Korea? <span>I'll tune what I flag.</span></p>
-      <div class="tune-btns"><button class="primary sm" id="tune-yes" type="button">Yes, tune it</button><button class="secondary sm" id="tune-no" type="button">Somewhere else</button></div>
+    <div class="tune" id="tune">
+      <div class="tune-row"><p class="t1">Explaining for <b id="for-who">anyone raised outside the US</b></p><button class="link" id="tune-open" type="button">Change</button></div>
+      <div class="tune-pick" id="tune-pick" hidden>
+        <p class="t3">Where did you grow up? I'll flag what's likely new to you.</p>
+        <div class="tchips" id="tchips"></div>
+      </div>
     </div>
     <div class="banner">
       <span class="big" id="count-big">0</span>
@@ -57,6 +73,7 @@
     <div class="cards" id="cards"></div>
     <div class="hidden-card" id="hidden-card" hidden></div>
     <p class="done" id="done" hidden>That's all for this post. Scroll on.</p>
+    <details class="read-list" id="read-list"><summary id="read-sum">What I read</summary><ol id="read-items"></ol></details>
     <button class="ghost" id="again-btn" type="button" style="margin-top:14px">Read again</button>
   </div>
 </div>

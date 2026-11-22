@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Welcome to iykyk</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body{min-height:100vh}
+  .wrap{max-width:640px;margin:0 auto;padding:56px 24px 64px}
+  .logo{font-size:44px}
+  .step{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:40px 0 10px}
+  h1{font-family:'Inter Tight';font-weight:800;font-size:48px;letter-spacing:-0.04em;line-height:1.05}
+  .sub{font-size:18px;color:var(--sub);line-height:1.55;margin:14px 0 26px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{height:46px;padding:0 18px 0 14px;border-radius:999px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:16px;font-weight:500}
+  .chip .f{font-size:20px}
+  .chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip .ck{display:none;width:20px;height:20px;border-radius:50%;background:var(--lime);color:var(--ink);font-size:12px;font-weight:700;align-items:center;justify-content:center}
+  .chip[aria-pressed="true"] .ck{display:flex}
+  .hint{margin-top:12px;font-size:13px;color:var(--muted)}
+  .card2{background:#fff;border-radius:22px;padding:20px 22px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:center}
+  .pinpic{flex:none;width:64px;height:64px;border-radius:16px;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:28px}
+  .card2 p{font-size:15px;line-height:1.55;color:var(--sub)}
+  .card2 b{color:var(--ink)}
+  .go{margin-top:34px;display:flex;align-items:center;gap:16px}
+  .go .primary{height:54px;padding:0 26px;font-size:16px}
+  .go .link{font-size:15px}
+  .priv{margin-top:40px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g>
+</defs></svg>
+<main class="wrap">
+  <span class="logo">iykyk<svg viewBox="-55 -55 110 110" width="18" height="18" aria-hidden="true"><use href="#ast"/></svg></span>
+
+  <p class="step">One quick thing</p>
+  <h1>Where did you grow up?</h1>
+  <p class="sub">What's obvious to people raised in the US depends on where you grew up. Not on your English.</p>
+  <div class="chips" id="chips"></div>
+  <p class="hint">Pick up to 2. Grew up in more than one place? That counts.</p>
+
+  <p class="step">Then</p>
+  <div class="card2">
+    <div class="pinpic" aria-hidden="true">🧩</div>
+    <p><b>Pin iykyk to your toolbar.</b> Click the puzzle icon at the top right of Chrome, then the pin next to iykyk. Open it next to any Instagram post.</p>
+  </div>
+
+  <div class="go">
+    <button class="primary" id="open-ig" type="button">Open Instagram and try it</button>
+    <button class="link" id="skip" type="button">Skip for now</button>
+  </div>
+  <p class="priv">We ask where you grew up, not who you are · Saved in this browser only</p>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="welcome.js"></script>
+</body>
+</html>

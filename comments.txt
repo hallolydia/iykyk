@@ -234,6 +234,102 @@ my_gaps:
 my_guess:
 notes: Lydia: "The Fed sets rates, so why do mortgage rates move on their own?" Needs the link between the Fed's short-term rate and long-term loan rates. The article already explains it, so this also tests whether IYKYK adds a card when the context is already there (it should not).
 
+=== c28 ===
+group:
+source: SYNTHETIC (written by Claude to cover sports; not a real comment). A football fan reacts to a last-second touchdown pass.
+comment: They really threw a Hail Mary and it worked. My dad is still screaming
+my_gaps:
+my_guess:
+notes:
+
+=== c29 ===
+group:
+source: SYNTHETIC (written by Claude to cover sports; not a real comment). Comments on a video of someone's terrible fantasy football week.
+comment: My fantasy team is giving Jets energy this year
+my_gaps:
+my_guess:
+notes:
+
+=== c30 ===
+group:
+source: SYNTHETIC (written by Claude to cover sports; not a real comment). A post about the college basketball tournament.
+comment: My March Madness bracket was busted by the first Thursday lol
+my_gaps:
+my_guess:
+notes:
+
+=== c31 ===
+group:
+source: SYNTHETIC (written by Claude to cover sports; not a real comment). A friend posts a photo of a huge grill setup.
+comment: He's the LeBron of tailgating, no debate
+my_gaps:
+my_guess:
+notes:
+
+=== c32 ===
+group:
+source: SYNTHETIC (written by Claude to cover politics; not a real comment). A post about a governor who isn't running again.
+comment: Man's a lame duck, he can say whatever he wants now
+my_gaps:
+my_guess:
+notes:
+
+=== c33 ===
+group:
+source: SYNTHETIC (written by Claude to cover politics; not a real comment). A map of election results.
+comment: Wisconsin doing its swing state thing again 😭
+my_gaps:
+my_guess:
+notes:
+
+=== c34 ===
+group:
+source: SYNTHETIC (written by Claude to cover money; not a real comment). A post about rising rent.
+comment: My 401(k) looked at me and said no
+my_gaps:
+my_guess:
+notes:
+
+=== c35 ===
+group:
+source: SYNTHETIC (written by Claude to cover money; not a real comment). Someone shows a tiny paycheck after taxes.
+comment: Living paycheck to paycheck but make it fashion
+my_gaps:
+my_guess:
+notes:
+
+=== c36 ===
+group:
+source: SYNTHETIC (written by Claude to cover sarcasm; not a real comment). Someone brags their ex got engaged two weeks after the breakup.
+comment: Wow. Love that for you.
+my_gaps:
+my_guess:
+notes:
+
+=== c37 ===
+group:
+source: SYNTHETIC (written by Claude to cover sarcasm; not a real comment). A coworker says they'll 'definitely' finish the project by Friday.
+comment: Sure, Jan.
+my_gaps:
+my_guess:
+notes:
+
+=== c38 ===
+group:
+source: SYNTHETIC (written by Claude to cover sarcasm; not a real comment). A Southern grandma comments on a neighbor's DIY paint job.
+comment: Well, bless your heart for trying.
+my_gaps:
+my_guess:
+notes:
+
+=== c39 ===
+group:
+source: SYNTHETIC (written by Claude to cover easy; not a real comment). A cooking video of pasta.
+comment: This looks so good, saving it for this weekend!
+my_gaps:
+my_guess:
+notes:
+
 === pending (Reddit could not be read automatically; paste the text in) ===
 - r/rickandmorty: "I'm not American, are presidential turkey pardons a..." (presidential turkey pardon)
 - r/BoomersBeingFools: "Oblivious boomer: hurricane edition"
