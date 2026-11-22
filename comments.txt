@@ -164,16 +164,78 @@ notes:
 
 === c19 ===
 group:
-source:
-comment:
+source: Instagram post (instagram.com/p/Dd_p1tjKVOZ). "Subway Takes" street-interview show on a NYC subway, sponsored by Twix. A man in sunglasses holds a MetroCard. On-screen text: "...curious."
+comment: That's my landlord 😭
 my_gaps:
 my_guess:
-notes:
+notes: 
 
 === c20 ===
 group:
-source:
-comment:
+source: Instagram post (instagram.com/p/Dd_p1tjKVOZ). "Subway Takes" street-interview show on a NYC subway, sponsored by Twix. A man in sunglasses holds a MetroCard. On-screen text: "...curious."
+comment: Nah folks brand deals ain't it
 my_gaps:
 my_guess:
-notes:
+notes: 
+
+=== c21 ===
+group:
+source: Instagram post (instagram.com/p/Dd_p1tjKVOZ). "Subway Takes" street-interview show on a NYC subway, sponsored by Twix. A man in sunglasses holds a MetroCard. On-screen text: "...curious."
+comment: I'm gonna buy a Twix bc this is the right amount of product placement in a subway takes. Zero. Congrats all!
+my_gaps:
+my_guess:
+notes: 
+
+=== c22 ===
+group:
+source: Instagram post (instagram.com/p/Dd_p1tjKVOZ). "Subway Takes" street-interview show on a NYC subway, sponsored by Twix. A man in sunglasses holds a MetroCard. On-screen text: "...curious."
+comment: It's always "who's Zombie Claus" and never "how's Zombie Claus" 😔
+my_gaps:
+my_guess:
+notes: 
+
+=== c23 ===
+group:
+source: Instagram post (instagram.com/p/Df_vZzphGga). Game-style 3D animation: a man waves back at someone who was waving at the person behind him. Caption: "If someone waves, and you wave back, but they were waving at the person behind you... what do you do?"
+comment: First of all who created this animation, because I've never seen that kind of walking 😂😂😂
+my_gaps:
+my_guess:
+notes: 
+
+=== c24 ===
+group:
+source: Instagram post (instagram.com/p/Df_vZzphGga). Game-style 3D animation: a man waves back at someone who was waving at the person behind him. Caption: "If someone waves, and you wave back, but they were waving at the person behind you... what do you do?"
+comment: I tried this and now I'm in mental asylum 🥀
+my_gaps:
+my_guess:
+notes: 
+
+=== c25 ===
+group:
+source: Instagram post (instagram.com/p/Df_vZzphGga). Game-style 3D animation: a man waves back at someone who was waving at the person behind him. Caption: "If someone waves, and you wave back, but they were waving at the person behind you... what do you do?"
+comment: I am the first person in my bloodline to discover this knowledge
+my_gaps:
+my_guess:
+notes: 
+
+=== c26 ===
+group:
+source: AP News article, "What to expect in the Iowa caucuses" (Jan 10, 2024). Context: national presidential election coverage, 2024 Republican primary.
+comment: At stake in the caucuses are Iowa's 40 delegates to the Republican National Convention in Milwaukee this summer, and perhaps more importantly, bragging rights and momentum heading into the New Hampshire primary the following week.
+my_gaps:
+my_guess:
+notes: Lydia: why does national election news make such a big deal of one state's party event in Iowa? Explain it based on the 2024 schedule.
+
+=== c27 ===
+group:
+source: AP News article, "Mortgage rates jump for the first time since October, squeezing US homebuyers" (Nov 19, 2026).
+comment: While the Fed doesn't set mortgage rates, its decisions to raise or lower its short-term rate are watched closely by bond investors and can ultimately influence rates on home loans.
+my_gaps:
+my_guess:
+notes: Lydia: "The Fed sets rates, so why do mortgage rates move on their own?" Needs the link between the Fed's short-term rate and long-term loan rates. The article already explains it, so this also tests whether IYKYK adds a card when the context is already there (it should not).
+
+=== pending (Reddit could not be read automatically; paste the text in) ===
+- r/rickandmorty: "I'm not American, are presidential turkey pardons a..." (presidential turkey pardon)
+- r/BoomersBeingFools: "Oblivious boomer: hurricane edition"
+- r/OutOfTheLoop: "What's up with 'Sir, this is a Wendy's'?"
+  Lydia: a meme reply when someone goes on an off-topic rant ("Sir, this is a fast-food place"). In real comments, the card must point out what in the comment above was out of place.
