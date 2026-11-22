@@ -380,8 +380,9 @@
   const paintLang = () => document.querySelectorAll("#lang-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang())));
   async function switchLang(to) {
     // every card keeps its text in each language it has been shown in, so switching back is instant
+    const cur = (it) => (/[가-힣]/.test(it.answer || "") ? "ko" : "en"); // which language the card is in right now, read from its own text
     const FIELDS = (it) => ({ answer: it.answer || "", origin: it.origin || "", closest: it.closest || "" });
-    state.items.forEach((it) => { it.tx = it.tx || {}; it.tx[it.lang || "en"] = it.tx[it.lang || "en"] || FIELDS(it); });
+    state.items.forEach((it) => { it.tx = it.tx || {}; it.tx[cur(it)] = it.tx[cur(it)] || FIELDS(it); });
     const need = state.items.map((it, i) => ({ it, i })).filter(({ it }) => !it.tx[to]);
     const apply = () => {
       state.items.forEach((it) => { if (it.tx[to]) { Object.assign(it, it.tx[to]); it.lang = to; } });
@@ -397,7 +398,7 @@
       let missing = need;
       for (let round = 0; round < 2 && missing.length; round++) {
         const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ translate: { to, items: missing.map(({ it, i }) => ({ id: String(i), ...it.tx[it.lang || "en"] })) } }) });
+          body: JSON.stringify({ translate: { to, items: missing.map(({ it, i }) => ({ id: String(i), ...it.tx[cur(it)] })) } }) });
         const data = await res.json().catch(() => ({}));
         (data.items || []).forEach((t) => { const it = state.items[+t.id]; if (it) it.tx[to] = { answer: t.answer, origin: t.origin, closest: t.closest }; });
         missing = missing.filter(({ it }) => !it.tx[to]);
