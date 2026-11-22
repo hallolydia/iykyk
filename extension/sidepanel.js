@@ -51,6 +51,7 @@
     for (let k = 0; k < 3 && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
     if (!got.comments.length) {
+      if (got.skipped > 0) return error(`I can see ${got.skipped} comment${got.skipped === 1 ? "" : "s"}, but ${got.skipped === 1 ? "it isn't" : "they aren't"} in English, so I skipped ${got.skipped === 1 ? "it" : "them"}. Try a post with English comments, or select any words and press Ask IYKYK.`);
       if (got.kind === "instagram") { toPage({ type: "point" }); return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
       if (got.kind === "youtube" || got.kind === "reddit") return error("Scroll down until the comments show up, then press Read again. You can also select any words and press Ask IYKYK.");
       return error("I can't find English text to read here. Scroll to some text, or select any words and press Ask IYKYK.");

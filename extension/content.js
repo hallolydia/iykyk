@@ -93,6 +93,19 @@
       const item = { id: "c" + (found.length + 1), el, text };
       found.push(item); added.push(item);
     });
+    // Nothing found the usual way (Instagram changes its layout often): look at every small piece of plain text in the open post.
+    if (!added.length && !found.length) {
+      container().querySelectorAll("span, div").forEach((el) => {
+        if (el.children.length || el.closest("a, button, h1, h2, [role='button'], time, #iykyk-panel")) return;
+        const text = ownText(el);
+        if (text.length < 6 || text.length > 600 || UI.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
+        if (!visible(el) || seen.some((s) => s.includes(text))) return;
+        seen.push(text);
+        if (!mostlyEnglish(text)) { skipped.add(text); return; }
+        const item = { id: "c" + (found.length + 1), el, text };
+        found.push(item); added.push(item);
+      });
+    }
     return added.slice(0, 20).map(({ id, text }) => ({ id, text }));
   }
 
