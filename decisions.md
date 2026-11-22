@@ -34,6 +34,7 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 | D20 | Not an English-study app | Decided |
 | D21 | What waits for later | Decided |
 | D22 | Name: IYKYK | Decided |
+| D23 | Calibrate the AI with evidence, not a survey | Decided ★ |
 
 ---
 
@@ -186,3 +187,19 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 - **Considered:** Backstory, Inside Joke, Wait What?, Lost in Comments
 - **Chose:** IYKYK ("If you know, you know"). Tagline and key moment: "Now you know."
 - **Why:** The name is itself an inside-joke phrase. A foreigner may not know it, which is the point. On first visit, the logo is underlined and explains itself.
+
+## D23. Calibrate the AI with evidence, not a survey ★
+
+- **Problem:** The AI guesses what "an adult raised in Korea with advanced English" would miss. That's an average person, not this user. In testing it missed the real hinge of a joke ("Hallmark") that I, the user, could spot right away.
+- **Options considered:**
+  1. Ask job, age, background. Weak link to what someone knows, feels like a survey, and it's personal data.
+  2. Ask "How well do you know US culture? High / Low." People can't rate this. That's the core problem: you don't know what you don't know.
+  3. Ask nothing, guess only. Fastest, but the first posts are noisy for everyone.
+  4. **One required tap (where you grew up) + an optional 10-second check: tap the things you already know.**
+- **Chose:** 4, then keep learning from behavior.
+  - Where you grew up sets the baseline (what's likely new).
+  - The quick check is a real signal, not a self-rating. What you tap goes straight into "already known", so the very first post is quieter.
+  - After that, every "I knew this" corrects the AI, and "Still confused" shows where it explains badly.
+  - Dropped "years in the US": the quick check gives the same information more directly, with one fewer question.
+- **Why:** The AI is good at the average, the user is the only source of truth about themselves. So the AI guesses, the user corrects it with one tap, and the test set measures how often the guess is right.
+- **Line for the pitch:** "I don't ask how good your English is. I ask what you already know, and I check it in 10 seconds."

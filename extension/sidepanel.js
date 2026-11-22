@@ -23,7 +23,7 @@
   let toastTimer;
   function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1600); }
   function updateTop() { $("nyk-count").textContent = state.saved.filter((s) => s.status !== "confused").length; }
-  function show(which) { ["panel-country", "panel-start", "panel-loading", "panel-results"].forEach((id) => ($(id).hidden = id !== which)); }
+  function show(which) { ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results"].forEach((id) => ($(id).hidden = id !== which)); }
   function error(msg) { show("panel-start"); $("err").hidden = false; $("err").textContent = msg; }
 
   async function tab() {
@@ -171,11 +171,29 @@
     const b = e.target.closest(".tchip"); if (!b) return;
     state.country = b.dataset.code || null;
     store.set("country", state.country); store.set("countryAsked", true);
-    paintTune(); show("panel-start");
-    toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Got it. Explaining for anyone.");
+    paintTune(); show("panel-known");
   });
+
+  // Quick check: tap what you already know. Real signal, not a self-rating.
+  const PROBES = [["Thanksgiving", "holiday"], ["Karen", "meme"], ["Hail Mary", "sports"], ["Friends (the show)", "tv"], ["March Madness", "sports"], ["Sure, Jan", "tone"], ["Costco", "brand"], ["Super Bowl ads", "sports"]];
+  $("known-chips").innerHTML = PROBES.map(([name]) => `<button class="tchip" type="button" aria-pressed="false">${esc(name)}</button>`).join("");
+  $("known-chips").addEventListener("click", (e) => {
+    const b = e.target.closest(".tchip"); if (!b) return;
+    b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
+  });
+  function finishKnown(save) {
+    if (save) {
+      document.querySelectorAll('#known-chips .tchip[aria-pressed="true"]').forEach((b) => state.known.add(norm(b.textContent.replace(/ \(the show\)$/, ""))));
+      store.set("known", [...state.known]);
+    }
+    store.set("knownAsked", true);
+    show("panel-start");
+    toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Got it. Explaining for anyone.");
+  }
+  $("known-done").addEventListener("click", () => finishKnown(true));
+  $("known-skip").addEventListener("click", () => finishKnown(false));
   paintFirst();
-  show(store.get("countryAsked", false) || state.country ? "panel-start" : "panel-country");
+  show(!(store.get("countryAsked", false) || state.country) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
 
   $("cards").addEventListener("click", (e) => {
     const c = e.target.closest(".card"); if (!c) return;
