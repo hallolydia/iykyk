@@ -36,7 +36,7 @@ The code also checks that every highlight quotes the comment exactly, and a grie
 
 **[2:25] Choices. Screen: decisions.md.**
 
-"I made choices on purpose. It skips comments that aren't in English, because a wrong explanation is worse than none. I labeled the test set myself, because AI shouldn't grade AI. And I used AI to build the whole thing, and to find where it breaks."
+"I made choices on purpose. This product explains US context, so it deliberately leaves comments that aren't in English alone. A wrong explanation is worse than none. I labeled the test set myself, because AI shouldn't grade AI. And I used AI to build the whole thing, and to find where it breaks."
 
 **[2:45] Close. Screen: the logo.**
 
