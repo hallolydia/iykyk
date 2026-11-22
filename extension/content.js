@@ -174,23 +174,34 @@
   function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
 
   // ---- point at Instagram's comment icon when the comments are closed ----
-  let pointEl = null;
-  function unpoint() { if (pointEl) { pointEl.remove(); pointEl = null; } }
+  let pointEl = null, pointHl = null;
+  function unpoint() { if (pointEl) { pointEl.remove(); pointEl = null; } if (pointHl) { pointHl.remove(); pointHl = null; } }
   function pointAtComments() {
     unpoint();
     if (KIND !== "instagram") return false;
     const svg = [...document.querySelectorAll("svg[aria-label]")].find((x) => /^(comment|댓글)$/i.test(x.getAttribute("aria-label")) && visible(x));
     if (!svg) return false;
-    const r = svg.getBoundingClientRect(); // the icon itself, not the number under it
-    const size = 44, cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    // the box that holds the icon AND the count under it
+    const ir = svg.getBoundingClientRect();
+    let box = ir;
+    for (let n = svg.parentElement, i = 0; n && i < 5; n = n.parentElement, i++) {
+      const r = n.getBoundingClientRect();
+      if (r.height >= ir.height + 14 && r.width <= 130) { box = r; break; }
+    }
+    const padX = 10, padY = 8, w = Math.max(box.width, ir.width) + padX * 2, left = box.left + box.width / 2 - w / 2;
+    // the highlighter: semi-transparent lime, blended (multiply) so the icon and the number stay readable on top of it.
+    // It has no z-index of its own, so it is not boxed off from the page and the blend reaches the icon.
+    pointHl = document.createElement("div");
+    pointHl.id = "iykyk-point-hl";
+    pointHl.style.cssText = `position:fixed;pointer-events:none;left:${left}px;top:${box.top - padY}px;width:${w}px;height:${box.height + padY * 2}px;border-radius:${Math.min(w, box.height + padY * 2) / 2}px;background:#D4FF3A;opacity:.7;mix-blend-mode:multiply`;
+    document.documentElement.appendChild(pointHl);
+    // the label, close to the highlighter
     pointEl = document.createElement("div");
     pointEl.id = "iykyk-point";
     pointEl.style.cssText = "position:fixed;z-index:2147483645;pointer-events:none;left:0;top:0;width:0;height:0";
-    // a plain lime circle behind the icon, like a highlighter. It stays still.
     pointEl.innerHTML = `
       <style>@keyframes iykyk-nudge{0%,100%{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(6px) rotate(-3deg)}}@media (prefers-reduced-motion:reduce){#iykyk-point div{animation:none!important}}</style>
-      <div style="position:fixed;left:${cx - size / 2}px;top:${cy - size / 2}px;width:${size}px;height:${size}px;border-radius:50%;background:#D4FF3A;mix-blend-mode:multiply"></div>
-      <div style="position:fixed;right:${innerWidth - (cx - size / 2) + 3}px;top:${cy - 11}px;background:#111;color:#fff;border-radius:999px;padding:4px 10px;font:800 11px 'Inter Tight',system-ui,sans-serif;white-space:nowrap;transform:rotate(-3deg);animation:iykyk-nudge 1.8s ease-in-out infinite">Open comments</div>`;
+      <div style="position:fixed;right:${innerWidth - left + 4}px;top:${box.top + box.height / 2 - 11}px;background:#111;color:#fff;border-radius:999px;padding:4px 10px;font:800 11px 'Inter Tight',system-ui,sans-serif;white-space:nowrap;transform:rotate(-3deg);animation:iykyk-nudge 1.8s ease-in-out infinite">Open comments</div>`;
     document.documentElement.appendChild(pointEl);
     // goes away on the next click anywhere, or after 12 seconds
     document.addEventListener("click", unpoint, { once: true, capture: true });
