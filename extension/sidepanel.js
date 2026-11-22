@@ -13,6 +13,7 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const $ = (id) => document.getElementById(id);
 
+  const cache = new Map(); // post URL -> AI result, so going back is instant
   const state = {
     items: [], hidden: [], focus: 0, tabId: null, comments: [],
     country: store.get("country", null),
@@ -44,20 +45,28 @@
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
     if (!got.comments.length) return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet.");
     state.comments = got.comments;
+    state.url = got.url;
+    const cached = cache.get(got.url);
+    if (cached) { applyRules(cached); render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); return; }
     show("panel-loading");
 
     // a picture of the current scene, for context (comment text is sent separately)
-    let image = null;
-    try { image = await chrome.tabs.captureVisibleTab(t.windowId, { format: "jpeg", quality: 55 }); } catch {}
+    // two frames, one second apart, so the AI sees a bit of what happens
+    const images = [];
+    try { images.push(await chrome.tabs.captureVisibleTab(t.windowId, { format: "jpeg", quality: 50 })); } catch {}
+    await new Promise((r) => setTimeout(r, 500));
+    try { images.push(await chrome.tabs.captureVisibleTab(t.windowId, { format: "jpeg", quality: 50 })); } catch {}
+    const audio = (await toPage({ type: "audio" }))?.audio || "";
 
     const slow = setTimeout(() => { $("loading-text").textContent = "Still reading… jokes take a second."; }, 8000);
     try {
       const res = await fetch(API, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", image }, countries: places(), country: state.country, known: [...state.known], explainIn: "en" })
+        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", images, audio }, countries: places(), country: state.country, known: [...state.known], explainIn: "en" })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Couldn't read this one.");
+      cache.set(got.url, data);
       applyRules(data);
       render();
       await toPage({ type: "highlight", items: state.items, focus: 0 });
@@ -69,19 +78,42 @@
     }
   }
 
-  function applyRules(result) {
-    const byId = Object.fromEntries(state.comments.map((c) => [c.id, c.text]));
-    const per = {}; const vis = [], hid = [];
+  // append = false: a new post. true: new comments from scrolling, added under the existing cards.
+  async function readMore(fresh) {
+    try {
+      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ post: { comments: fresh, caption: "", scene: "" }, countries: places(), known: [...state.known], explainIn: "en" }) });
+      if (!res.ok) return;
+      const data = await res.json();
+      state.comments = state.comments.concat(fresh);
+      const before = state.items.length;
+      applyRules(data, fresh, true);
+      const keep = state.focus;
+      render(); setFocus(keep, false);
+      await toPage({ type: "highlight", items: state.items, focus: keep });
+      if (state.items.length > before) toast(`${state.items.length - before} more below.`);
+    } catch {}
+  }
+
+  function applyRules(result, comments = state.comments, append = false) {
+    const byId = Object.fromEntries(comments.map((c) => [c.id, c.text]));
+    const per = {};
+    if (!append) { state.items = []; state.hidden = []; state.focus = 0; }
     (result.items || []).forEach((it) => {
       const text = byId[it.comment_id];
       if (!text || !text.includes(it.quote) || (it.confidence ?? 0) < DROP_BELOW) return;
       per[it.comment_id] = (per[it.comment_id] || 0) + 1; if (per[it.comment_id] > 2) return;
-      const item = Object.assign({}, it, { check: it.confidence < SHOW_AT });
-      (state.known.has(norm(it.quote)) ? hid : vis).push(item);
+      const key = norm(it.quote);
+      // the same meme in many comments = one card, highlighted everywhere
+      const same = state.items.find((x) => norm(x.quote) === key) || state.hidden.find((x) => norm(x.quote) === key);
+      if (same) { if (!same.comment_ids.includes(it.comment_id)) same.comment_ids.push(it.comment_id); return; }
+      const item = Object.assign({}, it, { check: it.confidence < SHOW_AT, comment_ids: [it.comment_id] });
+      (state.known.has(key) ? state.hidden : state.items).push(item);
     });
-    const order = state.comments.map((c) => c.id);
-    vis.sort((a, b) => order.indexOf(a.comment_id) - order.indexOf(b.comment_id));
-    state.items = vis; state.hidden = hid; state.focus = 0;
+    if (!append) {
+      const order = state.comments.map((c) => c.id);
+      state.items.sort((a, b) => order.indexOf(a.comment_id) - order.indexOf(b.comment_id));
+    }
   }
 
   function render() {
@@ -110,7 +142,7 @@
     const more = `<div class="morerow">${det.length ? '<button class="more" type="button" data-more>More ▾</button>' : "<span></span>"}<button class="link" data-act="confused" type="button">Still confused</button></div>${det.length ? `<div class="details" hidden>${det.join("")}</div>` : ""}`;
     return `<article class="card" data-i="${i}" tabindex="-1">
       <div class="row1"><span class="badge ${it.check ? "check" : ""}">${i + 1}</span><span class="qtag">${QUESTION[it.question] || QUESTION.reference}</span>${it.check ? '<span class="qtag check">⚠ Needs checking</span>' : ""}</div>
-      <h3 class="phrase">${esc(it.quote)}</h3><p class="answer">${esc(it.answer)}</p>${emo}${more}
+      <h3 class="phrase">${esc(it.quote)}</h3>${it.comment_ids && it.comment_ids.length > 1 ? `<p class="also">In ${it.comment_ids.length} comments</p>` : ""}<p class="answer">${esc(it.answer)}</p>${emo}${more}
       <div class="acts"><button class="primary" data-act="got" type="button">Got it <kbd>space</kbd></button><button class="secondary" data-act="knew" type="button">I knew this</button></div>
       <p class="status" hidden></p></article>`;
   }
@@ -238,6 +270,7 @@
 
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
   if (IS_EXT) chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === "more" && !$("panel-results").hidden && autoOn()) { readMore(msg.comments); return; }
     if (msg.type === "navigated") {
       state.items = [];
       const ready = store.get("countryAsked", false) || places().length;

@@ -7,7 +7,7 @@ import { z } from "zod";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 
 export const MODEL = "claude-opus-5-5";
-export const PROMPT_VERSION = "v2";
+export const PROMPT_VERSION = "v3";
 
 const client = new Anthropic(); // reads ANTHROPIC_API_KEY from the environment
 
@@ -45,6 +45,8 @@ Rules:
 - The first item may be the post's caption. Use it as context for every comment.
 - Names of brands, stores, TV channels, shows, and products can carry cultural meaning on their own. Treat them as possible hinges.
 - In long comments, the punchline is usually near the end. Read to the end before choosing the hinge.
+- If an AUDIO track is named, think about what that sound is known for on social media: its mood (sad violin, suspense, triumphant), how its melody is used in memes, or its lyrics. Comments often joke about the sound itself. If you don't know the track, don't guess.
+- Images are frames from the video in order. Use expressions, actions, and on-screen text to understand the moment.
 - If you are not sure what something refers to (for example a very new meme), say so in the answer and give a confidence below 0.7. Never invent a source.
 - Sad or personal comments (grief, illness): explain the tone gently, never as a joke.
 - "answer": one or two short sentences, warm and plain, like a friend texting. No lecturing.
@@ -78,16 +80,18 @@ export function buildUserMessage({ post, country, countries, known, explainIn })
     `READER: ${reader}. Explain in ${explainIn === "ko" ? "Korean" : "English"}.`,
     `KNOWN (never flag these): ${known.length ? known.join(" | ") : "(none)"}`,
     `CAPTION: ${String(post.caption || "").slice(0, MAX_CHARS) || "(none)"}`,
-    `SCENE: ${String(post.scene || "").slice(0, MAX_CHARS) || "(not provided)"}`,
+    `SCENE: ${String(post.scene || "").slice(0, MAX_CHARS) || "(see the images, if any)"}`,
+    `AUDIO: ${String(post.audio || "").slice(0, 120) || "(unknown)"}`,
     `COMMENTS (JSON):\n${JSON.stringify(comments, null, 1)}`
   ].join("\n\n");
 }
 
-export async function analyze(input, { system = SYSTEM_PROMPT } = {}) {
+export async function analyze(input, { system = SYSTEM_PROMPT, effort = "medium", fast = false } = {}) {
   const content = [];
-  if (input.post.image && /^data:image\/(png|jpeg|webp);base64,/.test(input.post.image)) {
-    const [, mediaType, data] = input.post.image.match(/^data:(image\/[a-z]+);base64,(.*)$/);
-    content.push({ type: "image", source: { type: "base64", media_type: mediaType, data } });
+  const frames = [].concat(input.post.images || [], input.post.image || []).slice(0, 3);
+  for (const img of frames) {
+    const m = typeof img === "string" && img.match(/^data:(image\/(?:png|jpeg|webp));base64,(.*)$/);
+    if (m) content.push({ type: "image", source: { type: "base64", media_type: m[1], data: m[2] } });
   }
   content.push({ type: "text", text: buildUserMessage(input) });
 
@@ -96,7 +100,8 @@ export async function analyze(input, { system = SYSTEM_PROMPT } = {}) {
     max_tokens: 16000,
     betas: ["server-side-fallback-2026-07-01"],
     fallbacks: "default",
-    output_config: { effort: "medium", format: betaZodOutputFormat(Result) },
+    output_config: { effort, format: betaZodOutputFormat(Result) },
+    ...(fast ? { speed: "fast" } : {}),
     system,
     messages: [{ role: "user", content }]
   });

@@ -18,3 +18,4 @@ Later
 [AI v1] First live read took about 15 seconds > keep the loading line honest, add "Still reading..." after 8 seconds
 [extension] "What I read" showed Instagram labels ("오리지널 오디오", "1주 · 수정됨") and skipped the caption and most visible comments > read only the sentence text (skip links, time, buttons), keep the caption, pick the area with the most text
 [AI v1] On a long parody comment, the AI flagged "the doctor said it was a false alarm" and missed the real hinge, "Hallmark" > prompt v2 adds general rules: brand/channel/show names can be hinges, punchlines sit at the end of long comments, the first item may be the caption (no test answers named in the prompt)
+[AI speed] A post took about 12 seconds at medium effort. Low effort was 6 seconds but missed the main joke ("Christmas heist"). Fast mode was not available on this account > kept medium, cut perceived wait instead (cache per post, 0.5s between frames)

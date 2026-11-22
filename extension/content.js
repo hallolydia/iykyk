@@ -38,19 +38,47 @@
     return t.replace(/\s+/g, " ").replace(/^[\s·•]+|[\s·•]+$/g, "").trim();
   }
 
-  function readComments() {
+  // fresh = true: start over (new post). false: keep what was read, return only new comments.
+  function readComments(fresh = true) {
     const root = container();
-    const seen = [];
-    found = [];
+    if (fresh) found = [];
+    const seen = found.map((f) => f.text);
+    const added = [];
     root.querySelectorAll('span[dir="auto"], h1[dir="auto"]').forEach((el) => {
       if (el.closest("a, button, h2, [role='button'], time, #iykyk-panel")) return;
       const text = ownText(el);
       if (text.length < 2 || UI.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
       if (!visible(el) || seen.some((s) => s.includes(text))) return;
       seen.push(text);
-      found.push({ id: "c" + (found.length + 1), el, text });
+      const item = { id: "c" + (found.length + 1), el, text };
+      found.push(item); added.push(item);
     });
-    return found.slice(0, 20).map(({ id, text }) => ({ id, text }));
+    return added.slice(0, 20).map(({ id, text }) => ({ id, text }));
+  }
+
+  // scrolling the comments: read what's newly on screen (only while the panel is open)
+  let scrollTimer;
+  document.addEventListener("scroll", () => {
+    if (!panelOpen() || !found.length) return;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const fresh = readComments(false);
+      if (fresh.length) chrome.runtime.sendMessage({ type: "more", comments: fresh }).catch(() => {});
+    }, 1200);
+  }, true);
+
+  // The track playing under the post. Instagram shows it as a link to the audio page.
+  function readAudio() {
+    const root = container();
+    const link = root.querySelector('a[href*="/audio/"]') || document.querySelector('a[href*="/reels/audio/"]');
+    const text = (link?.innerText || "").replace(/\s*•\s*/g, " · ").replace(/\s+/g, " ").trim();
+    if (!text) {
+      // no song link: the creator's own sound shows as plain text
+      const own = [...root.querySelectorAll("span")].some((s) => /^(original audio|오리지널 오디오)$/i.test((s.innerText || "").trim()));
+      return own ? "original audio (the creator's own sound)" : "";
+    }
+    if (/^(original audio|오리지널 오디오)$/i.test(text)) return "original audio (the creator's own sound)";
+    return text.slice(0, 120);
   }
 
   // ---- highlights (CSS Custom Highlight API: draws over text, no DOM changes) ----
@@ -86,9 +114,11 @@
     marks = [];
     items.forEach((it, i) => {
       if (it.done === "knew") return;
-      const f = found.find((c) => c.id === it.comment_id);
-      const range = f && rangeFor(f.el, it.quote);
-      if (range) marks.push({ i, range, check: !!it.check });
+      (it.comment_ids || [it.comment_id]).forEach((cid) => {
+        const f = found.find((c) => c.id === cid);
+        const range = f && rangeFor(f.el, it.quote);
+        if (range) marks.push({ i, range, check: !!it.check });
+      });
     });
     paint(focusIndex);
     return marks.length;
@@ -120,7 +150,8 @@
   function panelOpen() { return !!frameBox && frameBox.style.display !== "none"; }
 
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
-    if (msg.type === "toggle") { panelOpen() ? closePanel() : openPanel(); reply({ ok: true }); }
+    if (msg.type === "audio") { reply({ audio: readAudio() }); }
+    else if (msg.type === "toggle") { panelOpen() ? closePanel() : openPanel(); reply({ ok: true }); }
     else if (msg.type === "close") { closePanel(); reply({ ok: true }); }
     else if (msg.type === "read") reply({ comments: readComments(), url: location.href });
     else if (msg.type === "highlight") reply({ drawn: highlight(msg.items, msg.focus) });
