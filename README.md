@@ -69,7 +69,7 @@ Targets: 80% or more of underlines right (most important), 60% or more of my gap
 Read this table with care. This test sends only the comment text, so v3's new inputs (sound, frames) were not used. With 27 comments and one run each, a few points between versions is noise, not progress. The honest result is that all three prompts are about the same on this set, and the next gain has to come from somewhere else.
 
 **Most common errors (v3):**
-- **Underlining what I said was easy (6 of 7 wrong underlines).** "Sure, Jan.", "Love that for you.", "401(k)", "seconds", "the dog days of summer". Some of these may be real gaps I did not know I had: my own guess on "Not you guys waiting in the train" turned out to be wrong, and the AI had underlined it.
+- **Underlining what I said was easy (6 of 7 wrong underlines).** "Sure, Jan.", "Love that for you.", "401(k)", "seconds", "the dog days of summer".
 - **Missing plain English I did not know (8 missed gaps).** "freeway", "manchild", "take it back", "misogynistic cliché", "bond investors", "saving it". These are not culture, they are vocabulary and finance words, which the prompt does not look for.
 - **Missing fan-talk.** A comment about a TV couple ("Rory and..Logan?") needed knowing the show, and was missed.
 - **The grief comment got no underline and no joke**, which is the behavior I wanted.
