@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iykyk</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* side panel fit: narrow column, no left feed */
+  body{background:var(--paper)}
+  .sp-top{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line)}
+  .sp-top .logo{font-size:32px}
+  .sp-top .pill{height:32px;font-size:13px;padding:0 12px}
+  .panel-scroll{padding:18px 16px 28px}
+  .big{font-size:52px}
+  .btxt{font-size:20px}
+  .phrase{font-size:24px}
+  .answer{font-size:17px}
+  .acts{flex-wrap:wrap}
+  .acts .link{margin-left:4px}
+  .start-title{font-size:21px}
+  .toast{right:18px;top:70px}
+  .err{font-size:14px;color:var(--amber);background:var(--amber-bg);border-radius:14px;padding:12px 14px;margin-top:12px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g>
+</defs></svg>
+
+<header class="sp-top">
+  <span class="logo">iykyk<svg viewBox="-55 -55 110 110" width="13" height="13" aria-hidden="true"><use href="#ast"/></svg></span>
+  <span class="pill">Now you know <b id="nyk-count">0</b></span>
+</header>
+
+<div class="panel-scroll" id="panel-scroll">
+  <div id="panel-start" class="start">
+    <p class="start-title">Open a post's comments, then read them with me.</p>
+    <button class="primary" id="read-btn" type="button">Read these comments</button>
+    <p class="start-sub">I only read the words, never who wrote them.</p>
+    <p class="err" id="err" hidden></p>
+  </div>
+  <div id="panel-loading" class="loading" hidden>
+    <span class="dot"></span><span id="loading-text">Reading like someone who didn't grow up here…</span>
+  </div>
+  <div id="panel-results" hidden>
+    <div class="tune" id="tune" hidden>
+      <p class="t1">Explaining for anyone raised outside the US.</p>
+      <p class="t2">Grew up in 🇰🇷 Korea? <span>I'll tune what I flag.</span></p>
+      <div class="tune-btns"><button class="primary sm" id="tune-yes" type="button">Yes, tune it</button><button class="secondary sm" id="tune-no" type="button">Somewhere else</button></div>
+    </div>
+    <div class="banner">
+      <span class="big" id="count-big">0</span>
+      <div><p class="btxt" id="count-text"></p><p class="bsub" id="hidden-text"></p></div>
+    </div>
+    <div class="ph"><h2 id="panel-title">Things in this post</h2><span class="hint"><kbd>↑</kbd><kbd>↓</kbd></span></div>
+    <div class="cards" id="cards"></div>
+    <div class="hidden-card" id="hidden-card" hidden></div>
+    <p class="done" id="done" hidden>That's all for this post. Scroll on.</p>
+    <button class="ghost" id="again-btn" type="button" style="margin-top:14px">Read again</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="sidepanel.js"></script>
+</body>
+</html>
