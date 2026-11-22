@@ -273,6 +273,7 @@
       let f = found.find((c) => c.el.contains(range.commonAncestorContainer));
       if (!f) { readComments(false); f = found.find((c) => c.el.contains(range.commonAncestorContainer)); }
       if (!f || !f.text.includes(quote)) return hideAsk();
+      if (!mostlyEnglish(quote)) return hideAsk(); // English only: no sticker on Korean, Arabic or other text
       showAsk(range.getBoundingClientRect(), { id: f.id, comment: f.text, quote });
     }, 0);
   }, true);

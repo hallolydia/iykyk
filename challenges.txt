@@ -52,3 +52,4 @@ Later
 [extension] Pressing EN did nothing on a card that was first written in Korean, because the card was marked as English by mistake > the card's language is now read from its own text (does it contain Hangul), not from a label
 [extension] Moving to the next reel showed nothing, then "I couldn't read anything", because the comments had not loaded yet > a loading state appears the moment the content changes, and a new post gets about nine tries (a few seconds) before giving up with a softer message
 [cost] The live AI stopped ("AI error 400") when the API credits ran out after scoring and testing with the most expensive model > moved the live reading to Sonnet to keep each read cheap; the scores in the README were measured with Opus and say so
+[scope] Select-to-ask still showed its sticker on Korean text although IYKYK only explains English > no sticker unless the selected words are mostly English, so the English-only rule (D27) holds everywhere
