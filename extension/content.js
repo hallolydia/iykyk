@@ -275,10 +275,10 @@
         shiftedCard = card;
         return;
       }
-      // too wide to fit even beside the panel: fall through and scale the page down
+      // too wide to fit even beside the panel: fall through and make the page narrower
     }
 
-    // Layout B: the comment box opens separately next to the video. Measure it and scale the page only if it would not fit.
+    // Layout B: the comment box opens separately next to the video. Measure it and make the page narrower only if it would not fit.
     let right = 0;
     if (anchor) {
       for (let n = anchor; n && n !== document.body; n = n.parentElement) {
@@ -287,8 +287,10 @@
       }
       if (!right) right = anchor.getBoundingClientRect().right + 70;
     }
-    const z = right > limit ? Math.max(0.75, limit / right) : 1;
-    if (z < 1) st.textContent = `html{zoom:${z}!important;width:${(innerWidth - PANEL_W) / z}px!important;${keep}}`;
+    // Never scale the page (it shrank the video and left a black strip). Only make the page narrower:
+    // Instagram lays the comment box out again further left, so its right edge ends up 20px from the panel.
+    const extra = right > limit ? Math.min(Math.round(right - limit), Math.max(0, innerWidth - PANEL_W - 600)) : 0;
+    if (extra > 0) st.textContent = `html{width:calc(100% - ${PANEL_W + extra}px)!important;${keep}}`;
   }
   function makeRoom(on) {
     let st = document.getElementById("iykyk-room");
