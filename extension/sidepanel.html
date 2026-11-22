@@ -32,8 +32,24 @@
 
   .tchip.skip{background:transparent;border:1px dashed var(--line);color:var(--sub)}
   .tchip.skip[aria-pressed="true"]{background:transparent;color:var(--ink);border-color:var(--ink)}
+  /* start preview: shows what will happen, in the product's own visual language */
+  .demo{position:relative;background:var(--paper);border-radius:12px;padding:14px 14px 14px;margin:0 0 20px}
+  .demo-row{display:flex;align-items:center;gap:8px}
+  .demo-av{width:20px;height:20px;border-radius:50%;background:#E2E2DF;flex:none}
+  .demo-text{font-size:13.5px;line-height:1.5}
+  .demo-hl{position:relative;padding:1px 6px;border-radius:5px;background-image:linear-gradient(90deg,#D4FF3A 0%,#D4FF3A 30%,#E9FFA0 100%);background-repeat:no-repeat;background-size:0% 100%;animation:demo-sweep 4.5s ease-in-out infinite}
+  .demo-n{position:absolute;left:-7px;top:-9px;width:15px;height:15px;border-radius:50%;border:1.25px solid #111;background:#D4FF3A;font-size:9px;font-weight:600;line-height:12.5px;text-align:center;opacity:0;animation:demo-pop 4.5s ease-in-out infinite}
+  .demo-arrow{display:block;margin:4px 0 0 34px;opacity:0;animation:demo-in 4.5s ease-in-out infinite;animation-delay:0s}
+  .demo-card{margin:-6px 0 0 70px;background:#fff;border-radius:10px;padding:8px 10px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 4px 12px rgba(0,0,0,.05);opacity:0;transform:translateY(4px) rotate(-1.5deg);animation:demo-card 4.5s cubic-bezier(.3,1.4,.5,1) infinite}
+  .demo-tag{display:inline-block;font-size:10.5px;font-weight:600;background:#111;color:#fff;border-radius:999px;padding:2px 8px}
+  .demo-ans{font-size:12px;line-height:1.45;color:var(--sub);margin-top:5px}
+  @keyframes demo-sweep{0%,8%{background-size:0% 100%}28%,90%{background-size:100% 100%}100%{background-size:0% 100%}}
+  @keyframes demo-pop{0%,26%{opacity:0;transform:scale(.4)}32%,88%{opacity:1;transform:scale(1)}100%{opacity:0}}
+  @keyframes demo-in{0%,34%{opacity:0}42%,88%{opacity:1}100%{opacity:0}}
+  @keyframes demo-card{0%,40%{opacity:0;transform:translateY(6px) rotate(-1.5deg)}50%,88%{opacity:1;transform:translateY(0) rotate(-1.5deg)}100%{opacity:0;transform:translateY(0) rotate(-1.5deg)}}
+  @media (prefers-reduced-motion: reduce){.demo-hl{background-size:100% 100%}.demo-n,.demo-arrow,.demo-card{opacity:1;transform:none}}
+  #panel-start .start-title{margin-bottom:16px}
   /* start card: 3 groups. tight inside a group, wide between groups */
-  #panel-start .start-title{margin-bottom:18px}
   .auto{display:flex;align-items:center;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.4;color:var(--sub)}
   #panel-start .start-sub{margin-top:6px;padding-left:22px;line-height:1.4}
   .auto input{accent-color:#111;width:14px;height:14px}
@@ -141,6 +157,17 @@
   </div>
   <div id="panel-start" class="start" hidden>
     <p class="start-title">Open a post's comments,<br>then read them with me.</p>
+    <div class="demo" aria-hidden="true">
+      <div class="demo-row">
+        <span class="demo-av"></span>
+        <p class="demo-text">Not the <span class="demo-hl"><span class="demo-n">1</span>Christmas heist</span> 💀</p>
+      </div>
+      <svg class="demo-arrow" viewBox="0 0 40 30" width="34" height="26"><path d="M6 3 C 6 16, 14 23, 30 24" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round"/><path d="M25 19 L31 24 L24 28" fill="none" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="demo-card">
+        <span class="demo-tag">Why is this funny?</span>
+        <p class="demo-ans">A gift swap steal, called a movie robbery.</p>
+      </div>
+    </div>
     <button class="primary" id="read-btn" type="button">Read these comments</button>
     <label class="auto"><input type="checkbox" id="auto-read"> Read each post automatically while I'm open</label>
     <p class="start-sub">I only read the words, never who wrote them.</p>
