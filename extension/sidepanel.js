@@ -39,9 +39,10 @@
     const t = await tab();
     if (!t || !/^https:\/\/www\.instagram\.com\//.test(t.url || "")) return error("Open a post on instagram.com first.");
     state.tabId = t.id;
-    const got = await toPage({ type: "read" });
+    let got = await toPage({ type: "read" });
+    for (let k = 0; k < 3 && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
-    if (!got.comments.length) return error("Open the comments first, then click Read. If they're open, I can't find them on this layout yet.");
+    if (!got.comments.length) return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet.");
     state.comments = got.comments;
     show("panel-loading");
 
@@ -53,7 +54,7 @@
     try {
       const res = await fetch(API, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", image }, country: state.country, known: [...state.known], explainIn: "en" })
+        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", image }, countries: places(), country: state.country, known: [...state.known], explainIn: "en" })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Couldn't read this one.");
@@ -105,7 +106,7 @@
     const emo = it.emoji ? `<div class="emo"><div class="sel" aria-hidden="true"><i></i><i></i><i></i><i></i>${esc(it.emoji.char)}</div><div class="et">${esc(it.emoji.meaning)}</div></div>` : "";
     const det = [];
     if (it.origin) det.push(`<div class="det"><p class="lab">Where it comes from</p><p>${esc(it.origin)}</p></div>`);
-    if (it.closest && state.country) det.push(`<div class="det"><p class="lab">Closest thing in ${esc(countryName(state.country) || '')} <span class="cm">closest match</span></p><p>${esc(it.closest)}</p></div>`);
+    if (it.closest && places().length) det.push(`<div class="det"><p class="lab">Closest thing in ${esc(countryName())} <span class="cm">closest match</span></p><p>${esc(it.closest)}</p></div>`);
     const more = `<div class="morerow">${det.length ? '<button class="more" type="button" data-more>More ▾</button>' : "<span></span>"}<button class="link" data-act="confused" type="button">Still confused</button></div>${det.length ? `<div class="details" hidden>${det.join("")}</div>` : ""}`;
     return `<article class="card" data-i="${i}" tabindex="-1">
       <div class="row1"><span class="badge ${it.check ? "check" : ""}">${i + 1}</span><span class="qtag">${QUESTION[it.question] || QUESTION.reference}</span>${it.check ? '<span class="qtag check">⚠ Needs checking</span>' : ""}</div>
@@ -144,56 +145,78 @@
   $("read-btn").addEventListener("click", read);
   $("close-btn").addEventListener("click", async () => { const t = await tab(); if (t) chrome.tabs.sendMessage(t.id, { type: "close" }).catch(() => {}); });
   $("again-btn").addEventListener("click", read);
-  // "Explaining for ..." + Change: a neutral picker, never a guess
-  const COUNTRIES = [["", "🌐", "Anywhere outside the US"], ["KR", "🇰🇷", "Korea"], ["JP", "🇯🇵", "Japan"], ["CN", "🇨🇳", "China"], ["IN", "🇮🇳", "India"], ["VN", "🇻🇳", "Vietnam"], ["BR", "🇧🇷", "Brazil"], ["MX", "🇲🇽", "Mexico"], ["FR", "🇫🇷", "France"]];
-  const countryName = (code) => (COUNTRIES.find((c) => c[0] === code) || [])[2];
-  function paintTune() {
-    $("for-who").textContent = state.country ? `someone raised in ${countryName(state.country)}` : "anyone raised outside the US";
-    $("tchips").innerHTML = COUNTRIES.map(([code, flag, name]) => `<button class="tchip" type="button" data-code="${code}" aria-pressed="${(state.country || "") === code}">${flag} ${name}</button>`).join("");
+  // ---- Where you grew up: up to 3 places, presets + type any country ----
+  const PRESETS = [["🇰🇷", "Korea"], ["🇯🇵", "Japan"], ["🇨🇳", "China"], ["🇮🇳", "India"], ["🇻🇳", "Vietnam"], ["🇧🇷", "Brazil"], ["🇲🇽", "Mexico"], ["🇫🇷", "France"]];
+  const MAX_PLACES = 3;
+  // every country name, for the "Other" box (built from the browser, no list to maintain)
+  const ALL_COUNTRIES = (() => {
+    try {
+      const dn = new Intl.DisplayNames(["en"], { type: "region" }); const out = new Set();
+      for (let a = 65; a <= 90; a++) for (let b = 65; b <= 90; b++) {
+        const code = String.fromCharCode(a, b), name = dn.of(code);
+        if (name && name !== code && !/unknown|outlying|pseudo/i.test(name)) out.add(name.replace("South Korea", "Korea"));
+      }
+      return [...out].sort();
+    } catch { return PRESETS.map((p) => p[1]); }
+  })();
+  $("all-countries").innerHTML = ALL_COUNTRIES.map((n) => `<option value="${esc(n)}"></option>`).join("");
+
+  // older saves stored one country code
+  if (!store.get("countries", null) && state.country) state.countries = [{ KR: "Korea", JP: "Japan", CN: "China", IN: "India", VN: "Vietnam", BR: "Brazil", MX: "Mexico", FR: "France" }[state.country] || state.country];
+  else state.countries = store.get("countries", []);
+  const places = () => state.countries;
+  const placesText = () => places().length === 0 ? "" : places().length === 1 ? places()[0] : places().slice(0, -1).join(", ") + " and " + places().slice(-1);
+  const countryName = () => places()[0] || "";
+  function savePlaces() { store.set("countries", state.countries); state.country = places()[0] || null; store.set("country", state.country); }
+
+  function togglePlace(name) {
+    const i = state.countries.indexOf(name);
+    if (i > -1) state.countries.splice(i, 1);
+    else { state.countries.push(name); if (state.countries.length > MAX_PLACES) state.countries.shift(); }
+    savePlaces();
   }
-  $("tune-open").addEventListener("click", () => { const p = $("tune-pick"); p.hidden = !p.hidden; $("tune-open").textContent = p.hidden ? "Change" : "Done"; });
-  $("tchips").addEventListener("click", (e) => {
+
+  // one picker used in two places: the first-run screen and "Change"
+  function pickerHtml() {
+    const custom = places().filter((n) => !PRESETS.some((p) => p[1] === n));
+    return PRESETS.map(([flag, name]) => `<button class="tchip" type="button" data-name="${esc(name)}" aria-pressed="${places().includes(name)}">${flag} ${esc(name)}</button>`).join("")
+      + custom.map((name) => `<button class="tchip" type="button" data-name="${esc(name)}" aria-pressed="true">${esc(name)} ✕</button>`).join("")
+      + `<button class="tchip skip" type="button" data-any aria-pressed="${places().length === 0}">Skip · explain for anyone</button>`;
+  }
+  function paintPickers() {
+    $("for-who").textContent = places().length ? `someone raised in ${placesText()}` : "anyone raised outside the US";
+    $("tchips").innerHTML = pickerHtml();
+    $("first-chips").innerHTML = pickerHtml();
+  }
+  function onPick(e) {
     const b = e.target.closest(".tchip"); if (!b) return;
-    state.country = b.dataset.code || null; store.set("country", state.country);
-    paintTune();
- $("tune-pick").hidden = true; $("tune-open").textContent = "Change";
-    toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Explaining for anyone.");
+    if (b.hasAttribute("data-any")) { state.countries = []; savePlaces(); }
+    else togglePlace(b.dataset.name);
+    paintPickers();
     if (state.items.length) render();
-  });
-  paintTune();
-
-  // First run: ask where they grew up before anything else
-  function paintFirst() {
-    $("first-chips").innerHTML = COUNTRIES.filter((c) => c[0]).map(([code, flag, name]) => `<button class="tchip" type="button" data-code="${code}">${flag} ${name}</button>`).join("")
-      + `<button class="tchip any" type="button" data-code="">Somewhere else · explain for anyone</button>`;
   }
-  $("first-chips").addEventListener("click", (e) => {
-    const b = e.target.closest(".tchip"); if (!b) return;
-    state.country = b.dataset.code || null;
-    store.set("country", state.country); store.set("countryAsked", true);
-    paintTune(); show("panel-known");
+  $("tchips").addEventListener("click", onPick);
+  $("first-chips").addEventListener("click", onPick);
+
+  // "Other": type any country, pick from autocomplete, Enter or Add
+  document.querySelectorAll(".other-form").forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = form.querySelector("input");
+      const typed = input.value.trim(); if (!typed) return;
+      const match = ALL_COUNTRIES.find((n) => n.toLowerCase() === typed.toLowerCase()) || typed;
+      if (!places().includes(match)) togglePlace(match);
+      input.value = ""; paintPickers();
+      if (state.items.length) render();
+    });
   });
 
-  // Quick check: tap what you already know. Real signal, not a self-rating.
-  const PROBES = [["Thanksgiving", "holiday"], ["Karen", "meme"], ["Hail Mary", "sports"], ["Friends (the show)", "tv"], ["March Madness", "sports"], ["Sure, Jan", "tone"], ["Costco", "brand"], ["Super Bowl ads", "sports"]];
-  $("known-chips").innerHTML = PROBES.map(([name]) => `<button class="tchip" type="button" aria-pressed="false">${esc(name)}</button>`).join("");
-  $("known-chips").addEventListener("click", (e) => {
-    const b = e.target.closest(".tchip"); if (!b) return;
-    b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
+  $("tune-open").addEventListener("click", () => { const p = $("tune-pick"); p.hidden = !p.hidden; $("tune-open").textContent = p.hidden ? "Change" : "Done"; });
+  $("country-next").addEventListener("click", () => {
+    store.set("countryAsked", true); savePlaces(); show("panel-known");
   });
-  function finishKnown(save) {
-    if (save) {
-      document.querySelectorAll('#known-chips .tchip[aria-pressed="true"]').forEach((b) => state.known.add(norm(b.textContent.replace(/ \(the show\)$/, ""))));
-      store.set("known", [...state.known]);
-    }
-    store.set("knownAsked", true);
-    show("panel-start");
-    toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Got it. Explaining for anyone.");
-  }
-  $("known-done").addEventListener("click", () => finishKnown(true));
-  $("known-skip").addEventListener("click", () => finishKnown(false));
-  paintFirst();
-  show(!(store.get("countryAsked", false) || state.country) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
+  paintPickers();
+  show(!(store.get("countryAsked", false) || places().length) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
 
   $("cards").addEventListener("click", (e) => {
     const c = e.target.closest(".card"); if (!c) return;
@@ -216,12 +239,27 @@
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
   if (IS_EXT) chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "navigated") {
-      state.items = []; show(store.get("countryAsked", false) || state.country ? "panel-start" : "panel-country");
-      $("read-btn").textContent = "Read these comments";
+      state.items = [];
+      const ready = store.get("countryAsked", false) || places().length;
+      show(ready ? "panel-start" : "panel-country");
+      if (ready && store.get("knownAsked", false) && autoOn() && /\/(p|reels?)\//.test(msg.url || "")) {
+        clearTimeout(autoTimer); autoTimer = setTimeout(read, 1200); // let the new comments load
+      }
     }
   });
 
   updateTop();
+
+  // ---- auto-read: on by default while the panel is open ----
+  let autoTimer;
+  function autoOn() { return store.get("autoRead", true); }
+  $("auto-read").checked = autoOn();
+  $("auto-read").addEventListener("change", (e) => { store.set("autoRead", e.target.checked); toast(e.target.checked ? "I'll read each post for you." : "Okay, I'll wait for you."); });
+  (async () => {
+    if (!IS_EXT || !autoOn() || $("panel-start").hidden) return;
+    const t = await tab();
+    if (t && /instagram\.com\/(p|reels?)\//.test(t.url || "")) read();
+  })();
 
   // Design preview outside Chrome (open sidepanel.html?preview in a normal browser)
   if (!IS_EXT && location.search.includes("preview")) {

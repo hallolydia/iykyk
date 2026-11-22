@@ -20,16 +20,24 @@
   .panel-scroll{padding:14px 14px 28px}
 
   /* explaining for */
-  .tune{padding:9px 12px;margin-bottom:16px;border-radius:12px;box-shadow:none;border:1px solid var(--line)}
+  .tune{padding:10px 12px 12px;margin-bottom:16px;border-radius:12px;box-shadow:none;border:1px solid var(--line)}
   .tune-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .tune .t1{font-size:12.5px;color:var(--sub);line-height:1.4}
+  .tune .t1{font-size:12.5px;color:var(--sub);line-height:1.5}
   .tune .t1 b{color:var(--ink);font-weight:600}
   .tune .link{font-size:12.5px;flex:none}
-  .tune .t3{font-size:12.5px;color:var(--sub);margin:10px 0 8px}
-  .tchips{display:flex;flex-wrap:wrap;gap:6px}
+  .tune .t3{font-size:12.5px;line-height:1.55;color:var(--sub);margin:14px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+  .tchips{display:flex;flex-wrap:wrap;gap:8px 6px}
   .tchip{height:28px;padding:0 10px;border-radius:999px;background:var(--paper);font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:5px}
   .tchip[aria-pressed="true"]{background:var(--ink);color:#fff}
 
+  .tchip.skip{background:transparent;border:1px dashed var(--line);color:var(--sub)}
+  .tchip.skip[aria-pressed="true"]{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .auto{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--sub)}
+  .auto input{accent-color:#111;width:14px;height:14px}
+  .other-form{display:flex;gap:6px;margin-top:12px}
+  .other-form input{flex:1;min-width:0;height:32px;border-radius:999px;border:1px solid var(--line);background:#fff;padding:0 12px;font:inherit;font-size:12.5px;color:var(--ink)}
+  .other-form input:focus{outline:1.5px solid var(--ink);outline-offset:0}
+  .other-form .sm{height:32px;padding:0 12px;font-size:12.5px}
   /* banner: one line, no repeated title */
   .banner{display:flex;align-items:center;gap:10px;margin-bottom:14px}
   .banner .big{font-size:34px;letter-spacing:-0.04em}
@@ -78,11 +86,11 @@
   /* start, country, known */
   .start{padding:18px;border-radius:16px}
   .step-lab{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .start-title{font-size:18px;line-height:1.25;letter-spacing:-0.015em;margin-bottom:10px}
-  .start-sub2{font-size:13px;line-height:1.5;color:var(--sub);margin:0 0 14px}
+  .start-title{font-size:18px;line-height:1.25;letter-spacing:-0.015em;margin-bottom:8px}
+  .start-sub2{font-size:13px;line-height:1.55;color:var(--sub);margin:0 0 16px}
   .start-sub{font-size:12px;margin-top:10px}
   .start .primary{height:36px;font-size:13.5px;padding:0 16px}
-  .big-chips{gap:6px}
+  .big-chips{gap:8px 6px}
   .big-chips .tchip{height:32px;padding:0 12px;font-size:13px;background:#fff;border:1px solid var(--line)}
   .big-chips .tchip.any{width:100%;justify-content:center;background:var(--paper);border-color:transparent;color:var(--sub)}
   .big-chips .tchip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -115,8 +123,10 @@
   <div id="panel-country" class="start" hidden>
     <p class="step-lab">One quick thing</p>
     <p class="start-title">Where did you grow up?</p>
-    <p class="start-sub2">What's obvious to people raised in the US depends on where you grew up. Not on your English.</p>
+    <p class="start-sub2">What's obvious to people raised in the US depends on where you grew up. Not on your English. Pick up to 3.</p>
     <div class="tchips big-chips" id="first-chips"></div>
+    <form class="other-form"><input list="all-countries" placeholder="Other country" aria-label="Other country"><button class="secondary sm" type="submit">Add</button></form>
+    <div class="known-go"><button class="primary" id="country-next" type="button">Continue</button></div>
     <p class="start-sub">Saved in this browser only. You can change it anytime.</p>
   </div>
   <div id="panel-known" class="start" hidden>
@@ -129,6 +139,7 @@
   <div id="panel-start" class="start" hidden>
     <p class="start-title">Open a post's comments, then read them with me.</p>
     <button class="primary" id="read-btn" type="button">Read these comments</button>
+    <label class="auto"><input type="checkbox" id="auto-read"> Read each post automatically while I'm open</label>
     <p class="start-sub">I only read the words, never who wrote them.</p>
     <p class="err" id="err" hidden></p>
   </div>
@@ -139,8 +150,9 @@
     <div class="tune" id="tune">
       <div class="tune-row"><p class="t1">Explaining for <b id="for-who">anyone raised outside the US</b></p><button class="link" id="tune-open" type="button">Change</button></div>
       <div class="tune-pick" id="tune-pick" hidden>
-        <p class="t3">Where did you grow up? I'll flag what's likely new to you.</p>
+        <p class="t3">Where did you grow up? Pick up to 3. I'll flag what's likely new to you.</p>
         <div class="tchips" id="tchips"></div>
+        <form class="other-form"><input list="all-countries" placeholder="Other country" aria-label="Other country"><button class="secondary sm" type="submit">Add</button></form>
       </div>
     </div>
     <div class="banner">
@@ -157,6 +169,7 @@
   </div>
 </div>
 
+<datalist id="all-countries"></datalist>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="sidepanel.js"></script>
 </body>

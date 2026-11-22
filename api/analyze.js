@@ -65,11 +65,15 @@ function rateLimited(ip) {
   return recent.length > 8; // 8 reads per minute per visitor
 }
 
-export function buildUserMessage({ post, country, known, explainIn }) {
+export function buildUserMessage({ post, country, countries, known, explainIn }) {
   const comments = (post.comments || []).slice(0, MAX_COMMENTS).map((c) => ({
     id: String(c.id), text: String(c.text || "").slice(0, MAX_CHARS)
   }));
-  const reader = country ? `grew up in ${COUNTRY_NAMES[country] || country}` : "grew up outside the US (country unknown)";
+  const list = (Array.isArray(countries) && countries.length ? countries : country ? [COUNTRY_NAMES[country] || country] : [])
+    .map((c) => String(c).slice(0, 40)).slice(0, 3);
+  const reader = list.length
+    ? `grew up in ${list.join(" and ")}${list.length > 1 ? " (use the first place for \"closest\")" : ""}`
+    : "grew up outside the US (country unknown)";
   return [
     `READER: ${reader}. Explain in ${explainIn === "ko" ? "Korean" : "English"}.`,
     `KNOWN (never flag these): ${known.length ? known.join(" | ") : "(none)"}`,
@@ -131,7 +135,7 @@ export default async function handler(req, res) {
   }
   const known = Array.isArray(body.known) ? body.known.map(String).slice(0, 300) : [];
   try {
-    const result = await analyze({ post, country: body.country || null, known, explainIn: body.explainIn || "en" });
+    const result = await analyze({ post, country: body.country || null, countries: Array.isArray(body.countries) ? body.countries : null, known, explainIn: body.explainIn || "en" });
     return res.status(200).json(result);
   } catch (err) {
     if (err instanceof Anthropic.RateLimitError) return res.status(429).json({ error: "AI is busy. Try again soon." });
