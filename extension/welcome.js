@@ -24,7 +24,7 @@
   });
 
   function finish() {
-    if (chosen.length) { set("country", chosen[0]); set("countries", chosen); }
+    if (chosen.length) { set("country", chosen[0]); set("countries", chosen); set("countryAsked", true); }
     else set("tuneDismissed", false);
     chrome.tabs.create({ url: "https://www.instagram.com/" });
   }

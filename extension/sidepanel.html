@@ -33,6 +33,11 @@
   .tchips{display:flex;flex-wrap:wrap;gap:6px}
   .tchip{height:32px;padding:0 12px;border-radius:999px;background:var(--paper);font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
   .tchip[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .step-lab{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .start-sub2{font-size:15px;line-height:1.55;color:var(--sub);margin:-6px 0 16px}
+  .big-chips{gap:8px}
+  .big-chips .tchip{height:40px;padding:0 14px;font-size:14.5px;background:#fff;border:1px solid var(--line)}
+  .big-chips .tchip.any{width:100%;justify-content:center;background:var(--paper);border-color:transparent;color:var(--sub)}
   .read-list{margin-top:18px;font-size:13px;color:var(--sub)}
   .read-list summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .read-list ol{margin:10px 0 0 18px;display:flex;flex-direction:column;gap:6px;line-height:1.45}
@@ -53,7 +58,14 @@
 </header>
 
 <div class="panel-scroll" id="panel-scroll">
-  <div id="panel-start" class="start">
+  <div id="panel-country" class="start" hidden>
+    <p class="step-lab">One quick thing</p>
+    <p class="start-title">Where did you grow up?</p>
+    <p class="start-sub2">What's obvious to people raised in the US depends on where you grew up. Not on your English.</p>
+    <div class="tchips big-chips" id="first-chips"></div>
+    <p class="start-sub">Saved in this browser only. You can change it anytime.</p>
+  </div>
+  <div id="panel-start" class="start" hidden>
     <p class="start-title">Open a post's comments, then read them with me.</p>
     <button class="primary" id="read-btn" type="button">Read these comments</button>
     <p class="start-sub">I only read the words, never who wrote them.</p>

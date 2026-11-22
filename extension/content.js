@@ -93,7 +93,7 @@
     if (frameBox) { frameBox.style.display = "block"; return; }
     frameBox = document.createElement("div");
     frameBox.id = "iykyk-panel";
-    frameBox.style.cssText = "position:fixed;top:12px;right:12px;bottom:12px;width:400px;z-index:2147483647;border-radius:20px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08);background:#F4F4F4";
+    frameBox.style.cssText = "position:fixed;top:0;right:0;bottom:0;width:400px;z-index:2147483647;overflow:hidden;border-left:1px solid #E4E4E1;box-shadow:-8px 0 24px rgba(0,0,0,.06);background:#F4F4F4";
     const f = document.createElement("iframe");
     f.src = chrome.runtime.getURL("sidepanel.html");
     f.title = "iykyk";

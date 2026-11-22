@@ -23,7 +23,7 @@
   let toastTimer;
   function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1600); }
   function updateTop() { $("nyk-count").textContent = state.saved.filter((s) => s.status !== "confused").length; }
-  function show(which) { ["panel-start", "panel-loading", "panel-results"].forEach((id) => ($(id).hidden = id !== which)); }
+  function show(which) { ["panel-country", "panel-start", "panel-loading", "panel-results"].forEach((id) => ($(id).hidden = id !== which)); }
   function error(msg) { show("panel-start"); $("err").hidden = false; $("err").textContent = msg; }
 
   async function tab() {
@@ -155,11 +155,27 @@
   $("tchips").addEventListener("click", (e) => {
     const b = e.target.closest(".tchip"); if (!b) return;
     state.country = b.dataset.code || null; store.set("country", state.country);
-    paintTune(); $("tune-pick").hidden = true; $("tune-open").textContent = "Change";
+    paintTune();
+ $("tune-pick").hidden = true; $("tune-open").textContent = "Change";
     toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Explaining for anyone.");
     if (state.items.length) render();
   });
   paintTune();
+
+  // First run: ask where they grew up before anything else
+  function paintFirst() {
+    $("first-chips").innerHTML = COUNTRIES.filter((c) => c[0]).map(([code, flag, name]) => `<button class="tchip" type="button" data-code="${code}">${flag} ${name}</button>`).join("")
+      + `<button class="tchip any" type="button" data-code="">Somewhere else · explain for anyone</button>`;
+  }
+  $("first-chips").addEventListener("click", (e) => {
+    const b = e.target.closest(".tchip"); if (!b) return;
+    state.country = b.dataset.code || null;
+    store.set("country", state.country); store.set("countryAsked", true);
+    paintTune(); show("panel-start");
+    toast(state.country ? `Tuned for ${countryName(state.country)}.` : "Got it. Explaining for anyone.");
+  });
+  paintFirst();
+  show(store.get("countryAsked", false) || state.country ? "panel-start" : "panel-country");
 
   $("cards").addEventListener("click", (e) => {
     const c = e.target.closest(".card"); if (!c) return;
@@ -182,7 +198,7 @@
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
   if (IS_EXT) chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === "navigated") {
-      state.items = []; show("panel-start");
+      state.items = []; show(store.get("countryAsked", false) || state.country ? "panel-start" : "panel-country");
       $("read-btn").textContent = "Read these comments";
     }
   });

@@ -27,6 +27,7 @@ http.createServer(async (req, res) => {
   fs.readFile(file, (err, data) => {
     if (err) { res.statusCode = 404; return res.end("Not found"); }
     res.setHeader("Content-Type", TYPES[path.extname(file)] || "application/octet-stream");
+    res.setHeader("Cache-Control", "no-store"); // always serve the latest file while developing
     res.end(data);
   });
 }).listen(PORT, () => console.log(`iykyk dev server on http://localhost:${PORT}`));
