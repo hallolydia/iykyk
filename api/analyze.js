@@ -124,22 +124,32 @@ export async function analyze(input, { system = SYSTEM_PROMPT, effort = "medium"
 }
 
 // ---- translate the explanations already on screen (fast: a small model, no re-reading) ----
-const Tr = z.object({ items: z.array(z.object({ id: z.string(), answer: z.string(), origin: z.string(), closest: z.string() })) });
 const KO_STYLE = `
 
 KOREAN STYLE (strict): every sentence ends in the polite 해요 style: …해요, …이에요/예요, …거예요, …있어요, …뜻이에요. Never casual speech (…야, …이야, …거야, …해, …어) and never stiff formal endings (…합니다, …입니다).
 Wrong: "여자들이 싸운다는 뜻의 속어야." Right: "여자들이 싸운다는 뜻의 속어예요."
 Wrong: "다들 자랑하고 있어." Right: "다들 자랑하고 있어요."`;
-export async function translate({ items, to }) {
+// One small call per card, all at the same time: faster than one long call, and one failure does not take the others down.
+const Tr1 = z.object({ answer: z.string(), origin: z.string(), closest: z.string() });
+async function translateOne(x, to) {
   const language = to === "ko" ? "natural, friendly Korean in the 해요 style" : "plain, friendly English, like a friend texting";
-  const response = await client.beta.messages.parse({
-    model: "claude-haiku-5-5",
-    max_tokens: 4000,
-    output_config: { format: betaZodOutputFormat(Tr) },
-    system: `Rewrite the answer, origin and closest fields in ${language}. Do not translate word for word: make it read naturally and be easy to understand, as a native speaker would explain it to a friend. Keep the English words the reader needs to learn (slang, idioms, names, show and brand titles, the key words of the joke) in English, with a short gloss in the target language only when it helps. Do not add or remove information. An empty field stays empty. Return every id you were given.${to === "ko" ? KO_STYLE : ""}`,
-    messages: [{ role: "user", content: JSON.stringify(items) }]
-  });
-  return { items: response.parsed_output?.items || [] };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const r = await client.beta.messages.parse({
+        model: "claude-haiku-5-5",
+        max_tokens: 1200,
+        output_config: { format: betaZodOutputFormat(Tr1) },
+        system: `Rewrite the answer, origin and closest fields in ${language}. Do not translate word for word: make it read naturally and be easy to understand, as a native speaker would explain it to a friend. Keep the English words the reader needs to learn (slang, idioms, names, show and brand titles, the key words of the joke) in English, with a short gloss in the target language only when it helps. Do not add or remove information. An empty field stays empty.${to === "ko" ? KO_STYLE : ""}`,
+        messages: [{ role: "user", content: JSON.stringify({ answer: x.answer, origin: x.origin, closest: x.closest }) }]
+      });
+      if (r.parsed_output) return { id: x.id, ...r.parsed_output };
+    } catch { /* try once more */ }
+  }
+  return null;
+}
+export async function translate({ items, to }) {
+  const done = await Promise.all(items.map((x) => translateOne(x, to)));
+  return { items: done.filter(Boolean), failed: done.filter((d) => !d).length };
 }
 
 export default async function handler(req, res) {

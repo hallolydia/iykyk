@@ -392,12 +392,19 @@
     if (!need.length) return apply();
     live(to === "ko" ? "Translating to Korean…" : "Translating to English…");
     try {
-      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ translate: { to, items: need.map(({ it, i }) => ({ id: String(i), ...it.tx[it.lang || "en"] })) } }) });
-      const data = await res.json().catch(() => ({}));
-      if (!(data.items || []).length) throw new Error("no translation");
-      (data.items || []).forEach((t) => { const it = state.items[+t.id]; if (it) it.tx[to] = { answer: t.answer, origin: t.origin, closest: t.closest }; });
-      apply(); live("Done", 1200);
+      // ask for whatever is still missing, up to two rounds, so one card that fails does not stay in the old language
+      let missing = need;
+      for (let round = 0; round < 2 && missing.length; round++) {
+        const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ translate: { to, items: missing.map(({ it, i }) => ({ id: String(i), ...it.tx[it.lang || "en"] })) } }) });
+        const data = await res.json().catch(() => ({}));
+        (data.items || []).forEach((t) => { const it = state.items[+t.id]; if (it) it.tx[to] = { answer: t.answer, origin: t.origin, closest: t.closest }; });
+        missing = missing.filter(({ it }) => !it.tx[to]);
+        if (data.items && data.items.length) apply(); // show what arrived right away
+      }
+      if (missing.length === need.length) throw new Error("no translation");
+      apply();
+      live(missing.length ? `${missing.length} card${missing.length === 1 ? "" : "s"} could not be translated. Tap ${to === "ko" ? "한" : "EN"} again to retry.` : "Done", missing.length ? 3500 : 1200);
     } catch { live("Couldn't translate. Try again.", 3000); }
   }
   $("lang-seg").addEventListener("click", (e) => {

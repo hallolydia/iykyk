@@ -97,6 +97,23 @@ What I decided: I'm not claiming the scene helps, because this test did not show
 - Labeling the test set. AI shouldn't grade AI.
 - Choosing what clues the product reads. That came from the experiment above.
 
+### Which AI does which job, and why
+
+I did not use one big model for everything. Each job got the model and effort it needs, and I measured before trading accuracy for speed.
+
+| Job | Model | Why |
+|---|---|---|
+| Read a post and find the gaps | Claude Opus, medium effort | Low effort was twice as fast but missed the main joke in my test, so I kept medium (D24) |
+| Explain one phrase you select | Same model, low effort | One chosen phrase is a small job, so it comes back in a few seconds |
+| Switch the explanation to Korean or back | Claude Haiku, one small call per card, all at once | It is only rewriting text, so a small model is enough. Cards translate in parallel, and one that fails is asked for again |
+| Score the prompts | A script I wrote, against my own labels | AI should not grade AI |
+
+What I did around the model, so I could trust it:
+- **Checks in code, not in the prompt.** Every underline must quote the comment exactly. Low-confidence answers are dropped, and in-between ones say "Needs checking".
+- **A test before the prompt.** I labeled the answers myself, then scored three prompt versions. I report the result even where I missed my own target.
+- **A log of what broke.** [`challenges.txt`](challenges.txt) has every real problem and the fix, including ones where the AI was wrong and I caught it.
+- **Rules about where AI should stay out.** It does not decide what I already know (a button does), and it does not touch a grief comment with a joke.
+
 ## Challenges I hit
 
 - **The AI underlined the wrong half of a joke.** On "Not the Christmas heist", it flagged "Not the" (a slang pattern) and skipped "Christmas heist", the actual hinge. Both were real gaps, but the joke lives in one of them. I decided which one is the hinge in the test set and the prompt, instead of letting the AI guess.
