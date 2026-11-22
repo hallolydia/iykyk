@@ -174,38 +174,54 @@
   function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
 
   // ---- point at Instagram's comment icon when the comments are closed ----
-  let pointEl = null, pointHl = null;
-  function unpoint() { if (pointEl) { pointEl.remove(); pointEl = null; } if (pointHl) { pointHl.remove(); pointHl = null; } }
-  function pointAtComments() {
-    unpoint();
-    if (KIND !== "instagram") return false;
+  let pointEl = null, pointHl = null, pointRaf = 0, pointTimer = 0;
+  function unpoint() {
+    cancelAnimationFrame(pointRaf); clearTimeout(pointTimer);
+    if (pointEl) { pointEl.remove(); pointEl = null; }
+    if (pointHl) { pointHl.remove(); pointHl = null; }
+  }
+  const commentsOpen = () => [...document.querySelectorAll("textarea, [contenteditable='true']")].some((x) => !x.closest("#iykyk-panel") && visible(x));
+  // the box that holds Instagram's comment icon and the count under it, measured right now
+  function commentIconBox() {
     const svg = [...document.querySelectorAll("svg[aria-label]")].find((x) => /^(comment|댓글)$/i.test(x.getAttribute("aria-label")) && visible(x));
-    if (!svg) return false;
-    // the box that holds the icon AND the count under it
+    if (!svg) return null;
     const ir = svg.getBoundingClientRect();
     let box = ir;
     for (let n = svg.parentElement, i = 0; n && i < 5; n = n.parentElement, i++) {
       const r = n.getBoundingClientRect();
       if (r.height >= ir.height + 14 && r.width <= 130) { box = r; break; }
     }
-    const padX = 10, padY = 8, w = Math.max(box.width, ir.width) + padX * 2, left = box.left + box.width / 2 - w / 2;
+    return { box, ir };
+  }
+  function pointAtComments() {
+    unpoint();
+    if (KIND !== "instagram" || commentsOpen() || !commentIconBox()) return false;
     // the highlighter: semi-transparent lime, blended (multiply) so the icon and the number stay readable on top of it.
-    // It has no z-index of its own, so it is not boxed off from the page and the blend reaches the icon.
+    // No z-index of its own, so it is not boxed off from the page and the blend reaches the icon.
     pointHl = document.createElement("div");
     pointHl.id = "iykyk-point-hl";
-    pointHl.style.cssText = `position:fixed;pointer-events:none;left:${left}px;top:${box.top - padY}px;width:${w}px;height:${box.height + padY * 2}px;border-radius:${Math.min(w, box.height + padY * 2) / 2}px;background:#D4FF3A;opacity:.7;mix-blend-mode:multiply`;
+    pointHl.style.cssText = "position:fixed;pointer-events:none;background:#D4FF3A;opacity:.7;mix-blend-mode:multiply";
     document.documentElement.appendChild(pointHl);
-    // the label, close to the highlighter
     pointEl = document.createElement("div");
     pointEl.id = "iykyk-point";
     pointEl.style.cssText = "position:fixed;z-index:2147483645;pointer-events:none;left:0;top:0;width:0;height:0";
     pointEl.innerHTML = `
       <style>@keyframes iykyk-nudge{0%,100%{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(6px) rotate(-3deg)}}@media (prefers-reduced-motion:reduce){#iykyk-point div{animation:none!important}}</style>
-      <div style="position:fixed;right:${innerWidth - left + 4}px;top:${box.top + box.height / 2 - 11}px;background:#111;color:#fff;border-radius:999px;padding:4px 10px;font:800 11px 'Inter Tight',system-ui,sans-serif;white-space:nowrap;transform:rotate(-3deg);animation:iykyk-nudge 1.8s ease-in-out infinite">Open comments</div>`;
+      <div id="iykyk-point-label" style="position:fixed;background:#111;color:#fff;border-radius:999px;padding:4px 10px;font:800 11px 'Inter Tight',system-ui,sans-serif;white-space:nowrap;transform:rotate(-3deg);animation:iykyk-nudge 1.8s ease-in-out infinite">Open comments</div>`;
     document.documentElement.appendChild(pointEl);
-    // goes away on the next click anywhere, or after 12 seconds
+    const label = pointEl.querySelector("#iykyk-point-label");
+    // follow the icon every frame, so it stays on THIS content's icon while the page scrolls or the reel changes
+    const place = () => {
+      const m = commentIconBox();
+      if (!m || commentsOpen()) return unpoint();
+      const { box, ir } = m, padX = 10, padY = 8, w = Math.max(box.width, ir.width) + padX * 2, h = box.height + padY * 2, left = box.left + box.width / 2 - w / 2;
+      Object.assign(pointHl.style, { left: left + "px", top: box.top - padY + "px", width: w + "px", height: h + "px", borderRadius: Math.min(w, h) / 2 + "px" });
+      Object.assign(label.style, { right: innerWidth - left + 4 + "px", top: box.top + box.height / 2 - 11 + "px" });
+      pointRaf = requestAnimationFrame(place);
+    };
+    place();
     document.addEventListener("click", unpoint, { once: true, capture: true });
-    setTimeout(unpoint, 12000);
+    pointTimer = setTimeout(unpoint, 8000);
     return true;
   }
 
@@ -348,7 +364,8 @@
   let last = location.href;
   setInterval(() => {
     if (location.href !== last) {
-      last = location.href; clear();
+      last = location.href; clear(); unpoint();
+      setTimeout(() => { if (panelOpen() && KIND === "instagram") pointAtComments(); }, 900); // new content, comments closed: show where to open them
       chrome.runtime.sendMessage({ type: "navigated", url: last }).catch(() => {});
     }
   }, 800);
