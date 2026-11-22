@@ -283,6 +283,19 @@
   });
 
   // ---- events ----
+  // The button and the title say what is about to be read, so they match the page you are on.
+  const COPY = {
+    instagram: ["Open a post's comments,<br>then read them with me.", "Read these comments"],
+    youtube: ["Scroll down to the comments,<br>then read them with me.", "Read these comments"],
+    reddit: ["Open a thread,<br>then read it with me.", "Read this thread"],
+    page: ["Open an article,<br>then read it with me.", "Read this page"]
+  };
+  function paintStart(url) {
+    const k = /instagram\.com/.test(url || "") ? "instagram" : /youtube\.com/.test(url || "") ? "youtube" : /reddit\.com/.test(url || "") ? "reddit" : "page";
+    $("start-title").innerHTML = COPY[k][0];
+    $("read-btn").textContent = COPY[k][1];
+  }
+  if (window.chrome && chrome.tabs) tab().then((t) => paintStart(t && t.url)).catch(() => {});
   $("read-btn").addEventListener("click", read);
   $("close-btn").addEventListener("click", async () => { const t = await tab(); if (t) chrome.tabs.sendMessage(t.id, { type: "close" }).catch(() => {}); });
   // Read again on the same post: keep every answer we already have and read only the comments that are new.
@@ -423,6 +436,7 @@
     if (msg.type === "ask") { askAbout(msg); return; }
     if (msg.type === "more" && !$("panel-results").hidden && autoOn()) { readMore(msg.comments); return; }
     if (msg.type === "navigated") {
+      paintStart(msg.url);
       state.items = [];
       const ready = store.get("countryAsked", false) || places().length;
       show(ready ? "panel-start" : "panel-country");
