@@ -20,7 +20,7 @@ I could ask ChatGPT. But by the time I copy the comment, switch apps, and write 
 
 It isn't only vocabulary. I didn't grow up with the history, the politics, or the TV that people here share, and the sense of humor is different too. So I often can't tell where the joke is, and I can't ask someone "why is this funny?" every single time.
 
-[TODO: one real comment I didn't get, and what I did next]
+On a Gilmore Girls post I read this comment: "Rory and..Logan?" "Rory and Logan!" "Rory and NOT LOGAN?" EXACTLY THE ROLLERCOASTER I WILL NOT GET OVER. I understood only the last sentence. I didn't know the show, so I didn't know what I was missing, and the only way to find out was to leave the page and ask someone. That is the moment I built this for.
 
 ## How it works
 
