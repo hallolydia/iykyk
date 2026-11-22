@@ -45,14 +45,18 @@
   async function read() {
     $("err").hidden = true;
     const t = await tab();
-    if (!t || !/^https:\/\/www\.instagram\.com\//.test(t.url || "")) return error("Open a post on instagram.com first.");
+    if (!t || !/^https:\/\//.test(t.url || "")) return error("Open a web page first: Instagram, YouTube, Reddit, or an article.");
     state.tabId = t.id;
     let got = await toPage({ type: "read" });
     for (let k = 0; k < 3 && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
-    if (!got.comments.length) { toPage({ type: "point" }); return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
+    if (!got.comments.length) {
+      if (got.kind === "instagram") { toPage({ type: "point" }); return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
+      if (got.kind === "youtube" || got.kind === "reddit") return error("Scroll down until the comments show up, then press Read again. You can also select any words and press Ask IYKYK.");
+      return error("I can't find English text to read here. Scroll to some text, or select any words and press Ask IYKYK.");
+    }
     state.comments = got.comments;
-    state.url = got.url; state.skipped = got.skipped || 0;
+    state.url = got.url; state.skipped = got.skipped || 0; state.site = got.site || "Instagram";
     const cached = cache.get(got.url + "|" + lang());
     if (cached) { applyRules(cached); render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); return; }
     show("panel-loading");
@@ -210,7 +214,7 @@
 
   function save(it, status) {
     state.saved = state.saved.filter((s) => norm(s.phrase) !== norm(it.quote));
-    state.saved.unshift({ phrase: it.quote, answer: it.answer, question: it.question, status, source: "Instagram", url: state.url || "", date: new Date().toISOString() });
+    state.saved.unshift({ phrase: it.quote, answer: it.answer, question: it.question, status, source: state.site || "Instagram", url: state.url || "", date: new Date().toISOString() });
     store.set("saved", state.saved); updateTop();
   }
 
@@ -249,7 +253,7 @@
   let prevScreen = "panel-start";
   function renderSaved() {
     const good = state.saved.filter((x) => x.status === "got"), knew = state.saved.filter((x) => x.status === "knew"), bad = state.saved.filter((x) => x.status === "confused");
-    const link = (x) => /^https:\/\/www\.instagram\.com\//.test(x.url || "") ? `<a class="slink" href="${esc(x.url)}" target="_blank" rel="noopener">View the post ↗</a>` : "";
+    const link = (x) => /^https:\/\//.test(x.url || "") ? `<a class="slink" href="${esc(x.url)}" target="_blank" rel="noopener">View the source ↗</a>` : "";
     const row = (x) => `<li class="srow"><div><p class="sphrase">${esc(x.phrase)}</p><p class="sans">${esc(x.answer || "")}</p>${link(x)}</div><button class="link" data-s="${state.saved.indexOf(x)}" type="button">Remove</button></li>`;
     const chip = (x) => `<span class="hchip">${esc(x.phrase)}<button data-s="${state.saved.indexOf(x)}" type="button" title="Show this again" aria-label="Show ${esc(x.phrase)} again">×</button></span>`;
     $("saved-count").textContent = good.length;

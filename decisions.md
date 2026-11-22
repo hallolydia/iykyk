@@ -39,6 +39,7 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 | D25 | Sound: the track name now, speech later | Decided |
 | D26 | More comments, more cards, but one card per meme | Decided |
 | D27 | English comments only; skip other languages | Decided ★ |
+| D28 | Instagram, YouTube, Reddit and articles, without watching every site | Decided |
 
 ---
 
@@ -234,4 +235,11 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 - **Why:** The promise is the US cultural context hidden in English comments. A Korean reader already knows Korean memes. An explanation of an Arabic joke I can't check is worse than none, and the test set only covers English. It also makes reading faster and cheaper.
 - **Line for the pitch:** "I skip comments that aren't in English on purpose. A wrong explanation is worse than none."
 - **Related:** D19 (explanation language is a setting). The `EN | 한` switch changes the language of the explanation, not which comments get read.
+
+## D28. Instagram, YouTube, Reddit and articles, without watching every site
+
+- **Problem:** The same missing context shows up in YouTube comments, Reddit threads and news articles, not only Instagram. D2 started with Instagram only.
+- **Chose:** the icon works on any https page. Instagram keeps its always-on reader. On every other site the reader is added only when you click the icon, and only on that tab. YouTube and Reddit comments are read with their own selectors; on an article page the visible paragraphs are read. Select-to-ask works on any text.
+- **Why:** Asking for permission to read every site you visit is a lot to ask. Clicking the icon is a clear yes from the person, for one page at a time.
+- **Known limit:** the page layout tricks (sliding the post card, pointing at the comment icon) are Instagram only. Other sites just get a narrower page beside the panel.
 

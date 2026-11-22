@@ -24,7 +24,7 @@ It isn't only vocabulary. I didn't grow up with the history, the politics, or th
 
 ## How it works
 
-1. **Find.** IYKYK underlines the phrases someone raised outside the US would likely miss. You don't have to ask.
+1. **Find.** IYKYK underlines the phrases someone raised outside the US would likely miss. You don't have to ask. It works on Instagram, YouTube, Reddit and article pages.
 2. **Explain.** One click opens a card that answers the question you'd actually have: *Why is this funny? What's the reference? Is this rude or friendly?*
 3. **Remember.** Tap *I knew this* and it stays hidden next time. The more you use it, the quieter it gets.
 

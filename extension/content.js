@@ -1,4 +1,4 @@
-// Runs on instagram.com.
+// Runs on instagram.com, and on YouTube, Reddit and article pages once you click the icon there.
 // Reads only the comment TEXT that is visible (never usernames or photos),
 // and draws highlights over Instagram's text without changing its page.
 (() => {
@@ -9,6 +9,16 @@
   // Instagram's own UI labels (English and Korean) that are not comments
   const UI = /^(reply|replies|see translation|see original|view replies.*|view all \d+ replies|hide replies|like|likes|\d[\d,.]* likes?|follow|following|more|original audio|edited|verified|답글 달기|번역 보기|원본 보기|답글 보기.*|답글 \d+개 모두 보기|좋아요.*|팔로우|팔로잉|더 보기|댓글|게시|오리지널 오디오|수정됨|인증됨)$/i;
   const TIME = /^(\d+\s?(s|m|h|d|w|y|초|분|시간|일|주|년)( 전)?)(\s?·\s?(수정됨|edited))?$/i;
+
+  // which kind of page this is decides where the text is
+  const HOST = location.hostname;
+  const KIND = /(^|\.)instagram\.com$/.test(HOST) ? "instagram" : /(^|\.)youtube\.com$/.test(HOST) ? "youtube" : /(^|\.)reddit\.com$/.test(HOST) ? "reddit" : "page";
+  const SITE = { instagram: "Instagram", youtube: "YouTube", reddit: "Reddit" }[KIND] || HOST.replace(/^www\./, "");
+  const SELECTORS = {
+    youtube: ["ytd-comment-thread-renderer #content-text", "ytd-comment-view-model #content-text", "#content-text.ytd-comment-view-model"],
+    reddit: ['shreddit-comment div[slot="comment"]', '[data-testid="comment"]', "div.md", ".Comment p"],
+    page: ["article p", "main p", '[class*="comment"] p', '[id*="comment"] p', "p"]
+  };
 
   let found = []; // [{ id, el, text }]
 
@@ -46,8 +56,29 @@
     return (t.match(/[A-Za-z]/g) || []).length / letters >= 0.4;
   }
 
+  // YouTube, Reddit and article pages: read the visible blocks of text with the page's own selectors.
+  function readGeneric(fresh) {
+    if (fresh) { found = []; skipped.clear(); }
+    const seen = found.map((f) => f.text);
+    const added = [];
+    const els = [...new Set((SELECTORS[KIND] || SELECTORS.page).flatMap((q) => [...document.querySelectorAll(q)]))]
+      .sort((a, b) => (a.compareDocumentPosition(b) & 4 ? -1 : 1));
+    for (const el of els) {
+      if (el.closest("#iykyk-panel") || !visible(el)) continue;
+      const text = (el.innerText || "").replace(/\s+/g, " ").trim();
+      if (text.length < (KIND === "page" ? 40 : 2) || text.length > 600) continue;
+      if (seen.some((s) => s.includes(text) || text.includes(s))) continue;
+      if (!mostlyEnglish(text)) { skipped.add(text); continue; }
+      seen.push(text);
+      const item = { id: "c" + (found.length + 1), el, text };
+      found.push(item); added.push(item);
+    }
+    return added.slice(0, 20).map(({ id, text }) => ({ id, text }));
+  }
+
   // fresh = true: start over (new post). false: keep what was read, return only new comments.
   function readComments(fresh = true) {
+    if (KIND !== "instagram") return readGeneric(fresh);
     const root = container();
     if (fresh) { found = []; skipped.clear(); }
     const seen = found.map((f) => f.text);
@@ -78,6 +109,7 @@
 
   // The track playing under the post. Instagram shows it as a link to the audio page.
   function readAudio() {
+    if (KIND !== "instagram") return "";
     const root = container();
     const link = root.querySelector('a[href*="/audio/"]') || document.querySelector('a[href*="/reels/audio/"]');
     const text = (link?.innerText || "").replace(/\s*•\s*/g, " · ").replace(/\s+/g, " ").trim();
@@ -146,6 +178,7 @@
   function unpoint() { if (pointEl) { pointEl.remove(); pointEl = null; } }
   function pointAtComments() {
     unpoint();
+    if (KIND !== "instagram") return false;
     const svg = [...document.querySelectorAll("svg[aria-label]")].find((x) => /^(comment|댓글)$/i.test(x.getAttribute("aria-label")) && visible(x));
     if (!svg) return false;
     const r = svg.getBoundingClientRect(); // the icon itself, not the number under it
@@ -217,6 +250,7 @@
     const st = document.getElementById("iykyk-room");
     if (!st) return;
     unshift();
+    if (KIND !== "instagram") { st.textContent = `html{width:calc(100% - ${PANEL_W + GAP}px)!important;overflow-x:hidden!important}`; return; }
     const keep = "overflow-x:hidden!important";
     st.textContent = `html{width:calc(100% - ${PANEL_W}px)!important;${keep}}`; // measure without any scaling
     const limit = innerWidth - PANEL_W - GAP;
@@ -289,7 +323,7 @@
     if (msg.type === "audio") { reply({ audio: readAudio() }); }
     else if (msg.type === "toggle") { panelOpen() ? closePanel() : openPanel(); reply({ ok: true }); }
     else if (msg.type === "close") { closePanel(); reply({ ok: true }); }
-    else if (msg.type === "read") reply({ comments: readComments(msg.fresh !== false), url: location.href, skipped: skipped.size });
+    else if (msg.type === "read") reply({ comments: readComments(msg.fresh !== false), url: location.href, skipped: skipped.size, kind: KIND, site: SITE });
     else if (msg.type === "highlight") reply({ drawn: highlight(msg.items, msg.focus) });
     else if (msg.type === "focus") { focus(msg.i, msg.scroll); reply({ ok: true }); }
     else if (msg.type === "point") { reply({ pointed: pointAtComments() }); }
