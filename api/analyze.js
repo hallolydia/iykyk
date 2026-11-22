@@ -7,7 +7,7 @@ import { z } from "zod";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 
 export const MODEL = "claude-opus-5-5";
-export const PROMPT_VERSION = "v1";
+export const PROMPT_VERSION = "v2";
 
 const client = new Anthropic(); // reads ANTHROPIC_API_KEY from the environment
 
@@ -42,6 +42,9 @@ Rules:
 - At most 2 flags per comment. Most comments need zero. Missing one joke is better than flagging everything.
 - "quote" must be copied exactly from the comment text.
 - Use the scene and caption to explain why THIS moment is funny, not just what the word means.
+- The first item may be the post's caption. Use it as context for every comment.
+- Names of brands, stores, TV channels, shows, and products can carry cultural meaning on their own. Treat them as possible hinges.
+- In long comments, the punchline is usually near the end. Read to the end before choosing the hinge.
 - If you are not sure what something refers to (for example a very new meme), say so in the answer and give a confidence below 0.7. Never invent a source.
 - Sad or personal comments (grief, illness): explain the tone gently, never as a joke.
 - "answer": one or two short sentences, warm and plain, like a friend texting. No lecturing.

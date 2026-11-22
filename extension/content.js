@@ -6,15 +6,19 @@
   if (window.__iykyk) return;
   window.__iykyk = true;
 
-  // Instagram's own UI words, in English and Korean, that are not comments
-  const UI_WORDS = /^(reply|replies|see translation|view replies.*|view all \d+ replies|hide replies|like|likes|follow|following|more|답글 달기|번역 보기|답글 보기.*|답글 \d+개 모두 보기|좋아요.*|팔로우|더 보기|댓글|게시|원본 보기)$/i;
-  const TIME = /^\d+\s?(s|m|h|d|w|y|초|분|시간|일|주|년)$/i;
+  // Instagram's own UI labels (English and Korean) that are not comments
+  const UI = /^(reply|replies|see translation|see original|view replies.*|view all \d+ replies|hide replies|like|likes|\d[\d,.]* likes?|follow|following|more|original audio|edited|verified|답글 달기|번역 보기|원본 보기|답글 보기.*|답글 \d+개 모두 보기|좋아요.*|팔로우|팔로잉|더 보기|댓글|게시|오리지널 오디오|수정됨|인증됨)$/i;
+  const TIME = /^(\d+\s?(s|m|h|d|w|y|초|분|시간|일|주|년)( 전)?)(\s?·\s?(수정됨|edited))?$/i;
 
   let found = []; // [{ id, el, text }]
 
+  // Pick the area with the most text: the open post dialog, or the post page itself
   function container() {
-    const dialogs = [...document.querySelectorAll('[role="dialog"]')].filter((d) => d.offsetParent !== null);
-    return dialogs[dialogs.length - 1] || document.querySelector("main") || document.body;
+    const main = document.querySelector("main");
+    const roots = [...document.querySelectorAll('[role="dialog"]')].filter((d) => d.offsetParent !== null);
+    if (main) roots.push(main);
+    roots.sort((a, b) => b.querySelectorAll('span[dir="auto"]').length - a.querySelectorAll('span[dir="auto"]').length);
+    return roots[0] || document.body;
   }
 
   function visible(el) {
@@ -22,17 +26,28 @@
     return r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth;
   }
 
+  // The sentence itself: skip text inside links (usernames), time stamps, and buttons
+  function ownText(el) {
+    let t = "";
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      if (n.parentElement.closest('a, time, button, [role="button"]')) continue;
+      t += n.nodeValue;
+    }
+    return t.replace(/\s+/g, " ").replace(/^[\s·•]+|[\s·•]+$/g, "").trim();
+  }
+
   function readComments() {
     const root = container();
-    const seen = new Set();
+    const seen = [];
     found = [];
     root.querySelectorAll('span[dir="auto"], h1[dir="auto"]').forEach((el) => {
-      if (el.closest("a, button, h2, [role='button'], time, #iykyk-panel")) return; // usernames, buttons, headers, our panel
-      if (el.querySelector('span[dir="auto"]')) return;                        // take the innermost text only
-      const text = (el.innerText || "").replace(/\s+/g, " ").trim();
-      if (text.length < 2 || UI_WORDS.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
-      if (!visible(el) || seen.has(text)) return;
-      seen.add(text);
+      if (el.closest("a, button, h2, [role='button'], time, #iykyk-panel")) return;
+      const text = ownText(el);
+      if (text.length < 2 || UI.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
+      if (!visible(el) || seen.some((s) => s.includes(text))) return;
+      seen.push(text);
       found.push({ id: "c" + (found.length + 1), el, text });
     });
     return found.slice(0, 20).map(({ id, text }) => ({ id, text }));

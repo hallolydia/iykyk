@@ -330,6 +330,30 @@ my_gaps:
 my_guess:
 notes:
 
+=== c40 ===
+group:
+source: Instagram Reel by delaneyrowe (Oct 22). Woman in a trench coat, cheerful. On-screen text: "The lovable side character in every movie who has approximately 20 minutes left to live"
+comment: She visits Dr. Sherman and tells him she doesn't want to hear the words out loud; to put them in a document she can read in private. Then she puts the papers in her purse and promptly tells the family that the doctor said it was a false alarm and they should all go to Positano to celebrate! [...] She's been doubly blessed. Double Blessing on Hallmark coming soon!
+my_gaps:
+my_guess:
+notes: Found while testing the extension. The AI v1 missed "Hallmark" on the long comment.
+
+=== c41 ===
+group:
+source: Instagram Reel by delaneyrowe (Oct 22). Woman in a trench coat, cheerful. On-screen text: "The lovable side character in every movie who has approximately 20 minutes left to live"
+comment: Rite in time for the holiday Christmas magic😭😂😂🤣🎄🥳
+my_gaps:
+my_guess:
+notes:
+
+=== c42 ===
+group:
+source: Instagram Reel by delaneyrowe (Oct 22). Woman in a trench coat, cheerful. On-screen text: "The lovable side character in every movie who has approximately 20 minutes left to live"
+comment: Aunt malika is always the coolest. She must live 😂
+my_gaps:
+my_guess:
+notes:
+
 === pending (Reddit could not be read automatically; paste the text in) ===
 - r/rickandmorty: "I'm not American, are presidential turkey pardons a..." (presidential turkey pardon)
 - r/BoomersBeingFools: "Oblivious boomer: hurricane edition"
