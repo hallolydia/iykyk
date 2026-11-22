@@ -35,8 +35,7 @@ Related: [PRD](PRD.md) · [Design](DESIGN.md) · [Decisions](decisions.md)
 
 1. User opens a Reel on instagram.com and opens the comments.
 2. User clicks the IYKYK icon. The side panel opens.
-3. Panel shows **"Read these comments"**. User clicks it.
-   - [ ] Or start reading automatically when the panel opens? Decide by testing.
+3. **Auto-read (on by default):** while the panel is open, IYKYK reads the post as soon as its comments load, and again every time the user moves to a new post. Opening the panel is the consent; when it's closed, nothing is read. A switch turns it off ("Read each post automatically while I'm open"), and the "Read these comments" button stays for manual use.
 4. IYKYK reads:
    - the **comment text that is visible** on screen (no usernames, no profile photos)
    - the Reel's caption, if visible
@@ -163,6 +162,6 @@ The same panel, on a sample Reel feed inside a normal web page, so judges can cl
 
 ## 10. Open questions
 
-- [ ] Read automatically when the panel opens, or wait for a click?
+- [x] Read automatically while the panel is open (decided: Reels move too fast for a button per post).
 - [ ] Show "Seen again" in the panel, or only on the Now you know page?
 - [ ] How many suggested questions above the ask bar: 2 or 3?
