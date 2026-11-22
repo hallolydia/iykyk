@@ -1,0 +1,1106 @@
+{
+ "v1": {
+  "c03": [],
+  "c02": [],
+  "c04": [],
+  "c01": [
+   {
+    "comment_id": "c01",
+    "quote": "real dads, not just fathers",
+    "question": "tone",
+    "answer": "In American English, \"father\" can mean just the biological parent, while \"dad\" means the one who actually shows up, cares, and raises you. The writer is gently saying their own father wasn't really there for them, so this is wistful and a bit sad, not a joke.",
+    "emoji": null,
+    "origin": "Common saying: \"Any man can be a father, but it takes someone special to be a dad.\"",
+    "closest": "",
+    "confidence": 0.88
+   }
+  ],
+  "c06": [
+   {
+    "comment_id": "c06",
+    "quote": "Not you guys waiting in the train",
+    "question": "tone",
+    "answer": "It's not a negation. \"Not you [doing X]\" is playful teasing that means \"I can't believe you're doing this.\" They're laughing at the people waiting, not saying they weren't waiting.",
+    "emoji": null,
+    "origin": "From African American English, spread widely by Black Twitter and TikTok.",
+    "closest": "Like \"아니 너네 기차에서 기다리는 거 실화냐ㅋㅋㅋ\"",
+    "confidence": 0.85
+   }
+  ],
+  "c05": [
+   {
+    "comment_id": "c05",
+    "quote": "he still paid his train fare while runnign after you!",
+    "question": "funny",
+    "answer": "Without seeing the video, this seems to be the joke: in many US and UK cities people often jump the turnstile to skip paying, so a guy who stops to tap his card in the middle of an angry chase is funnily honest and polite. The commenter is siding with him, which is why they say \"give him his cig back.\"",
+    "emoji": null,
+    "origin": "",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c07": [
+   {
+    "comment_id": "c07",
+    "quote": "nothing like stars hollow",
+    "question": "reference",
+    "answer": "Stars Hollow is the fictional, super cozy small Connecticut town in Gilmore Girls, full of quirky neighbors and town festivals. He's joking that his real Connecticut town isn't that charming.",
+    "emoji": null,
+    "origin": "Gilmore Girls, a US TV drama (2000–2007) about a mother and daughter in a small town.",
+    "closest": "",
+    "confidence": 0.95
+   },
+   {
+    "comment_id": "c07",
+    "quote": "im the modern day Luke",
+    "question": "reference",
+    "answer": "Luke is the grumpy but big-hearted diner owner in Gilmore Girls, known for his flannel shirts and backwards baseball cap, and fans love him. He's playfully bragging about his own vibe while promoting his meme, half self-mocking.",
+    "emoji": null,
+    "origin": "Luke Danes, owner of Luke's Diner and Lorelai's love interest in Gilmore Girls.",
+    "closest": "",
+    "confidence": 0.9
+   }
+  ],
+  "c08": [
+   {
+    "comment_id": "c08",
+    "quote": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\"",
+    "question": "reference",
+    "answer": "This is about Gilmore Girls. Fans watched Rory go from doubting her rich boyfriend Logan, to loving them together, to the show breaking them up when she turned down his proposal, and the 2016 revival stirred it up again. The outrage at the writers is playful fan drama, not real anger.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007) and its 2016 Netflix revival 'A Year in the Life'; Rory's boyfriends (Dean, Jess, Logan) are a classic fan debate.",
+    "closest": "Like the Reply 1988 'husband debate' (Taek vs. Jung-hwan), where fans felt emotionally betrayed by who Deok-sun ended up with.",
+    "confidence": 0.88
+   }
+  ],
+  "c09": [
+   {
+    "comment_id": "c09",
+    "quote": "I'm the creeper",
+    "question": "tone",
+    "answer": "She's teasing herself, not admitting anything bad. \"Creeper\" here just means the person who secretly hangs around watching, probably checking whether people at a potluck or party are eating the dish she brought. Without the video, the potluck part is my best guess.",
+    "emoji": null,
+    "origin": "Casual slang for someone who lurks and watches others. It's often used jokingly about yourself.",
+    "closest": "",
+    "confidence": 0.65
+   }
+  ],
+  "c11": [],
+  "c10": [
+   {
+    "comment_id": "c10",
+    "quote": "we make some fire Mac n cheese",
+    "question": "reference",
+    "answer": "\"Fire\" means really, really good. In many American families, especially Black families, homemade baked mac and cheese is a prized holiday dish, so the commenter is half-joking that it's too good to give away and they'd rather keep the leftovers.",
+    "emoji": null,
+    "origin": "\"Fire\" as slang for excellent comes from hip-hop and Black American slang; mac and cheese is a classic Thanksgiving and family-gathering staple.",
+    "closest": "",
+    "confidence": 0.75
+   }
+  ],
+  "c12": [
+   {
+    "comment_id": "c12",
+    "quote": "seconds is also the first bite of that dish",
+    "question": "funny",
+    "answer": "\"Seconds\" means going back for a second helping of food. The joke is that this person's \"second plate\" is actually their first taste of that dish, so it's a sneaky excuse to eat more. Without the video I can't be sure exactly what happened, but that's the playful contradiction.",
+    "emoji": null,
+    "origin": "\"Going back for seconds\" is a common American phrase for a second helping, especially at big family meals like Thanksgiving or potlucks.",
+    "closest": "Like asking for \"한 그릇 더\" at a buffet or family meal, but pretending it doesn't count because it's a new dish.",
+    "confidence": 0.6
+   }
+  ],
+  "c27": [],
+  "c13": [
+   {
+    "comment_id": "c13",
+    "quote": "the dog days of summer",
+    "question": "reference",
+    "answer": "\"The dog days of summer\" is a common English idiom for the hottest, laziest stretch of summer, and it has nothing to do with actual dogs. The joke is that their office took it literally, made it a real dog day, and then kept it going all year.",
+    "emoji": null,
+    "origin": "From ancient Greece and Rome, where the hottest weeks lined up with the rise of Sirius, the 'Dog Star.'",
+    "closest": "삼복더위 (초복·중복·말복), the hottest days of summer",
+    "confidence": 0.9
+   }
+  ],
+  "c14": [
+   {
+    "comment_id": "c14",
+    "quote": "\"cat fights\"",
+    "question": "reference",
+    "answer": "\"Catfight\" is an old English slang term for a fight between women, picturing them hissing, scratching, and pulling hair like cats. The commenter is sincerely saying the label was always a sexist stereotype that treats women's conflicts as petty or as a show.",
+    "emoji": null,
+    "origin": "English slang that compares women fighting to cats scratching each other. It is often used in media and tabloids.",
+    "closest": "Similar to the stereotype in Korean dramas and gossip of women in a 머리채 잡는 싸움 (hair-pulling fight).",
+    "confidence": 0.8
+   }
+  ],
+  "c26": [
+   {
+    "comment_id": "c26",
+    "quote": "bragging rights and momentum heading into the New Hampshire primary",
+    "question": "reference",
+    "answer": "Iowa votes first in the US presidential nomination race, so its few delegates matter less than the headlines. A win there signals strength and attracts money and media attention right before New Hampshire, which traditionally votes next.",
+    "emoji": null,
+    "origin": "For decades, Iowa (caucus) and New Hampshire (primary) have been the first two contests of the US presidential nomination calendar.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c30": [
+   {
+    "comment_id": "c30",
+    "quote": "March Madness bracket was busted by the first Thursday",
+    "question": "reference",
+    "answer": "March Madness is the huge US college basketball tournament, and people fill out a 'bracket' guessing every game's winner. 'Busted' means their picks were already ruined by upsets on the very first day of games, so they're laughing at how fast it fell apart.",
+    "emoji": null,
+    "origin": "The NCAA men's basketball tournament each March; filling out brackets in office pools and with friends is a big yearly American tradition.",
+    "closest": "",
+    "confidence": 0.95
+   }
+  ],
+  "c28": [
+   {
+    "comment_id": "c28",
+    "quote": "threw a Hail Mary",
+    "question": "reference",
+    "answer": "In American football, a 'Hail Mary' is a long, desperate pass thrown at the very end of a game, when there's almost no chance it will work. Here it means the team took a last-second long-shot gamble and actually pulled it off, which is why Dad is still screaming.",
+    "emoji": null,
+    "origin": "Named after a Catholic prayer. It became a football term in 1975, when a quarterback said he 'closed his eyes and said a Hail Mary' after a game-winning pass.",
+    "closest": "Like a last-second buzzer-beater (버저비터) in basketball: a desperate final shot that wins the game.",
+    "confidence": 0.88
+   }
+  ],
+  "c32": [
+   {
+    "comment_id": "c32",
+    "quote": "Man's a lame duck",
+    "question": "reference",
+    "answer": "A 'lame duck' is someone near the end of their term, usually after their replacement is already chosen. The joke here is the upside: he has no election or job left to protect, so he's free to say anything.",
+    "emoji": null,
+    "origin": "An old political and stock-market term for someone who has lost their power or influence.",
+    "closest": "레임덕 (the same loanword used in Korean politics), though Korean usage usually stresses losing authority, not the freedom to speak openly.",
+    "confidence": 0.85
+   }
+  ],
+  "c29": [
+   {
+    "comment_id": "c29",
+    "quote": "giving Jets energy",
+    "question": "reference",
+    "answer": "The New York Jets are an NFL team famous for losing and letting their fans down year after year. So they're joking that their team is hopeless and embarrassing.",
+    "emoji": null,
+    "origin": "The NY Jets have one of the longest playoff droughts in American football, and 'Jets' has become shorthand for disappointment.",
+    "closest": "Like joking that your team is playing like the Hanwha Eagles during their long losing years: loyal fans, constant heartbreak.",
+    "confidence": 0.9
+   },
+   {
+    "comment_id": "c29",
+    "quote": "My fantasy team",
+    "question": "reference",
+    "answer": "This is fantasy football, a hugely popular US game where friends 'draft' real NFL players and score points based on how those players actually perform each week. Their picks are doing badly.",
+    "emoji": null,
+    "origin": "Fantasy football leagues are a big yearly tradition among American friends and coworkers.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c34": [
+   {
+    "comment_id": "c34",
+    "quote": "My 401(k) looked at me and said no",
+    "question": "reference",
+    "answer": "A 401(k) is the retirement savings account most Americans get through their job. Saying it 'said no' is a self-deprecating joke: their savings are too small, or just dropped, so retiring or buying something isn't happening.",
+    "emoji": null,
+    "origin": "Named after section 401(k) of the US tax code, which created these accounts in 1978.",
+    "closest": "퇴직연금 (DC-type or IRP accounts)",
+    "confidence": 0.85
+   }
+  ],
+  "c36": [
+   {
+    "comment_id": "c36",
+    "quote": "Love that for you.",
+    "question": "tone",
+    "answer": "This phrase can be sincere (\"happy for you!\") or dry and sarcastic (\"good for you, I guess\"). The flat \"Wow.\" before it leans toward playful or mock sarcasm, but without the post it's hard to be sure.",
+    "emoji": null,
+    "origin": "Popular slang phrase, often linked to Alexis Rose's lines on the TV show Schitt's Creek (\"Love that journey for me\").",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c35": [
+   {
+    "comment_id": "c35",
+    "quote": "but make it fashion",
+    "question": "funny",
+    "answer": "This is a playful meme formula: 'X, but make it fashion' means taking something unglamorous and pretending it's stylish. Here the joke is being broke but somehow looking chic about it, so it's self-mocking and lighthearted, not a real complaint.",
+    "emoji": null,
+    "origin": "A 2010s internet catchphrase from fashion and drag-influenced slang, used as 'X but make it fashion' to jokingly glamorize anything.",
+    "closest": "",
+    "confidence": 0.82
+   }
+  ],
+  "c33": [
+   {
+    "comment_id": "c33",
+    "quote": "Wisconsin doing its swing state thing again",
+    "question": "reference",
+    "answer": "Wisconsin is famous in US elections for being nearly 50/50, so results are razor-thin, slow to count, and can flip late at night. The commenter is half-joking, half-stressed that it's keeping everyone in suspense again. The 😭 reads as dramatic exasperation, not real crying.",
+    "emoji": null,
+    "origin": "US presidential elections are decided state by state, and a few 'swing states' like Wisconsin regularly decide the winner by tiny margins.",
+    "closest": "Like Chungcheong in Korean presidential elections, the region people watch because it often swings the result.",
+    "confidence": 0.8
+   }
+  ],
+  "c37": [
+   {
+    "comment_id": "c37",
+    "quote": "Sure, Jan.",
+    "question": "reference",
+    "answer": "It's a sarcastic way of saying \"I don't believe you at all.\" People reply with it when someone makes a claim that sounds obviously made up or exaggerated.",
+    "emoji": null,
+    "origin": "From The Brady Bunch Movie (1995), where Marcia rolls her eyes at her sister Jan's obviously fake boyfriend story; it later became a popular reaction GIF.",
+    "closest": "Like replying \"아~ 네네\" or \"퍽이나\" in a flat, unconvinced tone.",
+    "confidence": 0.92
+   }
+  ],
+  "c39": [],
+  "c38": [
+   {
+    "comment_id": "c38",
+    "quote": "bless your heart",
+    "question": "tone",
+    "answer": "It sounds kind, but in the US (especially the South) it's often a polite way to say \"you poor thing, you failed.\" Paired with \"for trying,\" it's most likely a gentle, sweet-sounding put-down rather than real praise.",
+    "emoji": null,
+    "origin": "A classic Southern US phrase, famous for hiding insults or pity behind politeness.",
+    "closest": "Like saying \"애썼네~\" in a sugary, slightly condescending tone.",
+    "confidence": 0.85
+   }
+  ]
+ },
+ "v2": {
+  "c03": [],
+  "c01": [
+   {
+    "comment_id": "c01",
+    "quote": "real dads, not just fathers",
+    "question": "tone",
+    "answer": "In American English, \"father\" can just mean the man who's biologically your parent, while \"dad\" means someone who actually shows up, cares, and raises you. The commenter is quietly saying their own father wasn't really there for them, so it's more wistful than funny.",
+    "emoji": null,
+    "origin": "A common US saying: \"Any man can be a father, but it takes someone special to be a dad.\"",
+    "closest": "",
+    "confidence": 0.88
+   }
+  ],
+  "c02": [],
+  "c04": [],
+  "c06": [
+   {
+    "comment_id": "c06",
+    "quote": "Not you guys",
+    "question": "tone",
+    "answer": "This isn't a negation. Starting a sentence with \"Not you...\" is playful teasing, like \"I can't believe you guys are...\" They're laughing at the people in the video, not saying it wasn't them.",
+    "emoji": null,
+    "origin": "A playful pattern from African American English that spread through Twitter and TikTok.",
+    "closest": "Similar to teasing someone in Korean with \"아니 너네 기차 안에서 기다리고 있는 거 뭐야ㅋㅋㅋ\"",
+    "confidence": 0.88
+   }
+  ],
+  "c05": [
+   {
+    "comment_id": "c05",
+    "quote": "Give him his cig back",
+    "question": "tone",
+    "answer": "It's playful teasing, siding with the guy. The commenter finds it funny and a little sweet that he was honest enough to pay his train fare even while chasing whoever took his cigarette. There's no scene info, so this is likely, but not certain, a prank video where someone grabs a stranger's cigarette.",
+    "emoji": null,
+    "origin": "Probably from prank videos where people snatch cigarettes from smokers in public, but I can't confirm that without the video.",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c07": [
+   {
+    "comment_id": "c07",
+    "quote": "stars hollow",
+    "question": "reference",
+    "answer": "Stars Hollow is the fictional small town in Connecticut where Gilmore Girls is set. It's a cozy, quirky place full of town festivals and eccentric neighbors. He's admitting his real Connecticut town is nowhere near that charming.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007), a US TV drama about mother and daughter Lorelai and Rory Gilmore.",
+    "closest": "",
+    "confidence": 0.95
+   },
+   {
+    "comment_id": "c07",
+    "quote": "im the modern day Luke surpriseeeee",
+    "question": "funny",
+    "answer": "Luke Danes is the gruff, flannel-wearing diner owner in Gilmore Girls who becomes Lorelai's love interest. He's grumpy but secretly caring. Calling himself the modern Luke right after calling himself a 43-year-old manchild is a self-mocking, goofy brag, and the stretched-out \"surpriseeeee\" makes it playful.",
+    "emoji": null,
+    "origin": "Luke Danes, a main character in Gilmore Girls.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c08": [
+   {
+    "comment_id": "c08",
+    "quote": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\"",
+    "question": "reference",
+    "answer": "This is about Gilmore Girls. Rory's boyfriends (Dean, Jess, Logan) are a huge fan debate, and the commenter is acting out how their feelings about Logan flipped from doubt to love to 'get away from her.' The outrage at the writers is playful fan drama, not real anger.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007) and its 2016 Netflix revival, where Rory and Logan's relationship took messy turns.",
+    "closest": "Like K-drama fans arguing over which male lead the heroine should end up with (서브병, second lead syndrome).",
+    "confidence": 0.85
+   }
+  ],
+  "c09": [
+   {
+    "comment_id": "c09",
+    "quote": "I'm the creeper and then I call my mom and tell her how everyone loved my dish.",
+    "question": "funny",
+    "answer": "She's jokingly admitting she's the person at a potluck (a party where everyone brings a homemade dish) who secretly watches to see who takes her food. Then she proudly reports back to her mom like a kid. It's friendly self-teasing, not anything actually creepy.",
+    "emoji": null,
+    "origin": "Potlucks are a common US tradition at work, church, and family gatherings, and people often quietly worry whether anyone will eat what they brought.",
+    "closest": "",
+    "confidence": 0.7
+   }
+  ],
+  "c10": [
+   {
+    "comment_id": "c10",
+    "quote": "Cause we make some fire Mac n cheese",
+    "question": "reference",
+    "answer": "\"Fire\" means really, really good. At US family cookouts and holiday dinners, homemade baked mac and cheese is a prized dish (and a point of pride in many Black American families). The joke: they aren't upset that guests took some, they just secretly wanted the leftovers for themselves.",
+    "emoji": null,
+    "origin": "Baked mac and cheese is a staple side dish at American holiday dinners and cookouts, and some families are famous for theirs.",
+    "closest": "Like a family whose homemade kimchi or japchae is so good that you secretly hope guests don't take any home, so more is left for you.",
+    "confidence": 0.7
+   }
+  ],
+  "c11": [
+   {
+    "comment_id": "c11",
+    "quote": "Seconds?? You mean the first serving?",
+    "question": "funny",
+    "answer": "\"Seconds\" means going back for a second plate of food. The commenter is teasing that what someone called \"seconds\" looks more like a normal first plate, or a huge one. Without the video I can't tell which, but it's friendly ribbing.",
+    "emoji": null,
+    "origin": "",
+    "closest": "",
+    "confidence": 0.55
+   }
+  ],
+  "c12": [
+   {
+    "comment_id": "c12",
+    "quote": "seconds is also the first bite of that dish",
+    "question": "funny",
+    "answer": "\"Seconds\" means going back for a second serving of food. The joke is that this person's \"second round\" is the first time they're even trying that dish, probably because their first plate was too full or they skipped it. Without the video, I can't tell exactly which dish or why.",
+    "emoji": null,
+    "origin": "\"Going back for seconds\" is a common American phrase for taking another plate, especially at big family meals or buffets.",
+    "closest": "Like asking for another bowl of rice (한 공기 더), except you're grabbing a side dish you never touched the first time.",
+    "confidence": 0.6
+   }
+  ],
+  "c27": [],
+  "c13": [
+   {
+    "comment_id": "c13",
+    "quote": "the dog days of summer",
+    "question": "reference",
+    "answer": "\"The dog days of summer\" is a common English idiom for the hottest, laziest stretch of summer; it has nothing to do with actual dogs. The joke is that their office took it literally, made it a real \"bring your dog to work\" day, and loved it so much they kept it going all year.",
+    "emoji": null,
+    "origin": "From ancient Greek and Roman astronomy: the hottest weeks of summer, when Sirius, the \"Dog Star,\" rises with the sun.",
+    "closest": "삼복 (the hottest days of summer)",
+    "confidence": 0.92
+   }
+  ],
+  "c14": [
+   {
+    "comment_id": "c14",
+    "quote": "cat fights",
+    "question": "reference",
+    "answer": "\"Catfight\" is slang for a fight between two women, usually shown as petty, jealous, and full of hair-pulling and scratching. The commenter is sincerely saying that the label itself is sexist because it treats women's conflicts as silly or as entertainment.",
+    "emoji": null,
+    "origin": "Old English slang comparing women fighting to cats hissing and clawing; it's a common trope in tabloids and reality TV.",
+    "closest": "Similar to the stereotyped image of women in a 머리채 잡고 싸우는 fight, or the '여자의 적은 여자' trope.",
+    "confidence": 0.88
+   }
+  ],
+  "c28": [
+   {
+    "comment_id": "c28",
+    "quote": "threw a Hail Mary",
+    "question": "reference",
+    "answer": "In American football, a \"Hail Mary\" is a long, desperate pass thrown at the very end of a game when there's almost no chance left. So the team pulled off a last-second miracle play, which is why dad is still screaming with excitement.",
+    "emoji": null,
+    "origin": "American football term, named after the Catholic prayer, since you're basically praying it works.",
+    "closest": "Like a 버저비터 (buzzer-beater) in basketball, a last-second shot that wins the game.",
+    "confidence": 0.9
+   }
+  ],
+  "c26": [
+   {
+    "comment_id": "c26",
+    "quote": "bragging rights and momentum heading into the New Hampshire primary",
+    "question": "reference",
+    "answer": "Iowa is the first state to vote in the US presidential nomination race, and New Hampshire comes right after. Its 40 delegates are only a tiny share of the total, so the real prize is the headline of winning first, which can boost donations, media coverage, and support in later states.",
+    "emoji": null,
+    "origin": "US parties choose their presidential nominee through state-by-state contests. Iowa's caucuses have traditionally gone first, followed by the New Hampshire primary.",
+    "closest": "Korean parties' regional touring primaries (순회경선), where an early regional win sets the momentum and narrative for the later rounds.",
+    "confidence": 0.9
+   }
+  ],
+  "c30": [
+   {
+    "comment_id": "c30",
+    "quote": "March Madness bracket was busted by the first Thursday",
+    "question": "reference",
+    "answer": "March Madness is the huge US college basketball tournament, and millions of people fill out a 'bracket' guessing every game's winner. The first Thursday is basically day one, so their predictions were ruined almost immediately. It's a self-deprecating joke about how bad their guesses were.",
+    "emoji": null,
+    "origin": "The NCAA men's college basketball tournament, held every March with 64+ teams; office bracket pools are a big US tradition.",
+    "closest": "",
+    "confidence": 0.93
+   }
+  ],
+  "c29": [
+   {
+    "comment_id": "c29",
+    "quote": "Jets energy",
+    "question": "reference",
+    "answer": "The New York Jets are an NFL team famous for losing and constantly letting their fans down. They have the longest playoff drought in major US sports. So the person is saying their fantasy football team is hopeless this season and they're already resigned to it.",
+    "emoji": null,
+    "origin": "The NY Jets haven't made the NFL playoffs since 2010, so they've become shorthand for disappointment.",
+    "closest": "Like joking that your team is playing like the Hanwha Eagles during their long losing years, when fans were called 'saints' for putting up with it.",
+    "confidence": 0.85
+   }
+  ],
+  "c32": [],
+  "c33": [
+   {
+    "comment_id": "c33",
+    "quote": "Wisconsin doing its swing state thing again",
+    "question": "reference",
+    "answer": "Wisconsin is a famous US 'swing state' that can vote either party, and its elections are often decided by razor-thin margins that keep everyone anxiously waiting on election night. The 😭 is playful exasperation, like 'ugh, here we go again,' not real crying.",
+    "emoji": {
+     "char": "😭",
+     "meaning": "Mock despair or laughing frustration, not actual sadness"
+    },
+    "origin": "US presidential elections, where a few closely divided states like Wisconsin often decide the winner.",
+    "closest": "Like Chungcheong Province in Korean elections, often seen as the swing region whose close vote decides the outcome.",
+    "confidence": 0.8
+   }
+  ],
+  "c34": [
+   {
+    "comment_id": "c34",
+    "quote": "My 401(k) looked at me and said no",
+    "question": "reference",
+    "answer": "A 401(k) is the main retirement savings account many Americans get through their job, often invested in stocks. The joke is that their savings are so small, or have dropped so much, that the account itself 'refuses' to let them retire or spend. It's self-deprecating humor about money stress.",
+    "emoji": null,
+    "origin": "Named after section 401(k) of the US tax code, which created these employer retirement plans in 1978.",
+    "closest": "Like a DC-type 퇴직연금 (defined contribution retirement pension) or IRP account in Korea.",
+    "confidence": 0.85
+   }
+  ],
+  "c35": [
+   {
+    "comment_id": "c35",
+    "quote": "but make it fashion",
+    "question": "funny",
+    "answer": "\"X but make it fashion\" is a meme format that jokingly presents something bad or ordinary as if it were a stylish, glamorous choice. Here the commenter is turning being broke into a chic lifestyle aesthetic, so it's ironic and self-mocking, not a real compliment.",
+    "emoji": null,
+    "origin": "A popular internet meme phrase, often linked to fashion and drag slang. Its exact origin is unclear.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c36": [
+   {
+    "comment_id": "c36",
+    "quote": "Wow. Love that for you.",
+    "question": "tone",
+    "answer": "This is a trendy phrase that can be sincere (\"happy for you!\") or dry sarcasm (\"good for you, I guess\"). With a flat \"Wow.\" in front and no other context, it often reads as sarcastic or mildly unimpressed, but it could be genuine.",
+    "emoji": null,
+    "origin": "Popular online slang, often linked to the sitcom Schitt's Creek and Alexis's line \"love that journey for me.\"",
+    "closest": "",
+    "confidence": 0.65
+   }
+  ],
+  "c39": [],
+  "c37": [
+   {
+    "comment_id": "c37",
+    "quote": "Sure, Jan.",
+    "question": "reference",
+    "answer": "It's a sarcastic way of saying \"I don't believe you at all.\" It's an eye-roll at someone's claim. It's teasing, not hostile, but definitely dismissive.",
+    "emoji": null,
+    "origin": "From The Brady Bunch Movie (1995). Marcia says it flatly to her sister Jan, who claims she has a boyfriend named George Glass, and it became a popular reaction GIF.",
+    "closest": "Like saying \"퍽이나\" or \"어련하시겠어요\" in Korean.",
+    "confidence": 0.93
+   }
+  ],
+  "c38": [
+   {
+    "comment_id": "c38",
+    "quote": "bless your heart",
+    "question": "tone",
+    "answer": "It sounds sweet, but in the American South it's often a polite way of saying \"you poor thing, you failed\" or even \"you're kind of clueless.\" Here, with \"for trying,\" it's most likely a gentle put-down: nice effort, but it didn't work.",
+    "emoji": null,
+    "origin": "A classic Southern US phrase, famous for hiding pity or an insult behind politeness.",
+    "closest": "Like saying \"애쓴다~\" or \"수고했네~\" in a pitying, slightly mocking tone.",
+    "confidence": 0.85
+   }
+  ]
+ },
+ "v3": {
+  "c02": [],
+  "c03": [],
+  "c01": [
+   {
+    "comment_id": "c01",
+    "quote": "real dads, not just fathers",
+    "question": "tone",
+    "answer": "In the US, 'father' can just mean the man who's biologically your parent, while 'dad' means someone who actually shows up, cares, and raises you. The commenter is quietly saying their own father wasn't really there for them, so it's more wistful and a little sad than a joke.",
+    "emoji": null,
+    "origin": "A common American saying: 'Any man can be a father, but it takes someone special to be a dad.'",
+    "closest": "",
+    "confidence": 0.88
+   }
+  ],
+  "c04": [],
+  "c05": [],
+  "c06": [
+   {
+    "comment_id": "c06",
+    "quote": "Not you guys waiting in the train",
+    "question": "tone",
+    "answer": "Starting a sentence with \"Not you...\" is playful teasing, like saying \"I can't believe you're actually doing this, lol.\" The commenter finds it funny that they're waiting inside the train, not criticizing them.",
+    "emoji": null,
+    "origin": "Comes from African American English and became widespread internet slang on Twitter and TikTok around 2020.",
+    "closest": "",
+    "confidence": 0.8
+   }
+  ],
+  "c09": [
+   {
+    "comment_id": "c09",
+    "quote": "I'm the creeper",
+    "question": "tone",
+    "answer": "She's playfully admitting she's the one who secretly watches to see if people eat the dish she brought, probably to a potluck where everyone brings food to share. 'Creeper' here is self-teasing and sweet, not creepy, and calling mom to brag is the cute punchline.",
+    "emoji": null,
+    "origin": "'Creeper' is casual slang for someone who watches people a bit too closely. Potlucks are common at US offices, churches, and family events.",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c07": [
+   {
+    "comment_id": "c07",
+    "quote": "a Connecticut town nothing like stars hollow",
+    "question": "reference",
+    "answer": "Stars Hollow is the fictional small town in Connecticut where Gilmore Girls is set. It's super cozy and quirky, with town festivals and everyone knowing each other. He's joking that his real Connecticut town is nowhere near that charming.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007), a US TV dramedy about a mother and daughter living in Stars Hollow.",
+    "closest": "",
+    "confidence": 0.9
+   },
+   {
+    "comment_id": "c07",
+    "quote": "im the modern day Luke surpriseeeee",
+    "question": "funny",
+    "answer": "Luke is the grumpy but secretly sweet diner owner in Gilmore Girls who wears flannel and a backwards cap, and fans love him as Lorelai's love interest. Calling himself the 'modern day Luke' is a goofy, self-mocking brag. The whole comment reads as awkward, rambling self-promotion for his meme, which is part of why it comes across as funny or a little odd.",
+    "emoji": null,
+    "origin": "Luke Danes, a main character in Gilmore Girls.",
+    "closest": "",
+    "confidence": 0.8
+   }
+  ],
+  "c08": [
+   {
+    "comment_id": "c08",
+    "quote": "Rory and NOT LOGAN?",
+    "question": "reference",
+    "answer": "This is about Gilmore Girls: fans first doubted Rory's rich-boy boyfriend Logan, then loved him, then watched her turn down his proposal and never end up with him. The comment is playfully dramatic fan heartbreak, not real anger at the writers.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007) and its 2016 Netflix revival, where Rory and Logan still don't end up together.",
+    "closest": "Like K-drama fans who fall for a couple, then rage at the writers when the ending splits them up.",
+    "confidence": 0.88
+   }
+  ],
+  "c10": [
+   {
+    "comment_id": "c10",
+    "quote": "we make some fire Mac n cheese",
+    "question": "reference",
+    "answer": "They're bragging that their family's mac and cheese is so good they'd secretly be happy if a guest didn't eat it, because then there's more for them. In the US, homemade baked mac and cheese is a prized dish at family gatherings, so 'fire' (amazing) is a playful boast.",
+    "emoji": null,
+    "origin": "Baked mac and cheese is a staple at US holiday and family meals, especially in Southern and Black American cooking, where whoever makes it well is a point of pride.",
+    "closest": "",
+    "confidence": 0.7
+   }
+  ],
+  "c11": [
+   {
+    "comment_id": "c11",
+    "quote": "Seconds?? You mean the first serving? 😂",
+    "question": "funny",
+    "answer": "\"Seconds\" means going back for a second plate of food. The joke is that the first plate was already so huge that it looked like seconds, or even several servings, all at once. Without the video I can't be sure, but it's friendly teasing about a giant portion.",
+    "emoji": null,
+    "origin": "\"Going back for seconds\" is a common American phrase for taking a second helping at a meal.",
+    "closest": "Like teasing someone whose first bowl of rice is piled so high it already looks like 한 그릇 더.",
+    "confidence": 0.6
+   }
+  ],
+  "c12": [
+   {
+    "comment_id": "c12",
+    "quote": "seconds",
+    "question": "funny",
+    "answer": "\"Seconds\" means a second helping, going back to the table for another plate. The joke is that the person is on their second round, but one dish on the new plate is something they never took the first time, so their \"seconds\" is technically their first taste of it.",
+    "emoji": null,
+    "origin": "Common English phrase \"going back for seconds\" (taking another serving of food).",
+    "closest": "",
+    "confidence": 0.72
+   }
+  ],
+  "c13": [
+   {
+    "comment_id": "c13",
+    "quote": "the dog days of summer",
+    "question": "reference",
+    "answer": "\"The dog days of summer\" is a common English phrase for the hottest, laziest stretch of summer, with no real link to dogs. The commenter turns it literal: their office has \"dog days\" all year, meaning days when people bring their dogs to work.",
+    "emoji": null,
+    "origin": "From ancient Greece and Rome, when the 'Dog Star' Sirius rose with the sun during the hottest weeks of the year.",
+    "closest": "삼복 (초복·중복·말복), the hottest days of summer",
+    "confidence": 0.93
+   }
+  ],
+  "c27": [],
+  "c28": [
+   {
+    "comment_id": "c28",
+    "quote": "threw a Hail Mary",
+    "question": "reference",
+    "answer": "It's an American football term for a long, desperate pass thrown at the very end of a game, when there's almost no chance it works. So the team pulled off a last-second miracle, which is why dad is still yelling with excitement.",
+    "emoji": null,
+    "origin": "American football; named after the Catholic prayer, since you're basically praying it gets caught.",
+    "closest": "Like a 9th-inning, two-out walk-off comeback in Korean baseball (9회말 2아웃 역전).",
+    "confidence": 0.88
+   }
+  ],
+  "c14": [
+   {
+    "comment_id": "c14",
+    "quote": "\"cat fights\"",
+    "question": "reference",
+    "answer": "In English, a \"catfight\" is a slang term for two women fighting, usually pictured as screaming, scratching and hair-pulling. It's often used to mock or sexualize women's conflicts, so the commenter is happy to see that stereotype called out.",
+    "emoji": null,
+    "origin": "Older American slang that compares women fighting to hissing, scratching cats; it has long been a staple of TV and tabloids.",
+    "closest": "Similar to the Korean stereotype of women fighting by grabbing each other's hair (머리채 잡고 싸우기).",
+    "confidence": 0.85
+   }
+  ],
+  "c26": [
+   {
+    "comment_id": "c26",
+    "quote": "bragging rights and momentum heading into the New Hampshire primary",
+    "question": "reference",
+    "answer": "Iowa votes first in the US presidential nomination race, with New Hampshire right after. Iowa's 40 delegates are a tiny share of the total, so the real prize is the headlines and the 'frontrunner' image that carries into the next states.",
+    "emoji": null,
+    "origin": "US tradition: the Iowa caucuses and New Hampshire primary are the first contests of each presidential nomination season.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c29": [
+   {
+    "comment_id": "c29",
+    "quote": "giving Jets energy",
+    "question": "reference",
+    "answer": "The New York Jets are an NFL team famous for losing and letting their fans down year after year. So they're saying their fantasy football team is hopeless and painful to watch.",
+    "emoji": null,
+    "origin": "The Jets haven't made the NFL playoffs since 2010, the longest drought in the league, so they're a running joke for constant disappointment.",
+    "closest": "Like joking that your team is playing like the Hanwha Eagles during their long losing years, when their loyal fans were teasingly called 'bodhisattvas' for their endless patience.",
+    "confidence": 0.9
+   }
+  ],
+  "c30": [
+   {
+    "comment_id": "c30",
+    "quote": "My March Madness bracket was busted",
+    "question": "reference",
+    "answer": "March Madness is the huge US college basketball tournament, and tons of people fill out a \"bracket\" predicting every game, often in office pools. \"Busted\" means their picks were already ruined by upsets, and the first Thursday is the very first big day of games, so they failed almost immediately. It's a relatable, self-mocking joke.",
+    "emoji": null,
+    "origin": "The NCAA men's college basketball tournament held every March, with a 64-team single-elimination bracket.",
+    "closest": "",
+    "confidence": 0.92
+   }
+  ],
+  "c33": [
+   {
+    "comment_id": "c33",
+    "quote": "swing state thing",
+    "question": "reference",
+    "answer": "Wisconsin is a US 'swing state' that doesn't reliably vote for either party, so its election results are often razor-close and can decide the whole race. The commenter is half-joking, half-stressed (😭) that Wisconsin is being unpredictable and nail-biting yet again.",
+    "emoji": null,
+    "origin": "US election slang for states that can 'swing' between Democrats and Republicans, also called battleground states.",
+    "closest": "Like Chungcheong in Korean elections, often called the deciding 'casting vote' region because it doesn't lean firmly one way.",
+    "confidence": 0.85
+   }
+  ],
+  "c34": [
+   {
+    "comment_id": "c34",
+    "quote": "401(k)",
+    "question": "reference",
+    "answer": "A 401(k) is the main retirement savings account most American workers have through their job. Saying it 'said no' is a joke that their savings are too small or too battered to retire on or to pay for whatever is in the video.",
+    "emoji": null,
+    "origin": "Named after section 401(k) of the US tax code, which created these employer retirement plans in 1978.",
+    "closest": "퇴직연금 (especially the DC-type plan or IRP account)",
+    "confidence": 0.85
+   }
+  ],
+  "c32": [
+   {
+    "comment_id": "c32",
+    "quote": "lame duck",
+    "question": "reference",
+    "answer": "A 'lame duck' is a politician in their last term, either leaving soon or not allowed to run again. Here the angle is freedom, not weakness: he has no election left to protect, so he can speak bluntly without worrying about consequences.",
+    "emoji": null,
+    "origin": "An old English stock-market term for a broke trader, later used in US politics for outgoing officials.",
+    "closest": "레임덕. Same term, but Korean news usually stresses the loss of power, while this comment focuses on having nothing left to lose.",
+    "confidence": 0.85
+   }
+  ],
+  "c35": [
+   {
+    "comment_id": "c35",
+    "quote": "but make it fashion",
+    "question": "funny",
+    "answer": "\"X but make it fashion\" is a joking meme format that means doing something unglamorous in a stylish way. Here it teases that someone is basically broke, but still looks chic about it or spends money on looking good anyway. It's playful, not mean.",
+    "emoji": null,
+    "origin": "Popular internet catchphrase, linked to fashion and drag slang, used to make anything ordinary sound glamorous.",
+    "closest": "",
+    "confidence": 0.75
+   }
+  ],
+  "c36": [
+   {
+    "comment_id": "c36",
+    "quote": "Love that for you.",
+    "question": "tone",
+    "answer": "This phrase can be a sincere 'happy for you,' but paired with a flat 'Wow.' it often reads as dry or sarcastic, like 'good for you, I guess.' Without more context it could go either way, but online it leans teasing or mildly shady.",
+    "emoji": null,
+    "origin": "Popularized by the TV show 'Schitt's Creek' (Alexis Rose says it often), and now common online, often ironically.",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c39": [],
+  "c38": [
+   {
+    "comment_id": "c38",
+    "quote": "bless your heart",
+    "question": "tone",
+    "answer": "It sounds sweet, but in the American South it's often a polite way to call someone clueless or pitiful. With \"for trying,\" it most likely means \"aw, you failed, poor thing.\" It's a gentle burn, not real praise.",
+    "emoji": null,
+    "origin": "A classic Southern US phrase known for hiding insults behind politeness.",
+    "closest": "Like a sarcastic \"애쓴다 애써\" or a patronizing \"애썼네~\"",
+    "confidence": 0.85
+   }
+  ],
+  "c37": [
+   {
+    "comment_id": "c37",
+    "quote": "Sure, Jan.",
+    "question": "reference",
+    "answer": "It's a sarcastic way of saying \"Yeah right, I don't believe you.\" The commenter thinks someone is lying or exaggerating, and it's teasing more than truly rude.",
+    "emoji": null,
+    "origin": "From The Brady Bunch Movie (1995), where Marcia mocks her sister Jan's made-up boyfriend. It became a popular reaction GIF.",
+    "closest": "Like a sarcastic \"아~ 네네\" or \"퍽이나.\"",
+    "confidence": 0.93
+   }
+  ]
+ },
+ "v3+scene": {
+  "c02": [],
+  "c01": [
+   {
+    "comment_id": "c01",
+    "quote": "Like real dads, not just fathers.",
+    "question": "tone",
+    "answer": "In American English, 'father' can just mean the biological parent, while 'dad' means someone who actually shows up, plays, and cares. This commenter is gently saying their own father wasn't really there for them, so the tone is wistful and a little sad, not a joke.",
+    "emoji": null,
+    "origin": "A common American saying: 'Any man can be a father, but it takes someone special to be a dad.'",
+    "closest": "",
+    "confidence": 0.88
+   }
+  ],
+  "c03": [],
+  "c04": [],
+  "c05": [
+   {
+    "comment_id": "c05",
+    "quote": "he still paid his train fare while runnign after you!",
+    "question": "funny",
+    "answer": "It's teasing the stereotype that Japanese people stay polite and follow the rules no matter what. Even crazed from nicotine withdrawal on day 5 and chasing someone, he still stops to pay his fare. I'm guessing a bit about what happened earlier in the video.",
+    "emoji": null,
+    "origin": "Common internet joke about Japanese politeness and rule-following.",
+    "closest": "",
+    "confidence": 0.6
+   }
+  ],
+  "c06": [
+   {
+    "comment_id": "c06",
+    "quote": "Not you guys waiting in the train",
+    "question": "tone",
+    "answer": "\"Not you ___\" doesn't mean \"it isn't you.\" It's playful slang for \"I can't believe you're doing this, lol.\" The commenter is amused that the people on the train apparently waited for this guy while he ran back across the field.",
+    "emoji": null,
+    "origin": "\"Not [someone] doing [something]\" is internet slang from African American English, made popular on Twitter and TikTok to tease someone about a funny or embarrassing moment.",
+    "closest": "Like typing \"아 ㅋㅋㅋ 기다려주는 거 뭐야\" when you find something funny.",
+    "confidence": 0.75
+   }
+  ],
+  "c07": [
+   {
+    "comment_id": "c07",
+    "quote": "im the modern day Luke surpriseeeee",
+    "question": "reference",
+    "answer": "Luke is the grumpy, flannel-wearing diner owner in Gilmore Girls, and fans adore him as Lorelai's perfect match. This guy calls himself a 43-year-old 'manchild' and then claims to be the dreamy Luke, which is a funny, awkward contrast. The whole comment reads like clumsy self-promotion for his meme.",
+    "emoji": null,
+    "origin": "Luke Danes, the diner owner and Lorelai's love interest in Gilmore Girls (2000–2007).",
+    "closest": "",
+    "confidence": 0.8
+   },
+   {
+    "comment_id": "c07",
+    "quote": "a Connecticut town nothing like stars hollow",
+    "question": "reference",
+    "answer": "Stars Hollow is the cozy, quirky small Connecticut town where the show takes place, a kind of fantasy hometown for fans. He's joking that his real Connecticut town is nothing like that dream version.",
+    "emoji": null,
+    "origin": "The fictional town setting of Gilmore Girls.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c08": [
+   {
+    "comment_id": "c08",
+    "quote": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\"",
+    "question": "reference",
+    "answer": "Rory dates three main guys in Gilmore Girls (Dean, Jess, Logan), and fans argue about them endlessly. Logan is the one most people dislike at first, then grow to love, and then the show ends with Rory turning down his proposal, so the commenter is jokingly reliving that emotional whiplash.",
+    "emoji": null,
+    "origin": "Gilmore Girls (2000–2007) and its 2016 Netflix revival; fans pick 'Team Dean / Team Jess / Team Logan.'",
+    "closest": "Like K-drama fans fighting over the 'second male lead' and being heartbroken by who the heroine ends up with.",
+    "confidence": 0.85
+   }
+  ],
+  "c09": [
+   {
+    "comment_id": "c09",
+    "quote": "I'm the creeper and then I call my mom and tell her how everyone loved my dish.",
+    "question": "tone",
+    "answer": "She's lovingly making fun of herself. She admits she's the one secretly watching to see if people eat her potluck dish, then proudly reports back to Mom like a kid with a good grade. It's sweet and relatable, not creepy at all.",
+    "emoji": null,
+    "origin": "Friendsgiving is a Thanksgiving-style potluck with friends, where everyone brings a dish and quietly hopes theirs gets eaten.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c10": [
+   {
+    "comment_id": "c10",
+    "quote": "we make some fire Mac n cheese",
+    "question": "reference",
+    "answer": "\"Fire\" means really, really good. Homemade baked mac and cheese is a prized Thanksgiving side, especially in Black and Southern families, so they're bragging that theirs is so good they secretly want the leftovers back for themselves.",
+    "emoji": null,
+    "origin": "Baked mac and cheese is a classic holiday side dish in Black American and Southern cooking, and people are proud of their family recipe.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c11": [
+   {
+    "comment_id": "c11",
+    "quote": "You mean the first serving?",
+    "question": "funny",
+    "answer": "It's a self-deprecating joke: the commenter is saying nobody even takes ONE serving of the dish they bring. At a Friendsgiving potluck, everyone brings a dish, and it's a classic small heartbreak when yours sits there untouched.",
+    "emoji": null,
+    "origin": "Friendsgiving is a Thanksgiving-style potluck dinner with friends, where each guest brings a homemade dish.",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c12": [
+   {
+    "comment_id": "c12",
+    "quote": "seconds is also the first bite of that dish",
+    "question": "funny",
+    "answer": "The person is going back for a second plate, but it's the first time anyone has touched her dish. She's so thrilled because nobody tried it the first round, and at a potluck that's a quiet little heartbreak.",
+    "emoji": null,
+    "origin": "\"Going back for seconds\" means taking a second helping. At a Friendsgiving (a Thanksgiving potluck with friends), everyone brings a dish, and people secretly watch whether theirs gets eaten.",
+    "closest": "",
+    "confidence": 0.8
+   }
+  ],
+  "c27": [],
+  "c13": [
+   {
+    "comment_id": "c13",
+    "quote": "the dog days of summer",
+    "question": "funny",
+    "answer": "\"The dog days of summer\" is a common idiom for the hottest, laziest stretch of summer. Their office turned it into literal days where people bring their dogs to work, and it became so popular it now runs all year. It's a cute, wholesome pun.",
+    "emoji": null,
+    "origin": "An old phrase linked to Sirius, the 'Dog Star,' which rises with the sun during the hottest weeks of summer.",
+    "closest": "삼복더위 (the hottest days of summer)",
+    "confidence": 0.9
+   }
+  ],
+  "c14": [
+   {
+    "comment_id": "c14",
+    "quote": "\"cat fights\"",
+    "question": "reference",
+    "answer": "\"Cat fight\" is a common English phrase for women fighting each other, usually pictured as petty, jealous, hair-pulling drama over a guy. The commenter is sincerely praising the sketch for showing an all-women office as friendly and supportive instead of full of rivalry.",
+    "emoji": null,
+    "origin": "An old English slang term comparing women's arguments to cats hissing and scratching, often used in media to sexualize or mock them.",
+    "closest": "Similar to the Korean cliché \"여적여\" (여자의 적은 여자), the idea that women are naturally each other's enemies.",
+    "confidence": 0.85
+   }
+  ],
+  "c28": [
+   {
+    "comment_id": "c28",
+    "quote": "threw a Hail Mary",
+    "question": "reference",
+    "answer": "In American football, a \"Hail Mary\" is a long, desperate pass thrown in the last seconds, basically a prayer that someone catches it. It almost never works, which is why the dad is losing his mind.",
+    "emoji": null,
+    "origin": "Named after the Catholic prayer; made famous by Dallas Cowboys QB Roger Staubach in a 1975 NFL playoff game.",
+    "closest": "Like a buzzer-beater half-court shot in basketball, a last-ditch miracle attempt.",
+    "confidence": 0.95
+   }
+  ],
+  "c29": [
+   {
+    "comment_id": "c29",
+    "quote": "giving Jets energy",
+    "question": "reference",
+    "answer": "The New York Jets are an NFL team famous for losing and constantly disappointing their fans, so saying your team has 'Jets energy' means it's hopeless and painful to watch. It's a self-deprecating joke about how badly their fantasy team is doing.",
+    "emoji": null,
+    "origin": "The New York Jets have had a long playoff drought and are a running joke among NFL fans for always finding ways to fail.",
+    "closest": "Like joking that your team has 'Hanwha Eagles energy' in KBO — a team known for years of losing that fans still loyally (and painfully) support.",
+    "confidence": 0.88
+   }
+  ],
+  "c26": [
+   {
+    "comment_id": "c26",
+    "quote": "bragging rights and momentum heading into the New Hampshire primary",
+    "question": "reference",
+    "answer": "Iowa has only a few delegates, but it votes first in the whole primary season. A win there gets huge media attention and makes a candidate look like the frontrunner going into New Hampshire, which votes next. That's why the article says the symbolism matters more than the actual delegate count.",
+    "emoji": null,
+    "origin": "For decades, the Iowa caucuses and the New Hampshire primary have traditionally been the first two contests in US presidential nominations.",
+    "closest": "Like a Korean party's regional rotating primary (지역 순회 경선), where winning the first regions creates momentum and headlines out of proportion to their votes.",
+    "confidence": 0.85
+   }
+  ],
+  "c32": [
+   {
+    "comment_id": "c32",
+    "quote": "lame duck",
+    "question": "reference",
+    "answer": "A \"lame duck\" is a politician whose term is ending and who won't run again, so they have less power but also nothing to lose. The joke is he no longer needs to please voters, so he can speak freely.",
+    "emoji": null,
+    "origin": "Old British stock-market slang for a broke trader, later used in US politics for outgoing officials.",
+    "closest": "Like 레임덕 in Korean politics, though Koreans use it more for a weakened, outgoing president losing control; here it stresses the freedom of having nothing to lose.",
+    "confidence": 0.9
+   }
+  ],
+  "c30": [
+   {
+    "comment_id": "c30",
+    "quote": "My March Madness bracket was busted by the first Thursday",
+    "question": "reference",
+    "answer": "Every March, tons of Americans fill out a bracket predicting every game of the college basketball tournament, often in office or family pools. Saying it was 'busted' on the very first day of games is a self-deprecating joke: their picks were ruined almost immediately, which happens to almost everyone because upsets are so common.",
+    "emoji": null,
+    "origin": "March Madness is the NCAA men's basketball tournament. Its first full round of games starts on a Thursday.",
+    "closest": "",
+    "confidence": 0.93
+   }
+  ],
+  "c34": [
+   {
+    "comment_id": "c34",
+    "quote": "My 401(k) looked at me and said no",
+    "question": "reference",
+    "answer": "A 401(k) is a common American retirement savings account, usually through your job. The joke is that rent is so high they thought about raiding their retirement money, and even that account \"refused,\" because it's too small or there are big penalties for early withdrawal.",
+    "emoji": null,
+    "origin": "Named after section 401(k) of the US tax code, which created these employer retirement plans.",
+    "closest": "퇴직연금 (DC/IRP retirement pension accounts)",
+    "confidence": 0.88
+   }
+  ],
+  "c33": [
+   {
+    "comment_id": "c33",
+    "quote": "Wisconsin doing its swing state thing again",
+    "question": "reference",
+    "answer": "Wisconsin is a famous 'swing state' that flips between parties and is often decided by less than 1%. The commenter is teasing it like a friend who always creates drama, keeping everyone nervous until the very end.",
+    "emoji": null,
+    "origin": "US politics: 'swing states' are the few states with no reliable party majority, so they usually decide presidential elections.",
+    "closest": "Like Chungcheong's role as the 'casting vote' (캐스팅보트) region in Korean elections, where results there often decide the national winner.",
+    "confidence": 0.9
+   }
+  ],
+  "c35": [
+   {
+    "comment_id": "c35",
+    "quote": "but make it fashion",
+    "question": "reference",
+    "answer": "It's a joking phrase that means \"doing something bad or boring, but making it look stylish.\" Here it teases that being broke is being shown off like a trendy look, so it's playful, not mean.",
+    "emoji": null,
+    "origin": "A popular internet meme format, usually linked to drag and fashion culture, as in \"X, but make it fashion.\"",
+    "closest": "",
+    "confidence": 0.85
+   }
+  ],
+  "c39": [],
+  "c38": [
+   {
+    "comment_id": "c38",
+    "quote": "bless your heart",
+    "question": "tone",
+    "answer": "In the American South, this often sounds sweet but is actually a polite insult, here meaning \"wow, that paint job is bad, but at least you tried.\" Coming from a Southern grandma about a DIY job, it's gentle shade, not real praise.",
+    "emoji": null,
+    "origin": "A classic Southern US phrase that can be sincere sympathy but is famous for hiding criticism behind politeness.",
+    "closest": "Like saying \"수고 많으셨네요\" with a slightly pitying smile, where the politeness itself carries the criticism.",
+    "confidence": 0.9
+   }
+  ],
+  "c37": [
+   {
+    "comment_id": "c37",
+    "quote": "Sure, Jan.",
+    "question": "reference",
+    "answer": "It's a sarcastic 'yeah, right, I don't believe you.' The commenter is saying the coworker's 'definitely by Friday' is obviously not going to happen.",
+    "emoji": null,
+    "origin": "From The Brady Bunch Movie (1995): Marcia says it with a fake smile to her sister Jan, who's lying about having a boyfriend. It's now a popular reaction GIF.",
+    "closest": "Like saying '퍽이나 그러겠다' or '네~ 그러시겠죠' with a flat, unconvinced tone.",
+    "confidence": 0.95
+   }
+  ],
+  "c36": [
+   {
+    "comment_id": "c36",
+    "quote": "Wow. Love that for you.",
+    "question": "tone",
+    "answer": "This is deadpan and mostly sarcastic. The flat \"Wow.\" with a period signals fake enthusiasm, like saying \"good for you\" about something that's actually awkward or a bit sad, though it can also be playful support.",
+    "emoji": null,
+    "origin": "\"Love that for you\" became a popular internet phrase partly thanks to Alexis Rose on the TV show Schitt's Creek, and it's often used ironically.",
+    "closest": "Like a dry \"아~ 잘됐네\" said with a flat face, where everyone knows it's not really a congratulation.",
+    "confidence": 0.75
+   }
+  ]
+ }
+}

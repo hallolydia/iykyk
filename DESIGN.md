@@ -274,7 +274,7 @@ Tone: short, warm, a little cheeky. A friend, never a teacher.
 | Tagline | If you know, you know. Now you know. |
 | Logo card (first visit) | IYKYK = If you know, you know. An inside-joke phrase. Now you know. |
 | Loading | Reading like someone who didn't grow up here... |
-| Nothing found | Nothing to decode. You're basically from here now. |
+| Nothing found | Nothing to explain. You're basically from here now. |
 | Got it | Now you know. |
 | I knew this | Look at you. I'll skip this next time. |
 | Still confused | Noted. I'll do better on this one. |

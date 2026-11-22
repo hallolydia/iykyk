@@ -186,7 +186,7 @@
     el.panelTitle.textContent = n === 1 ? "1 thing in this post" : `${n} things in this post`;
 
     if (n === 0) {
-      el.cards.innerHTML = `<div class="card"><p class="phrase">Nothing to decode.</p><p class="answer">You're basically from here now.</p></div>`;
+      el.cards.innerHTML = `<div class="card"><p class="phrase">Nothing to explain.</p><p class="answer">You're basically from here now.</p></div>`;
     } else {
       el.cards.innerHTML = state.items.map(cardHtml).join("");
     }

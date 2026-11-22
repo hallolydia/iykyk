@@ -38,6 +38,7 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 | D24 | Speed vs. accuracy: measure before trading | Decided ★ |
 | D25 | Sound: the track name now, speech later | Decided |
 | D26 | More comments, more cards, but one card per meme | Decided |
+| D27 | English comments only; skip other languages | Decided ★ |
 
 ---
 
@@ -224,3 +225,13 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 
 - Scrolling the comments reads only the newly visible ones and adds cards under the existing ones. No total limit; still at most 2 per comment.
 - If the same phrase shows up in many comments (💀 ten times), it's one card ("In 10 comments"), highlighted everywhere. Many memes means more help, but the panel stays quiet.
+
+## D27. English comments only; skip other languages ★
+
+- **Problem:** Instagram posts also carry Korean, Arabic and other comments. Should IYKYK explain those too?
+- **Considered:** explain every language; explain only the reader's own language; leave non-English comments alone.
+- **Chose:** leave them alone. Comments that are mostly another script are not sent to the AI. "What I read" says how many were skipped.
+- **Why:** The promise is the US cultural context hidden in English comments. A Korean reader already knows Korean memes. An explanation of an Arabic joke I can't check is worse than none, and the test set only covers English. It also makes reading faster and cheaper.
+- **Line for the pitch:** "I skip comments that aren't in English on purpose. A wrong explanation is worse than none."
+- **Related:** D19 (explanation language is a setting). The `EN | 한` switch changes the language of the explanation, not which comments get read.
+

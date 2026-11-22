@@ -9,6 +9,7 @@
     get(k, f) { try { const v = localStorage.getItem("iykyk." + k); return v ? JSON.parse(v) : f; } catch { return f; } },
     set(k, v) { try { localStorage.setItem("iykyk." + k, JSON.stringify(v)); } catch {} }
   };
+  const lang = () => store.get("lang", "en"); // explanation language: en | ko
   const norm = (s) => String(s || "").trim().toLowerCase();
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const $ = (id) => document.getElementById(id);
@@ -22,9 +23,15 @@
   };
 
   let toastTimer;
-  function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 1600); }
-  function updateTop() { $("nyk-count").textContent = state.saved.filter((s) => s.status !== "confused").length; }
-  function show(which) { ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results"].forEach((id) => ($(id).hidden = id !== which)); }
+  function toast(t, ms = 1600) { const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), ms); }
+  let lastCount = null;
+  function updateTop() {
+    const n = state.saved.filter((s) => s.status === "got").length;
+    $("nyk-count").textContent = n;
+    if (lastCount !== null && n > lastCount) { const b = $("nyk-btn"); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); } // the number visibly jumps
+    lastCount = n;
+  }
+  function show(which) { ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results", "panel-saved"].forEach((id) => ($(id).hidden = id !== which)); }
   function error(msg) { show("panel-start"); $("err").hidden = false; $("err").textContent = msg; }
 
   async function tab() {
@@ -43,10 +50,10 @@
     let got = await toPage({ type: "read" });
     for (let k = 0; k < 3 && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
-    if (!got.comments.length) return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet.");
+    if (!got.comments.length) { toPage({ type: "point" }); return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
     state.comments = got.comments;
-    state.url = got.url;
-    const cached = cache.get(got.url);
+    state.url = got.url; state.skipped = got.skipped || 0;
+    const cached = cache.get(got.url + "|" + lang());
     if (cached) { applyRules(cached); render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); return; }
     show("panel-loading");
 
@@ -62,11 +69,11 @@
     try {
       const res = await fetch(API, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", images, audio }, countries: places(), country: state.country, known: [...state.known], explainIn: "en" })
+        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", images, audio }, countries: places(), country: state.country, known: [...state.known], explainIn: lang() })
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Couldn't read this one.");
-      cache.set(got.url, data);
+      cache.set(got.url + "|" + lang(), data);
       applyRules(data);
       render();
       await toPage({ type: "highlight", items: state.items, focus: 0 });
@@ -79,20 +86,63 @@
   }
 
   // append = false: a new post. true: new comments from scrolling, added under the existing cards.
+  // Split into up to 3 batches read in parallel: less to read per call, and the first batch to finish shows up first.
+  let liveJobs = 0, liveTimer;
+  function live(text, ms) {
+    const el = $("live"); el.hidden = false; $("live-text").textContent = text;
+    el.classList.toggle("busy", !ms);
+    clearTimeout(liveTimer);
+    if (ms) liveTimer = setTimeout(() => { el.hidden = true; }, ms);
+  }
   async function readMore(fresh) {
+    const size = Math.max(4, Math.ceil(fresh.length / 3));
+    const batches = [];
+    for (let i = 0; i < fresh.length; i += size) batches.push(fresh.slice(i, i + size));
+    liveJobs += batches.length;
+    const startCount = state.items.length;
+    live(`Reading ${fresh.length} new comment${fresh.length === 1 ? "" : "s"}…`);
+    await Promise.all(batches.map(async (batch) => {
+      try {
+        const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ post: { comments: batch, caption: "", scene: "" }, countries: places(), known: [...state.known], explainIn: lang() }) });
+        if (!res.ok) return;
+        const data = await res.json();
+        state.comments = state.comments.concat(batch);
+        const before = state.items.length;
+        applyRules(data, batch, true);
+        const keep = state.focus;
+        const box = document.querySelector(".panel-scroll"), y = box ? box.scrollTop : 0;
+        quietScroll = true; render(); setFocus(keep, false); quietScroll = false;
+        if (box) box.scrollTop = y; // stay exactly where the reader was
+        document.querySelectorAll("#cards .card").forEach((c, i) => { if (i >= before) c.classList.add("fresh"); });
+        await toPage({ type: "highlight", items: state.items, focus: keep });
+      } catch {} finally { liveJobs--; }
+    }));
+    if (liveJobs > 0) return; // another read is still running: keep the busy pill
+    const added = state.items.length - startCount;
+    live(added > 0 ? `${added} new card${added === 1 ? "" : "s"} added` : "Nothing new to explain.", 2600);
+  }
+
+  // The reader selected words the AI missed: explain just that phrase and add it as a card.
+  async function askAbout({ id, comment, quote }) {
+    const same = state.items.find((x) => norm(x.quote) === norm(quote));
+    if (same) { setFocus(state.items.indexOf(same), true); live("That one is already a card.", 2200); return; }
+    live(`Explaining “${quote.length > 28 ? quote.slice(0, 28) + "…" : quote}”…`);
     try {
       const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post: { comments: fresh, caption: "", scene: "" }, countries: places(), known: [...state.known], explainIn: "en" }) });
-      if (!res.ok) return;
-      const data = await res.json();
-      state.comments = state.comments.concat(fresh);
-      const before = state.items.length;
-      applyRules(data, fresh, true);
-      const keep = state.focus;
-      render(); setFocus(keep, false);
-      await toPage({ type: "highlight", items: state.items, focus: keep });
-      if (state.items.length > before) toast(`${state.items.length - before} more below.`);
-    } catch {}
+        body: JSON.stringify({ post: { comments: [{ id, text: comment }], caption: "", scene: "" }, countries: places(), known: [], explainIn: lang(), asked: quote }) });
+      const data = await res.json().catch(() => ({}));
+      const it = res.ok && (data.items || []).find((x) => x.comment_id === id && comment.includes(x.quote));
+      if (!it) return live("Couldn't explain that one. Try selecting the whole phrase.", 3000);
+      if (!state.comments.some((c) => c.id === id)) state.comments.push({ id, text: comment });
+      state.items.push(Object.assign({}, it, { check: (it.confidence ?? 1) < SHOW_AT, comment_ids: [id], asked: true, lang: lang() }));
+      render();
+      const last = state.items.length - 1;
+      document.querySelectorAll("#cards .card")[last]?.classList.add("fresh");
+      await toPage({ type: "highlight", items: state.items, focus: last });
+      setFocus(last, true);
+      live("Card added ↓", 2200);
+    } catch { live("Couldn't explain that one.", 3000); }
   }
 
   function applyRules(result, comments = state.comments, append = false) {
@@ -107,7 +157,7 @@
       // the same meme in many comments = one card, highlighted everywhere
       const same = state.items.find((x) => norm(x.quote) === key) || state.hidden.find((x) => norm(x.quote) === key);
       if (same) { if (!same.comment_ids.includes(it.comment_id)) same.comment_ids.push(it.comment_id); return; }
-      const item = Object.assign({}, it, { check: it.confidence < SHOW_AT, comment_ids: [it.comment_id] });
+      const item = Object.assign({}, it, { check: it.confidence < SHOW_AT, comment_ids: [it.comment_id], lang: lang() });
       (state.known.has(key) ? state.hidden : state.items).push(item);
     });
     if (!append) {
@@ -117,21 +167,22 @@
   }
 
   function render() {
-    show("panel-results");
+    if ($("panel-saved").hidden) show("panel-results"); else prevScreen = "panel-results";
     const n = state.items.length;
     $("count-big").textContent = n;
     $("count-text").textContent = n === 1 ? "thing you might miss." : "things you might miss.";
     $("hidden-text").textContent = state.hidden.length ? `${state.hidden.length} hidden because you already know ${state.hidden.length === 1 ? "it" : "them"}.` : "";
     $("panel-title").textContent = n === 1 ? "1 thing in this post" : `${n} things in this post`;
-    $("cards").innerHTML = n ? state.items.map(card).join("") : `<div class="card"><p class="phrase">Nothing to decode.</p><p class="answer">You're basically from here now.</p></div>`;
+    $("cards").innerHTML = n ? state.items.map(card).join("") : `<div class="card"><p class="phrase">Nothing to explain.</p><p class="answer">You're basically from here now.</p></div>`;
     const hc = $("hidden-card");
     hc.hidden = !state.hidden.length;
     hc.innerHTML = `<b>${state.hidden.length} hidden · you already know ${state.hidden.length === 1 ? "it" : "them"}</b><p>${state.hidden.map((h) => esc(h.quote)).join(" · ")}</p>`;
     $("done").hidden = true;
     // transparency: show exactly what was read (text only, no names)
-    $("read-sum").textContent = `What I read (${state.comments.length})`;
+    $("read-sum").textContent = `What I read (${state.comments.length})` + (state.skipped ? ` · skipped ${state.skipped} not in English` : "");
     $("read-items").innerHTML = state.comments.map((c) => `<li>${esc(c.text)}</li>`).join("");
     setFocus(0, false);
+    if (n && !store.get("askTipSeen", false)) { store.set("askTipSeen", true); setTimeout(() => toast("Missed one? Select it.", 3200), 1200); }
   }
 
   function card(it, i) {
@@ -148,35 +199,99 @@
   }
 
   const cardEl = (i) => document.querySelector(`.card[data-i="${i}"]`);
+  let quietScroll = false; // true while new cards are added in the background: never move the reader's place
   function setFocus(i, scrollPage = true) {
     if (!state.items.length) return;
     state.focus = Math.max(0, Math.min(i, state.items.length - 1));
     document.querySelectorAll(".card").forEach((c) => c.classList.toggle("on", +c.dataset.i === state.focus));
-    cardEl(state.focus)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (!quietScroll) cardEl(state.focus)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     toPage({ type: "focus", i: state.focus, scroll: scrollPage });
   }
 
   function save(it, status) {
     state.saved = state.saved.filter((s) => norm(s.phrase) !== norm(it.quote));
-    state.saved.unshift({ phrase: it.quote, answer: it.answer, question: it.question, status, source: "Instagram", date: new Date().toISOString() });
+    state.saved.unshift({ phrase: it.quote, answer: it.answer, question: it.question, status, source: "Instagram", url: state.url || "", date: new Date().toISOString() });
     store.set("saved", state.saved); updateTop();
   }
 
+  function unsave(it) { state.saved = state.saved.filter((x) => norm(x.phrase) !== norm(it.quote)); store.set("saved", state.saved); updateTop(); }
   function act(i, kind) {
-    const it = state.items[i]; if (!it || it.done) return;
+    const it = state.items[i]; if (!it) return;
     const c = cardEl(i);
-    if (kind === "confused") { save(it, "confused"); const s = c.querySelector(".status"); s.hidden = false; s.textContent = "Noted. I'll do better on this one."; return; }
-    it.done = kind; c.classList.add("handled");
-    if (kind === "got") { save(it, "got"); toast("Now you know."); }
-    if (kind === "knew") { state.known.add(norm(it.quote)); store.set("known", [...state.known]); save(it, "knew"); toast("Look at you. I'll skip this next time."); toPage({ type: "highlight", items: state.items, focus: state.focus }); }
+    const say = (html) => { const el = c.querySelector(".status"); el.hidden = false; el.innerHTML = html; };
+    const undoBtn = ' · <button class="link" data-act="undo" type="button">Undo</button>';
+    if (kind === "undo") {
+      if (!it.done && !it.confusedOn) return;
+      const was = it.done || "confused";
+      it.done = null; it.confusedOn = false; c.classList.remove("handled"); c.querySelector(".status").hidden = true;
+      unsave(it);
+      if (was === "knew") { state.known.delete(norm(it.quote)); store.set("known", [...state.known]); }
+      $("done").hidden = true;
+      toPage({ type: "highlight", items: state.items, focus: i });
+      setFocus(i, true); toast("Undone.");
+      return;
+    }
+    if (it.done) return;
+    if (kind === "confused") {
+      if (it.confusedOn) return;
+      it.confusedOn = true; save(it, "confused");
+      say('<span class="ok">✓ Marked confused</span>' + undoBtn); toast("Noted. I'll do better on this one.");
+      return;
+    }
+    it.done = kind; it.confusedOn = false; c.classList.add("handled");
+    if (kind === "got") { save(it, "got"); say("✓ Added to Now you know" + undoBtn); toast("Now you know."); }
+    if (kind === "knew") { state.known.add(norm(it.quote)); store.set("known", [...state.known]); save(it, "knew"); say("✓ Hidden from now on" + undoBtn); toast("Look at you. I'll skip this next time."); toPage({ type: "highlight", items: state.items, focus: state.focus }); }
     let nx = -1; for (let k = i + 1; k < state.items.length; k++) if (!state.items[k].done) { nx = k; break; }
     if (nx === -1) $("done").hidden = false; else setFocus(nx);
   }
 
+  // ---- "Now you know": everything you pressed Got it on, plus what you said you already knew ----
+  let prevScreen = "panel-start";
+  function renderSaved() {
+    const good = state.saved.filter((x) => x.status === "got"), knew = state.saved.filter((x) => x.status === "knew"), bad = state.saved.filter((x) => x.status === "confused");
+    const link = (x) => /^https:\/\/www\.instagram\.com\//.test(x.url || "") ? `<a class="slink" href="${esc(x.url)}" target="_blank" rel="noopener">View the post ↗</a>` : "";
+    const row = (x) => `<li class="srow"><div><p class="sphrase">${esc(x.phrase)}</p><p class="sans">${esc(x.answer || "")}</p>${link(x)}</div><button class="link" data-s="${state.saved.indexOf(x)}" type="button">Remove</button></li>`;
+    const chip = (x) => `<span class="hchip">${esc(x.phrase)}<button data-s="${state.saved.indexOf(x)}" type="button" title="Show this again" aria-label="Show ${esc(x.phrase)} again">×</button></span>`;
+    $("saved-count").textContent = good.length;
+    $("saved-list").innerHTML = good.length ? good.map(row).join("") : `<li class="sempty"><b>Nothing here yet.</b><br>Press <b>Got it</b> on a card and it lands here.</li>`;
+    $("knew-wrap").hidden = !knew.length;
+    $("knew-sum").textContent = `You already knew (${knew.length})`;
+    $("knew-list").innerHTML = knew.map(chip).join("");
+    $("confused-wrap").hidden = !bad.length;
+    $("confused-list").innerHTML = bad.map(row).join("");
+  }
+  function openSaved() {
+    const cur = ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results"].find((id) => !$(id).hidden);
+    if (cur) prevScreen = cur;
+    renderSaved(); show("panel-saved");
+  }
+  $("nyk-btn").addEventListener("click", () => { $("panel-saved").hidden ? openSaved() : show(prevScreen); });
+  $("saved-back").addEventListener("click", () => show(prevScreen));
+  $("panel-saved").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-s]"); if (!b) return;
+    const x = state.saved[+b.dataset.s]; if (!x) return;
+    state.saved.splice(+b.dataset.s, 1); store.set("saved", state.saved);
+    if (x.status === "knew") { state.known.delete(norm(x.phrase)); store.set("known", [...state.known]); }
+    const live = state.items.find((it) => norm(it.quote) === norm(x.phrase));
+    if (live) { live.done = null; live.confusedOn = false; }
+    updateTop(); renderSaved();
+    toPage({ type: "highlight", items: state.items, focus: state.focus });
+  });
+
   // ---- events ----
   $("read-btn").addEventListener("click", read);
   $("close-btn").addEventListener("click", async () => { const t = await tab(); if (t) chrome.tabs.sendMessage(t.id, { type: "close" }).catch(() => {}); });
-  $("again-btn").addEventListener("click", read);
+  // Read again on the same post: keep every answer we already have and read only the comments that are new.
+  async function readAgain() {
+    const t = await tab();
+    if (!t || !state.url || !state.items.length) return read();
+    state.tabId = t.id;
+    const got = await toPage({ type: "read", fresh: false });
+    if (!got || got.url !== state.url) return read(); // a different post: start over
+    if (!got.comments.length) return live("No new comments since the last read.", 2800);
+    readMore(got.comments);
+  }
+  $("again-btn").addEventListener("click", readAgain);
   // ---- Where you grew up: up to 3 places, presets + type any country ----
   const PRESETS = [["🇰🇷", "Korea"], ["🇯🇵", "Japan"], ["🇨🇳", "China"], ["🇮🇳", "India"], ["🇻🇳", "Vietnam"], ["🇧🇷", "Brazil"], ["🇲🇽", "Mexico"], ["🇫🇷", "France"]];
   const MAX_PLACES = 3;
@@ -216,7 +331,7 @@
       + `<button class="tchip skip" type="button" data-any aria-pressed="${places().length === 0}">Skip · explain for anyone</button>`;
   }
   function paintPickers() {
-    $("for-who").textContent = places().length ? `someone raised in ${placesText()}` : "anyone raised outside the US";
+    $("for-who").innerHTML = places().length ? `someone<br>raised in ${esc(placesText())}` : "anyone<br>raised outside the US";
     $("tchips").innerHTML = pickerHtml();
     $("first-chips").innerHTML = pickerHtml();
   }
@@ -243,6 +358,37 @@
     });
   });
 
+  // EN | 한: which language the explanations are written in (applies from the next read)
+  const paintLang = () => document.querySelectorAll("#lang-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang())));
+  async function switchLang(to) {
+    // every card keeps its text in each language it has been shown in, so switching back is instant
+    const FIELDS = (it) => ({ answer: it.answer || "", origin: it.origin || "", closest: it.closest || "" });
+    state.items.forEach((it) => { it.tx = it.tx || {}; it.tx[it.lang || "en"] = it.tx[it.lang || "en"] || FIELDS(it); });
+    const need = state.items.map((it, i) => ({ it, i })).filter(({ it }) => !it.tx[to]);
+    const apply = () => {
+      state.items.forEach((it) => { if (it.tx[to]) { Object.assign(it, it.tx[to]); it.lang = to; } });
+      const box = document.querySelector(".panel-scroll"), y = box ? box.scrollTop : 0, keep = state.focus;
+      quietScroll = true; render(); setFocus(keep, false); quietScroll = false;
+      if (box) box.scrollTop = y;
+      toPage({ type: "highlight", items: state.items, focus: keep });
+    };
+    if (!need.length) return apply();
+    live(to === "ko" ? "Translating to Korean…" : "Translating to English…");
+    try {
+      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ translate: { to, items: need.map(({ it, i }) => ({ id: String(i), ...it.tx[it.lang || "en"] })) } }) });
+      const data = await res.json().catch(() => ({}));
+      if (!(data.items || []).length) throw new Error("no translation");
+      (data.items || []).forEach((t) => { const it = state.items[+t.id]; if (it) it.tx[to] = { answer: t.answer, origin: t.origin, closest: t.closest }; });
+      apply(); live("Done", 1200);
+    } catch { live("Couldn't translate. Try again.", 3000); }
+  }
+  $("lang-seg").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-lang]"); if (!b || b.dataset.lang === lang()) return;
+    store.set("lang", b.dataset.lang); paintLang();
+    if (!$("panel-results").hidden && state.items.length) switchLang(b.dataset.lang);
+  });
+  paintLang();
   $("tune-open").addEventListener("click", () => { const p = $("tune-pick"); p.hidden = !p.hidden; $("tune-open").textContent = p.hidden ? "Change" : "Done"; });
   $("country-next").addEventListener("click", () => {
     store.set("countryAsked", true); savePlaces(); show("panel-known");
@@ -270,6 +416,7 @@
 
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
   if (IS_EXT) chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === "ask") { askAbout(msg); return; }
     if (msg.type === "more" && !$("panel-results").hidden && autoOn()) { readMore(msg.comments); return; }
     if (msg.type === "navigated") {
       state.items = [];

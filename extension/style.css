@@ -94,7 +94,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .card:focus-visible{outline:none}
 .card.on{box-shadow:0 0 0 1.5px var(--ink),0 8px 24px rgba(0,0,0,.06)}
 .card.on:before,.card.hover:before{opacity:1}
-.card.handled{opacity:.55}
+.card.handled>*:not(.status){opacity:.5}
 .row1{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .badge{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink);background:var(--lime);font-size:12px;font-weight:600;line-height:19px;text-align:center;flex:none}
 .badge.check{background:var(--amber-bg)}
@@ -131,3 +131,54 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .toast.show{opacity:1;transform:rotate(-5deg) scale(1)}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* live pill: shows something is being read (or just finished) while you scroll Instagram */
+.live{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:10px;background:#fff;border:1.5px dashed var(--ink);border-radius:999px;padding:9px 16px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;font-weight:600;letter-spacing:.02em;white-space:nowrap;box-shadow:var(--shadow);animation:livein .2s ease-out}
+.live:not(.busy) .dot:before{animation:none;width:10px;height:10px}
+@keyframes livein{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+/* a card that just arrived glows lime once */
+.card.fresh{animation:fresh 1.6s ease-out 1}
+@keyframes fresh{0%,35%{box-shadow:0 0 0 3px var(--lime),var(--shadow)}100%{box-shadow:var(--shadow)}}
+
+/* quiet hint: how to ask about something the AI missed */
+.asktip{margin:18px 4px 4px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub)}
+.asktip b{color:var(--ink);font-weight:600;background:linear-gradient(transparent 62%,var(--lime) 62%)}
+
+/* undo row on a card you already answered */
+.status .ok{color:var(--ink);font-weight:600;background:linear-gradient(transparent 58%,var(--lime) 58%)}
+.status .link{margin-left:2px}
+/* the Now you know pill is a button, and its number jumps when it goes up */
+button.pill{border:0;cursor:pointer;font-family:inherit;color:inherit;transition:box-shadow .15s}
+button.pill:hover{box-shadow:0 0 0 1.5px var(--ink)}
+button.pill.pop b{animation:nykpop .5s cubic-bezier(.3,1.6,.5,1)}
+button.pill.pop{animation:nykflash .9s ease-out}
+@keyframes nykpop{0%{transform:scale(1)}40%{transform:scale(1.7)}100%{transform:scale(1)}}
+@keyframes nykflash{0%{background:var(--lime)}100%{background:#fff}}
+/* Now you know list */
+.saved-h{font-family:'Bagel Fat One','Inter Tight',sans-serif;font-weight:400;font-size:28px;line-height:1.1;margin:14px 0 18px}
+.saved-h em{font-style:normal;display:block}
+.saved-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:26px 4px 10px}
+.saved-list{list-style:none;margin:0;padding:0}
+.srow{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;background:#fff;border-radius:18px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.sphrase{font-family:'Inter Tight';font-weight:800;font-size:17px;margin:0 0 4px}
+.sans{font-size:14px;line-height:1.45;color:var(--sub);margin:0}
+.stag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;background:#F0F0EE;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px;color:var(--sub)}
+.sempty{background:#fff;border:1.5px dashed var(--line);border-radius:18px;padding:22px;text-align:center;color:var(--sub);line-height:1.6}
+
+/* EN | 한: small two-part switch in the "Explaining for" row */
+.tune-row{align-items:center;gap:10px}
+.seg{display:inline-flex;background:#F0F0EE;border-radius:999px;padding:2px;flex:none}
+.seg button{border:0;background:transparent;font:600 12px 'Inter Tight',sans-serif;color:var(--sub);height:22px;min-width:30px;padding:0 9px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+
+/* Now you know: link to the original post, and the quiet "Hidden for you" shelf */
+.slink{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
+.slink:hover{color:var(--ink)}
+.hid{margin:22px 4px 0}
+.hid summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em}
+.hchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hchip{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:5px 6px 5px 12px;font-size:13.5px;box-shadow:var(--shadow)}
+.hchip button{border:0;background:#F0F0EE;border-radius:50%;width:20px;height:20px;line-height:1;cursor:pointer;color:var(--sub);font-size:13px}
+.hchip button:hover{background:var(--lime);color:var(--ink)}
+.hhint{font-size:12.5px;color:var(--sub);margin:12px 0 0}
+.hid{margin-top:28px}

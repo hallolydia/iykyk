@@ -38,10 +38,18 @@
     return t.replace(/\s+/g, " ").replace(/^[\s·•]+|[\s·•]+$/g, "").trim();
   }
 
+  // IYKYK explains English comments only. Text that is mostly another script (Korean, Arabic...) is skipped.
+  const skipped = new Set();
+  function mostlyEnglish(t) {
+    const letters = (t.match(/\p{L}/gu) || []).length;
+    if (letters < 2) return true; // emoji-only or very short: leave as is
+    return (t.match(/[A-Za-z]/g) || []).length / letters >= 0.4;
+  }
+
   // fresh = true: start over (new post). false: keep what was read, return only new comments.
   function readComments(fresh = true) {
     const root = container();
-    if (fresh) found = [];
+    if (fresh) { found = []; skipped.clear(); }
     const seen = found.map((f) => f.text);
     const added = [];
     root.querySelectorAll('span[dir="auto"], h1[dir="auto"]').forEach((el) => {
@@ -49,6 +57,7 @@
       const text = ownText(el);
       if (text.length < 2 || UI.test(text) || TIME.test(text) || /^[\d.,]+[km만천]?$/i.test(text)) return;
       if (!visible(el) || seen.some((s) => s.includes(text))) return;
+      if (!mostlyEnglish(text)) { skipped.add(text); return; }
       seen.push(text);
       const item = { id: "c" + (found.length + 1), el, text };
       found.push(item); added.push(item);
@@ -64,7 +73,7 @@
     scrollTimer = setTimeout(() => {
       const fresh = readComments(false);
       if (fresh.length) chrome.runtime.sendMessage({ type: "more", comments: fresh }).catch(() => {});
-    }, 1200);
+    }, 300);
   }, true);
 
   // The track playing under the post. Instagram shows it as a link to the audio page.
@@ -132,9 +141,136 @@
 
   function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
 
+  // ---- point at Instagram's comment icon when the comments are closed ----
+  let pointEl = null;
+  function unpoint() { if (pointEl) { pointEl.remove(); pointEl = null; } }
+  function pointAtComments() {
+    unpoint();
+    const svg = [...document.querySelectorAll("svg[aria-label]")].find((x) => /^(comment|댓글)$/i.test(x.getAttribute("aria-label")) && visible(x));
+    if (!svg) return false;
+    const r = svg.getBoundingClientRect(); // the icon itself, not the number under it
+    const size = 44, cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    pointEl = document.createElement("div");
+    pointEl.id = "iykyk-point";
+    pointEl.style.cssText = "position:fixed;z-index:2147483645;pointer-events:none;left:0;top:0;width:0;height:0";
+    // a plain lime circle behind the icon, like a highlighter. It stays still.
+    pointEl.innerHTML = `
+      <style>@keyframes iykyk-nudge{0%,100%{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(6px) rotate(-3deg)}}@media (prefers-reduced-motion:reduce){#iykyk-point div{animation:none!important}}</style>
+      <div style="position:fixed;left:${cx - size / 2}px;top:${cy - size / 2}px;width:${size}px;height:${size}px;border-radius:50%;background:#D4FF3A;mix-blend-mode:multiply"></div>
+      <div style="position:fixed;right:${innerWidth - (cx - size / 2) + 3}px;top:${cy - 11}px;background:#111;color:#fff;border-radius:999px;padding:4px 10px;font:800 11px 'Inter Tight',system-ui,sans-serif;white-space:nowrap;transform:rotate(-3deg);animation:iykyk-nudge 1.8s ease-in-out infinite">Open comments</div>`;
+    document.documentElement.appendChild(pointEl);
+    // goes away on the next click anywhere, or after 12 seconds
+    document.addEventListener("click", unpoint, { once: true, capture: true });
+    setTimeout(unpoint, 12000);
+    return true;
+  }
+
+  // ---- "Ask IYKYK": select words the AI missed, a small lime sticker appears next to them ----
+  let askBtn = null, askPick = null;
+  function hideAsk() { if (askBtn) askBtn.style.display = "none"; askPick = null; }
+  function showAsk(rect, pick) {
+    if (!askBtn) {
+      askBtn = document.createElement("button");
+      askBtn.id = "iykyk-ask"; askBtn.type = "button"; askBtn.textContent = "Ask IYKYK";
+      askBtn.style.cssText = "position:fixed;z-index:2147483646;background:#D4FF3A;color:#111;border:1.5px solid #111;border-radius:999px;padding:6px 13px;font:800 13px 'Inter Tight',system-ui,sans-serif;cursor:pointer;transform:rotate(-3deg);box-shadow:2px 2px 0 #111;animation:iykyk-pop .18s cubic-bezier(.3,1.6,.5,1)";
+      const st = document.createElement("style");
+      st.textContent = "@keyframes iykyk-pop{from{opacity:0;transform:rotate(-3deg) scale(.6)}to{opacity:1;transform:rotate(-3deg) scale(1)}}";
+      document.documentElement.appendChild(st);
+      askBtn.addEventListener("mousedown", (e) => e.preventDefault()); // keep the selection
+      askBtn.addEventListener("click", () => {
+        if (askPick) chrome.runtime.sendMessage({ type: "ask", id: askPick.id, comment: askPick.comment, quote: askPick.quote }).catch(() => {});
+        hideAsk(); getSelection().removeAllRanges();
+      });
+      document.documentElement.appendChild(askBtn);
+    }
+    askPick = pick;
+    const maxLeft = document.documentElement.clientWidth - 120;
+    askBtn.style.left = Math.max(8, Math.min(rect.left, maxLeft)) + "px";
+    askBtn.style.top = Math.min(rect.bottom + 8, innerHeight - 40) + "px";
+    askBtn.style.display = "block";
+  }
+  document.addEventListener("mouseup", (e) => {
+    if (!panelOpen() || (askBtn && e.target === askBtn)) return;
+    setTimeout(() => {
+      const sel = getSelection();
+      if (!sel || sel.isCollapsed || !sel.rangeCount) return hideAsk();
+      const quote = sel.toString().replace(/\s+/g, " ").trim();
+      const range = sel.getRangeAt(0);
+      if (quote.length < 2 || quote.length > 140 || (range.commonAncestorContainer.parentElement || range.commonAncestorContainer).closest?.("#iykyk-panel")) return hideAsk();
+      let f = found.find((c) => c.el.contains(range.commonAncestorContainer));
+      if (!f) { readComments(false); f = found.find((c) => c.el.contains(range.commonAncestorContainer)); }
+      if (!f || !f.text.includes(quote)) return hideAsk();
+      showAsk(range.getBoundingClientRect(), { id: f.id, comment: f.text, quote });
+    }, 0);
+  }, true);
+  document.addEventListener("selectionchange", () => { const s = getSelection(); if (!s || s.isCollapsed) hideAsk(); });
+  document.addEventListener("scroll", hideAsk, true);
+
   // ---- the iykyk panel: an extension page in a frame on the right, over the page ----
   let frameBox = null;
+  // make room: the page gets narrower than the panel's 400px, and if Instagram's comment box still doesn't fit,
+  // the page is scaled down a little so there are 20px between the comment box and the panel.
+  const PANEL_W = 400, GAP = 20;
+  let shiftedCard = null;
+  function unshift() { if (shiftedCard) { shiftedCard.style.translate = ""; shiftedCard = null; } }
+  function fitRoom() {
+    const st = document.getElementById("iykyk-room");
+    if (!st) return;
+    unshift();
+    const keep = "overflow-x:hidden!important";
+    st.textContent = `html{width:calc(100% - ${PANEL_W}px)!important;${keep}}`; // measure without any scaling
+    const limit = innerWidth - PANEL_W - GAP;
+    const input = [...document.querySelectorAll("textarea, [contenteditable='true']")].find((x) => !x.closest("#iykyk-panel") && visible(x));
+    const f = found.find((c) => c.el.isConnected && visible(c.el));
+    const anchor = input || (f && f.el);
+    const round = (n) => parseFloat(getComputedStyle(n).borderTopRightRadius) >= 8;
+
+    // Layout A: the video and the comment box live together. Find the smallest box that holds both and, if it fits,
+    // slide only that box so its right edge is exactly 20px from the panel. The page below it stays put, so nothing gets cut.
+    const video = [...document.querySelectorAll("video")].find((v) => visible(v) && !v.closest("#iykyk-panel"));
+    let card = null;
+    if (input && video) {
+      for (let n = input; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+        if (n.contains(video)) { if (n.getBoundingClientRect().width >= 400) card = n; break; }
+      }
+    }
+    if (card) {
+      const r = card.getBoundingClientRect();
+      if (r.width <= limit - 8) { // fits: move it
+        card.style.translate = `${Math.round(limit - r.right)}px 0px`;
+        shiftedCard = card;
+        return;
+      }
+      // too wide to fit even beside the panel: fall through and scale the page down
+    }
+
+    // Layout B: the comment box opens separately next to the video. Measure it and scale the page only if it would not fit.
+    let right = 0;
+    if (anchor) {
+      for (let n = anchor; n && n !== document.body; n = n.parentElement) {
+        const r = n.getBoundingClientRect();
+        if (r.width >= 300 && r.width <= 720 && round(n)) { right = r.right; break; }
+      }
+      if (!right) right = anchor.getBoundingClientRect().right + 70;
+    }
+    const z = right > limit ? Math.max(0.75, limit / right) : 1;
+    if (z < 1) st.textContent = `html{zoom:${z}!important;width:${(innerWidth - PANEL_W) / z}px!important;${keep}}`;
+  }
+  function makeRoom(on) {
+    let st = document.getElementById("iykyk-room");
+    if (on && !st) {
+      st = document.createElement("style");
+      st.id = "iykyk-room";
+      document.documentElement.appendChild(st);
+      fitRoom();
+      setTimeout(fitRoom, 400); setTimeout(fitRoom, 1500); // Instagram lays out late
+    } else if (!on && st) { unshift(); st.remove(); }
+    setTimeout(() => window.dispatchEvent(new Event("resize")), 50); // tell Instagram to re-layout
+  }
+  let fitTimer;
+  window.addEventListener("resize", () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitRoom, 250); });
   function openPanel() {
+    makeRoom(true);
     if (frameBox) { frameBox.style.display = "block"; return; }
     frameBox = document.createElement("div");
     frameBox.id = "iykyk-panel";
@@ -146,16 +282,17 @@
     frameBox.appendChild(f);
     document.documentElement.appendChild(frameBox);
   }
-  function closePanel() { if (frameBox) frameBox.style.display = "none"; clear(); }
+  function closePanel() { if (frameBox) frameBox.style.display = "none"; makeRoom(false); hideAsk(); unpoint(); clear(); }
   function panelOpen() { return !!frameBox && frameBox.style.display !== "none"; }
 
   chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
     if (msg.type === "audio") { reply({ audio: readAudio() }); }
     else if (msg.type === "toggle") { panelOpen() ? closePanel() : openPanel(); reply({ ok: true }); }
     else if (msg.type === "close") { closePanel(); reply({ ok: true }); }
-    else if (msg.type === "read") reply({ comments: readComments(), url: location.href });
+    else if (msg.type === "read") reply({ comments: readComments(msg.fresh !== false), url: location.href, skipped: skipped.size });
     else if (msg.type === "highlight") reply({ drawn: highlight(msg.items, msg.focus) });
     else if (msg.type === "focus") { focus(msg.i, msg.scroll); reply({ ok: true }); }
+    else if (msg.type === "point") { reply({ pointed: pointAtComments() }); }
     else if (msg.type === "clear") { clear(); reply({ ok: true }); }
     return false;
   });

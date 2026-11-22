@@ -172,7 +172,7 @@ Tone: a friend who grew up here, explaining over text. Short, warm, a little che
 |---|---|
 | Tagline | If you know, you know. Now you know. |
 | Loading | Reading like someone who didn't grow up here... |
-| Nothing found | Nothing to decode. You're basically from here now. |
+| Nothing found | Nothing to explain. You're basically from here now. |
 | Got it | Now you know. |
 | I knew this | Look at you. I'll skip this next time. |
 | Needs checking | Even I'm not sure about this one. |
