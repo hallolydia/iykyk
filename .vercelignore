@@ -1,0 +1,5 @@
+.env
+.env.*
+node_modules
+mockups
+.DS_Store

@@ -108,9 +108,33 @@
   }
 
   // ---------- analysis ----------
-  // For now this returns the saved sample result. The live AI call plugs in here.
-  function analyze(p) {
-    return new Promise((resolve) => setTimeout(() => resolve(p.result), 1100));
+  // Calls the live AI. If it fails, shows the saved example and says so.
+  async function analyze(p) {
+    const slow = setTimeout(() => { $("loading-text").textContent = "Still reading… jokes take a second."; }, 8000);
+    try {
+      const ctrl = new AbortController();
+      const kill = setTimeout(() => ctrl.abort(), 60000);
+      const res = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: ctrl.signal,
+        body: JSON.stringify({
+          post: { comments: p.comments.map(({ id, text }) => ({ id, text })), caption: p.caption, scene: p.scene },
+          country: state.country, known: [...state.known], explainIn: "en"
+        })
+      });
+      clearTimeout(kill);
+      if (!res.ok) throw new Error("status " + res.status);
+      const data = await res.json();
+      state.live = true;
+      return data;
+    } catch (e) {
+      state.live = false;
+      return p.result;
+    } finally {
+      clearTimeout(slow);
+      $("loading-text").textContent = "Reading like someone who didn't grow up here…";
+    }
   }
 
   // Rules from DESIGN.md: quote must exist in the comment, drop low confidence, hide what you know
@@ -174,6 +198,7 @@
       el.hiddenCard.hidden = true;
     }
     el.done.hidden = true;
+    $("live-note").hidden = state.live !== false;
     setFocus(0, false);
   }
 

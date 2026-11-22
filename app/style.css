@@ -76,6 +76,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .tune .t2 span{font-weight:400;color:var(--sub)}
 .tune-btns{display:flex;gap:8px}
 
+.live-note{font-size:13px;color:var(--amber);background:var(--amber-bg);border-radius:999px;padding:6px 12px;display:inline-block;margin-bottom:14px}
 .banner{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .big{font-family:'Inter Tight';font-weight:800;font-size:64px;letter-spacing:-0.045em;line-height:1}
 .btxt{font-family:'Inter Tight';font-weight:700;font-size:24px;letter-spacing:-0.02em;line-height:1.2}

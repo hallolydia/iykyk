@@ -14,3 +14,5 @@ Later
 
 [demo page] Space did nothing after "Read these comments": focus stayed on the hidden Read button > after reading, move focus to the first card so the keyboard works right away
 [demo page] CSS display rules beat the hidden attribute, so the loading line never went away > one global [hidden]{display:none} rule
+[AI v1] On "Not the Christmas heist", the AI flagged "Not the" (a slang pattern) instead of "Christmas heist". Both are real gaps, but the hinge of the joke was missed > decide in the prompt and test set which one is the hinge
+[AI v1] First live read took about 15 seconds > keep the loading line honest, add "Still reading..." after 8 seconds
