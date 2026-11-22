@@ -32,7 +32,10 @@
 
   .tchip.skip{background:transparent;border:1px dashed var(--line);color:var(--sub)}
   .tchip.skip[aria-pressed="true"]{background:transparent;color:var(--ink);border-color:var(--ink)}
-  .auto{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--sub)}
+  /* start card: 3 groups. tight inside a group, wide between groups */
+  #panel-start .start-title{margin-bottom:18px}
+  .auto{display:flex;align-items:center;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.4;color:var(--sub)}
+  #panel-start .start-sub{margin-top:6px;padding-left:22px;line-height:1.4}
   .auto input{accent-color:#111;width:14px;height:14px}
   .other-form{display:flex;gap:6px;margin-top:12px}
   .other-form input{flex:1;min-width:0;height:32px;border-radius:999px;border:1px solid var(--line);background:#fff;padding:0 12px;font:inherit;font-size:12.5px;color:var(--ink)}
