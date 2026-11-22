@@ -42,17 +42,20 @@
     try { return await chrome.tabs.sendMessage(state.tabId, msg); } catch { return null; }
   }
 
-  async function read() {
+  async function read(opts) {
+    const patient = !!(opts && opts.patient); // a new post just opened: its comments may still be loading
     $("err").hidden = true;
+    show("panel-loading");
+    $("loading-text").textContent = "Reading like someone who didn't grow up here…";
     const t = await tab();
     if (!t || !/^https:\/\//.test(t.url || "")) return error("Open a web page first: Instagram, YouTube, Reddit, or an article.");
     state.tabId = t.id;
     let got = await toPage({ type: "read" });
-    for (let k = 0; k < 3 && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
+    for (let k = 0; k < (patient ? 9 : 3) && got && !got.comments.length; k++) { await new Promise((r) => setTimeout(r, 900)); got = await toPage({ type: "read" }); }
     if (!got) return error("I can't see this page yet. Reload Instagram once, then try again.");
     if (!got.comments.length) {
       if (got.skipped > 0) return error(`I can see ${got.skipped} comment${got.skipped === 1 ? "" : "s"}, but ${got.skipped === 1 ? "it isn't" : "they aren't"} in English, so I skipped ${got.skipped === 1 ? "it" : "them"}. Try a post with English comments, or select any words and press Ask IYKYK.`);
-      if (got.kind === "instagram") { toPage({ type: "point" }); return error("Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
+      if (got.kind === "instagram") { toPage({ type: "point" }); return error(patient ? "No comments are open on this one yet. Open them, and I'll read." : "Open the comments, and I'll read them. If they're open, I can't find them on this layout yet."); }
       if (got.kind === "youtube" || got.kind === "reddit") return error("Scroll down until the comments show up, then press Read again. You can also select any words and press Ask IYKYK.");
       return error("I can't find English text to read here. Scroll to some text, or select any words and press Ask IYKYK.");
     }
@@ -448,9 +451,11 @@
       paintStart(msg.url);
       state.items = [];
       const ready = store.get("countryAsked", false) || places().length;
-      show(ready ? "panel-start" : "panel-country");
-      if (ready && store.get("knownAsked", false) && autoOn() && /\/(p|reels?)\//.test(msg.url || "")) {
-        clearTimeout(autoTimer); autoTimer = setTimeout(read, 1200); // let the new comments load
+      const auto = ready && store.get("knownAsked", false) && autoOn() && /\/(p|reels?)\//.test(msg.url || "");
+      show(auto ? "panel-loading" : ready ? "panel-start" : "panel-country");
+      if (auto) {
+        $("loading-text").textContent = "Reading like someone who didn't grow up here…";
+        clearTimeout(autoTimer); autoTimer = setTimeout(() => read({ patient: true }), 700); // wait for the new comments instead of giving up
       }
     }
   });

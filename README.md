@@ -125,6 +125,10 @@ What I did around the model, so I could trust it:
 - Spot a running joke across replies
 - "How will this sound?" before you reply. Stop lurking. Start replying.
 - A daily recap of what you saved, like a friend texting you
+- Bring back what I got a few days later, like a friend asking "remember this one?". Not a test.
+- Make "Still confused" a second try: ask again and get it explained a simpler way
+- Plain English words too, not only culture. My test showed the misses are words like "manchild" and "bond investors"
+- Fix what friends trip over while using it
 - Test whether other international students reach for it on their own the next time a joke goes over their head
 
 ## Timeline
