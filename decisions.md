@@ -35,6 +35,9 @@ Status: **Decided** · **To test** (the build or test set will settle it)
 | D21 | What waits for later | Decided |
 | D22 | Name: IYKYK | Decided |
 | D23 | Calibrate the AI with evidence, not a survey | Decided ★ |
+| D24 | Speed vs. accuracy: measure before trading | Decided ★ |
+| D25 | Sound: the track name now, speech later | Decided |
+| D26 | More comments, more cards, but one card per meme | Decided |
 
 ---
 
@@ -203,3 +206,21 @@ Status: **Decided** · **To test** (the build or test set will settle it)
   - Dropped "years in the US": the quick check gives the same information more directly, with one fewer question.
 - **Why:** The AI is good at the average, the user is the only source of truth about themselves. So the AI guesses, the user corrects it with one tap, and the test set measures how often the guess is right.
 - **Line for the pitch:** "I don't ask how good your English is. I ask what you already know, and I check it in 10 seconds."
+
+## D24. Speed vs. accuracy: measure before trading ★
+
+- **Problem:** Reading a post took about 12 seconds at medium effort. Switching posts felt slow.
+- **Measured (same post):** medium 11.6s, found the main joke ("Christmas heist"). Low 6.1s, **missed the main joke**. Fast mode: not available on this account.
+- **Chose:** keep medium for now, and cut the wait people feel: cache each post (going back is instant), shorter pause between frames, read the post as soon as it opens. The final effort level is decided on the test set, not on feel.
+- **Line for the pitch:** "Low effort was twice as fast but missed the main joke. I measured before trading accuracy for speed."
+
+## D25. Sound: the track name now, speech later
+
+- Instagram shows the track as text (e.g. "JADE · Angel Of My Dreams", or "original audio"). It goes to the AI with a rule: think about what that sound is known for (sad violin, suspense, a meme melody). The melody is often the joke, not the lyrics.
+- Two frames, half a second apart, show a bit of expression and action.
+- Speech (what people say) needs recording the tab's audio and a separate speech-to-text service. Not in this version. YouTube is the easier next step: it has captions as text.
+
+## D26. More comments, more cards, but one card per meme
+
+- Scrolling the comments reads only the newly visible ones and adds cards under the existing ones. No total limit; still at most 2 per comment.
+- If the same phrase shows up in many comments (💀 ten times), it's one card ("In 10 comments"), highlighted everywhere. Many memes means more help, but the panel stays quiet.
