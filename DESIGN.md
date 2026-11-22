@@ -245,6 +245,26 @@ Three kitsch ideas we keep. Each one also does a job.
 3. **Emoji under inspection** (ref: emoji being edited in a design tool). When an emoji carries the meaning, the card shows it inside a dashed selection box with corner handles, next to its real meaning: 💀 "Not actual death. It means I'm dying laughing." Also: the tone meter for "Is this rude or friendly?" uses 3D faces, and the loading screen moves a selection box across emoji ("Decoding...").
    - Emoji art: Microsoft Fluent 3D Emoji (MIT license). Not Apple emoji images (not licensed for this).
 
+## 6e. Panel scale (the 400px extension panel)
+
+The desktop scale is too loud next to Instagram. Instagram's comment text is about 14px, so the panel stays **one step quieter than the post it explains**: the content is the hero, the panel is the footnote.
+
+| Role | Size / line height | Font |
+|---|---|---|
+| Banner number | 34 / 1.0 | Inter Tight 800, -0.04em |
+| Card phrase | 18 / 1.25 | Inter Tight 700, -0.015em |
+| Banner sentence | 16 / 1.25 | Inter Tight 700 |
+| Answer | 14 / 1.55 | Inter 400, #2A2A2A |
+| UI (buttons, chips, links) | 12.5 to 13 | Inter 500 |
+| Meta (hints, sub lines) | 12 | Inter 400, --sub |
+| Labels | 10.5 | IBM Plex Mono, uppercase |
+
+- Spacing on a 4px grid: tag > phrase 8, phrase > answer 6, answer > More 10, More > actions 12, card padding 16, card gap 8.
+- Buttons 34px tall. Chips 28 to 32px.
+- One banner line ("4 things you might miss.") with the ↑ ↓ hint on the right. No second title saying the same thing.
+- Only the focused card shows its actions and "Still confused". Other cards show tag, phrase, answer.
+- Hierarchy comes from weight and color, not from size.
+
 ## 7. Voice and UX writing
 
 Tone: short, warm, a little cheeky. A friend, never a teacher.
