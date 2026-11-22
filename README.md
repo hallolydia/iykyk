@@ -103,7 +103,7 @@ I did not use one big model for everything. Each job got the model and effort it
 
 | Job | Model | Why |
 |---|---|---|
-| Read a post and find the gaps | Claude Opus, medium effort | Low effort was twice as fast but missed the main joke in my test, so I kept medium (D24) |
+| Read a post and find the gaps | Claude Sonnet, medium effort | Low effort was twice as fast but missed the main joke in my test, so I kept medium (D24). The scores above were measured with Claude Opus; I moved the live product to Sonnet to keep each read cheap |
 | Explain one phrase you select | Same model, low effort | One chosen phrase is a small job, so it comes back in a few seconds |
 | Switch the explanation to Korean or back | Claude Haiku, one small call per card, all at once | It is only rewriting text, so a small model is enough. Cards translate in parallel, and one that fails is asked for again |
 | Score the prompts | A script I wrote, against my own labels | AI should not grade AI |

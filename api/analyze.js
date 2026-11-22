@@ -6,7 +6,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 
-export const MODEL = "claude-opus-5-5";
+export const MODEL = "claude-sonnet-5-5"; // was claude-opus-5-5 while scoring; Sonnet costs much less per read
 export const PROMPT_VERSION = "v3";
 
 const client = new Anthropic(); // reads ANTHROPIC_API_KEY from the environment
