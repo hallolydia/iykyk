@@ -208,6 +208,7 @@ Status: **Decided** · **To test** (the build or test set will settle it)
   - Dropped "years in the US": the quick check gives the same information more directly, with one fewer question.
 - **Why:** The AI is good at the average, the user is the only source of truth about themselves. So the AI guesses, the user corrects it with one tap, and the test set measures how often the guess is right.
 - **Line for the pitch:** "I don't ask how good your English is. I ask what you already know, and I check it in 10 seconds."
+- **Update:** The optional "tap what you already know" step is removed from the first run. The "I knew this" button on each card does the same job where it matters, and the first run is now just one tap (where you grew up).
 
 ## D24. Speed vs. accuracy: measure before trading ★
 

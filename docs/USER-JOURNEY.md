@@ -23,7 +23,7 @@ Related: [PRD](PRD.md) · [Design](DESIGN.md) · [Decisions](decisions.md)
    - b. **"Where did you grow up?"** IYKYK suggests one country from the browser language (e.g. Korean > Korea). The user taps to confirm, picks another, or picks up to 2.
      - If they skip: IYKYK explains for "anyone raised outside the US".
    - c. "Open Instagram and try it" button.
-3. Optional, 10 seconds: **"Tap what you already know."** Eight chips (Thanksgiving, Karen, Hail Mary, Friends, March Madness, Sure Jan, Costco, Super Bowl ads). Tapped ones go straight into "already known". Skip is always there.
+3. (Removed.) An optional "tap what you already know" step used to sit here. The "I knew this" button on each card now does that job, so the first run ends after the country.
 4. Nothing else is asked. No account. Everything is saved in this browser.
 5. The panel itself asks the same two things the first time it opens, if the welcome tab was skipped. (D23)
 

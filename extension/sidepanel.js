@@ -32,7 +32,7 @@
     if (lastCount !== null && n > lastCount) { const b = $("nyk-btn"); b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); } // the number visibly jumps
     lastCount = n;
   }
-  function show(which) { ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results", "panel-saved"].forEach((id) => ($(id).hidden = id !== which)); }
+  function show(which) { ["panel-country", "panel-start", "panel-loading", "panel-results", "panel-saved"].forEach((id) => ($(id).hidden = id !== which)); }
   function error(msg) { show("panel-start"); $("err").hidden = false; $("err").textContent = msg; }
 
   async function tab() {
@@ -270,7 +270,7 @@
     $("confused-list").innerHTML = bad.map(row).join("");
   }
   function openSaved() {
-    const cur = ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results"].find((id) => !$(id).hidden);
+    const cur = ["panel-country", "panel-start", "panel-loading", "panel-results"].find((id) => !$(id).hidden);
     if (cur) prevScreen = cur;
     renderSaved(); show("panel-saved");
     englishSaved();
@@ -434,7 +434,7 @@
   paintLang();
   $("tune-open").addEventListener("click", () => { const p = $("tune-pick"); p.hidden = !p.hidden; $("tune-open").textContent = p.hidden ? "Change" : "Done"; });
   $("country-next").addEventListener("click", () => {
-    store.set("countryAsked", true); savePlaces(); show("panel-known");
+    store.set("countryAsked", true); savePlaces(); show("panel-start");
   });
   // Start over: forget the country, what you know and the saved list, then open the first screen again
   // The panel sits in an iframe on the page, and Chrome blocks confirm() there, so ask with a second tap instead.
@@ -451,7 +451,7 @@
     });
   });
   paintPickers();
-  show(!(store.get("countryAsked", false) || places().length) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
+  show(!(store.get("countryAsked", false) || places().length) ? "panel-country" : "panel-start");
 
   $("cards").addEventListener("click", (e) => {
     const c = e.target.closest(".card"); if (!c) return;
@@ -479,7 +479,7 @@
       paintStart(msg.url);
       state.items = [];
       const ready = store.get("countryAsked", false) || places().length;
-      const auto = ready && store.get("knownAsked", false) && autoOn() && /\/(p|reels?)\//.test(msg.url || "");
+      const auto = ready && autoOn() && /\/(p|reels?)\//.test(msg.url || "");
       show(auto ? "panel-loading" : ready ? "panel-start" : "panel-country");
       if (auto) {
         $("loading-text").textContent = "Reading like someone who didn't grow up here…";
