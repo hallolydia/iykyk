@@ -15,22 +15,34 @@
 
   function renderComments() {
     const p = post();
-    $("comments").innerHTML = p.comments.map((c, ci) => {
-      let html = esc(c.text);
-      items.forEach((it, i) => {
-        const ids = it.comment_ids || [it.comment_id];
-        if (!ids.includes(c.id)) return;
-        const q = esc(it.quote), at = html.indexOf(q);
-        if (at === -1) return;
-        const cls = "m" + (it.check ? " check" : "") + (i === focus ? " on" : "");
-        html = html.slice(0, at) + `<span class="${cls}" data-i="${i}"><span class="n">${i + 1}</span>${q}</span>` + html.slice(at + q.length);
-      });
-      const heart = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9A9A95" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6.5 5.3 5.3 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg>';
-      const body = post().kind === "reddit"
-        ? `<div class="vote" aria-hidden="true"><span>▲</span><span>▼</span></div><div class="cbody"><p class="text">${html}</p><p class="meta">Reply · Share</p></div>`
-        : `<div class="av"></div><div class="cbody"><p class="text">${html}</p><p class="meta">Reply</p></div><span class="heart" aria-hidden="true">${heart}</span>`;
-      return `<li class="comment ${post().kind}" data-cid="${esc(c.id)}">${body}</li>`;
+    const heart = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#737373" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6.5 5.3 5.3 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg>';
+    $("comments").innerHTML = p.comments.map((c) => {
+      const body = p.kind === "reddit"
+        ? `<div class="vote" aria-hidden="true"><span>▲</span><span>▼</span></div><div class="cbody"><p class="text">${esc(c.text)}</p><p class="meta">Reply · Share</p></div>`
+        : `<div class="av"></div><div class="cbody"><p class="text">${esc(c.text)}</p><p class="meta">Reply</p></div><span class="heart" aria-hidden="true">${heart}</span>`;
+      return `<li class="comment ${p.kind}" data-cid="${esc(c.id)}">${body}</li>`;
     }).join("");
+    paint();
+  }
+
+  // Highlights are drawn over the text without changing it, exactly like the extension does on Instagram.
+  function paint() {
+    if (!("highlights" in CSS)) return;
+    const normal = [], check = [], on = [];
+    items.forEach((it, i) => {
+      if (it.done === "knew") return;
+      (it.comment_ids || [it.comment_id]).forEach((cid) => {
+        const el = document.querySelector(`li.comment[data-cid="${cid}"] .text`);
+        const node = el && el.firstChild;
+        const at = node ? node.nodeValue.indexOf(it.quote) : -1;
+        if (at < 0) return;
+        const r = new Range(); r.setStart(node, at); r.setEnd(node, at + it.quote.length);
+        (i === focus ? on : it.check ? check : normal).push(r);
+      });
+    });
+    CSS.highlights.set("iykyk", new Highlight(...normal));
+    CSS.highlights.set("iykyk-check", new Highlight(...check));
+    CSS.highlights.set("iykyk-on", new Highlight(...on));
   }
 
   function renderPost() {
@@ -63,8 +75,8 @@
   function handle(msg) {
     switch (msg.type) {
       case "read": return { comments: post().comments.map(({ id, text }) => ({ id, text })), url: url(), skipped: 0, kind: post().kind, site: post().kind === "reddit" ? "Reddit" : "Instagram" };
-      case "highlight": items = msg.items || []; focus = msg.focus || 0; renderComments(); return { drawn: items.length };
-      case "focus": focus = msg.i || 0; renderComments(); { const m = document.querySelector(".m.on"); if (m && msg.scroll) m.scrollIntoView({ block: "center", behavior: "smooth" }); } return { ok: true };
+      case "highlight": items = msg.items || []; focus = msg.focus || 0; paint(); return { drawn: items.length };
+      case "focus": focus = msg.i || 0; paint(); return { ok: true };
       case "audio": return { audio: "" };
       case "point": return { pointed: false };
       default: return { ok: true };

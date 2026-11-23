@@ -93,23 +93,42 @@
     const audio = (await toPage({ type: "audio" }))?.audio || "";
 
     const slow = setTimeout(() => { $("loading-text").textContent = "Still reading… jokes take a second."; }, 8000);
-    try {
-      const res = await fetch(API, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post: { comments: got.comments, caption: "", scene: "", images, audio }, countries: places(), country: state.country, known: [...state.known], explainIn: lang() })
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Couldn't read this one.");
-      cache.set(got.url + "|" + lang(), data);
-      applyRules(data);
-      render();
-      await toPage({ type: "highlight", items: state.items, focus: 0 });
-    } catch (e) {
-      error(e.message || "Couldn't read this one. Try again.");
-    } finally {
-      clearTimeout(slow);
-      $("loading-text").textContent = "Reading like someone who didn't grow up here…";
-    }
+    // Up to 3 batches are read at the same time. The first batch to finish shows its cards right away,
+    // and the screenshots and sound name go with the first batch only.
+    const size = Math.max(4, Math.ceil(got.comments.length / 3));
+    const batches = [];
+    for (let i = 0; i < got.comments.length; i += size) batches.push(got.comments.slice(i, i + size));
+    const order = got.comments.map((c) => c.id);
+    const rawItems = [];
+    let finished = 0, ok = 0, lastError = "", drawn = false;
+    state.items = []; state.hidden = []; state.focus = 0;
+    await Promise.all(batches.map(async (batch, bi) => {
+      try {
+        const res = await fetch(API, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ post: { comments: batch, caption: "", scene: "", ...(bi === 0 ? { images, audio } : {}) }, countries: places(), country: state.country, known: [...state.known], explainIn: lang() })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || "Couldn't read this one.");
+        ok++; rawItems.push(...(data.items || []));
+        const watching = state.items[state.focus];
+        applyRules(data, batch, true);
+        state.items.sort((x, y) => order.indexOf(x.comment_id) - order.indexOf(y.comment_id));
+        const k = state.items.indexOf(watching);
+        const keep = k > -1 ? k : 0;
+        finished++;
+        if (!drawn && !state.items.length && finished < batches.length) return; // wait for a batch that has something to show
+        const box = document.querySelector(".panel-scroll"), y = box ? box.scrollTop : 0;
+        if (!drawn) { drawn = true; render(); }
+        else { quietScroll = true; render(); setFocus(keep, false); quietScroll = false; if (box) box.scrollTop = y; }
+        await toPage({ type: "highlight", items: state.items, focus: drawn ? keep : 0 });
+      } catch (e) { finished++; lastError = e.message || ""; }
+    }));
+    clearTimeout(slow);
+    $("loading-text").textContent = "Reading like someone who didn't grow up here…";
+    if (!ok) return error(lastError || "Couldn't read this one. Try again.");
+    if (!drawn) { render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); }
+    if (ok === batches.length) cache.set(got.url + "|" + lang(), { items: rawItems });
   }
 
   // append = false: a new post. true: new comments from scrolling, added under the existing cards.
@@ -201,6 +220,17 @@
     $("hidden-text").textContent = state.hidden.length ? `${state.hidden.length} hidden because you already know ${state.hidden.length === 1 ? "it" : "them"}.` : "";
     $("panel-title").textContent = n === 1 ? "1 thing in this post" : `${n} things in this post`;
     $("cards").innerHTML = n ? state.items.map(card).join("") : `<div class="card"><p class="phrase">Nothing to explain.</p><p class="answer">You're basically from here now.</p></div>`;
+    // cards you already answered keep their "handled" look and their Undo line when the list is drawn again
+    // (for example after switching EN | 한)
+    state.items.forEach((it, i) => {
+      const msg = it.done === "got" ? "✓ Added to Now you know" : it.done === "knew" ? "✓ Skipping from now on" : it.confusedOn ? '<span class="ok">✓ Marked confused</span>' : "";
+      const c = msg && cardEl(i);
+      if (!c) return;
+      if (it.done) c.classList.add("handled");
+      const st = c.querySelector(".status");
+      st.hidden = false;
+      st.innerHTML = msg + ' · <button class="link" data-act="undo" type="button">Undo</button>';
+    });
     const hc = $("hidden-card");
     hc.hidden = !state.hidden.length;
     hc.innerHTML = `<b>${state.hidden.length} hidden · you already know ${state.hidden.length === 1 ? "it" : "them"}</b><p>${state.hidden.map((h) => esc(h.quote)).join(" · ")}</p>`;
@@ -524,6 +554,7 @@
     sc.src = "../app/samples.js";
     sc.onload = () => {
       const p = window.IYKYK_SAMPLES[0];
+      if (!p.result) return;
       state.comments = p.comments.map(({ id, text }) => ({ id, text }));
       applyRules(p.result); render();
     };
