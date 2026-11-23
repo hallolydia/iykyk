@@ -15,7 +15,7 @@
 
   function renderComments() {
     const p = post();
-    const heart = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#737373" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6.5 5.3 5.3 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg>';
+    const heart = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8E8E8E" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6.5 5.3 5.3 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg>';
     $("comments").innerHTML = p.comments.map((c) => {
       const body = p.kind === "reddit"
         ? `<div class="vote" aria-hidden="true"><span>▲</span><span>▼</span></div><div class="cbody"><p class="text">${esc(c.text)}</p><p class="meta">Reply · Share</p></div>`

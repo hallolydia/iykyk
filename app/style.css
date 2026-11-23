@@ -189,3 +189,13 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .pc-scene{font-size:12px}
 .pcard.reddit{font-family:"Noto Sans","IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
 .pcard.reddit .pc-sub{font-family:inherit;font-weight:600;font-size:18px}
+
+/* Instagram comment values, measured on a real post (14/18 text, 12/16 Reply, 12px row padding, 32px avatar) */
+.pcard.instagram{color:#0C1014}
+.pcard.instagram .caption{color:#0C1014;font-size:14px;line-height:18px}
+.pcard.instagram .comment{padding:12px 0;gap:12px}
+.pcard.instagram .comment .text{color:#0C1014;font-size:14px;line-height:18px;font-weight:400}
+.pcard.instagram .comment .meta{color:#6A717A;font-size:12px;line-height:16px;font-weight:600;margin-top:8px}
+.pcard.instagram .comment .heart{margin-top:0}
+.pcard.instagram .comment .heart svg{width:16px;height:16px;stroke:#8E8E8E}
+.pcard.instagram .pc-scene{color:#6A717A}
