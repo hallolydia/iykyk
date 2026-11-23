@@ -436,6 +436,12 @@
   $("country-next").addEventListener("click", () => {
     store.set("countryAsked", true); savePlaces(); show("panel-known");
   });
+  // Start over: forget the country, what you know and the saved list, then open the first screen again
+  $("start-over").addEventListener("click", () => {
+    if (!confirm("Start over? This clears your country, what you already know, and your Now you know list.")) return;
+    ["country", "countries", "countryAsked", "known", "knownAsked", "saved", "askTipSeen"].forEach((k) => { try { localStorage.removeItem("iykyk." + k); } catch {} });
+    location.reload();
+  });
   paintPickers();
   show(!(store.get("countryAsked", false) || places().length) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
 

@@ -22,6 +22,14 @@
   };
   const norm = (s) => String(s || "").trim().toLowerCase();
 
+  // Start over: forget the country, what you know and the saved list, then reload the demo fresh
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#start-over")) return;
+    if (!confirm("Start over? This clears your country, what you already know, and your Now you know list.")) return;
+    ["country", "known", "saved", "tuneDismissed"].forEach((k) => { try { localStorage.removeItem("iykyk." + k); } catch (err) {} });
+    location.reload();
+  });
+
   const state = {
     postIndex: 0,
     items: [],      // visible items for the current post
@@ -103,7 +111,7 @@
       const isTop = ci === 0 && state.items.some((it) => it.comment_id === c.id);
       return `<li class="comment"><div class="av"></div><div><p class="who">Comment ${ci + 1}</p>
         <p class="text">${html}</p>
-        <p class="meta">♡ ${escapeHtml(c.likes)}${isTop ? ' <button class="why" type="button" data-why="' + c.id + '"><i></i>Why is this funny?</button>' : ""}</p></div></li>`;
+        <p class="meta">${c.likes ? "♡ " + escapeHtml(c.likes) : ""}${isTop ? ' <button class="why" type="button" data-why="' + c.id + '"><i></i>Why is this funny?</button>' : ""}</p></div></li>`;
     }).join("");
   }
 

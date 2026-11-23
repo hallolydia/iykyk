@@ -1,6 +1,94 @@
 // Sample posts and saved results for the demo page.
 // The result shape is the same shape the live AI returns.
+// The first two posts use real public Instagram comments (text only, no usernames) from my test set.
+// Their saved results are real AI output, used only if the live AI is unavailable.
 window.IYKYK_SAMPLES = [
+  {
+    "id": "gilmore",
+    "source": "Instagram post",
+    "title": "Friend who finally watched Gilmore Girls",
+    "caption": "letting her love dean is the hardest thing i've ever done as a friend",
+    "scene": "A woman on a couch looks annoyed. On-screen text: \"Your friend who finally watched Gilmore Girls\" / \"Lorelai and Luke.\"",
+    "comments": [
+      {
+        "id": "c1",
+        "text": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\" EXACTLY THE ROLLERCOASTER I WILL NOT GET OVER. How dare the writers do this to me, to us!"
+      },
+      {
+        "id": "c2",
+        "text": "im a 43 year old manchild that lives in a Connecticut town nothing like stars hollow but I made a meme for Gilmore girls fans that know ppl who eat lunch if your interested also im the modern day Luke surpriseeeee"
+      }
+    ],
+    "result": {
+      "items": [
+        {
+          "comment_id": "c1",
+          "quote": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\"",
+          "question": "reference",
+          "answer": "In Gilmore Girls fans argue over which boyfriend Rory should end up with (Dean, Jess or Logan). This comment replays one viewer's feelings flipping: unsure about Logan, then loving him, then upset when the show moves her away from him.",
+          "emoji": null,
+          "origin": "Gilmore Girls, where Rory dates Dean, Jess, and Logan, and fans split into 'Team Dean/Jess/Logan'.",
+          "closest": "",
+          "confidence": 0.8
+        }
+      ]
+    }
+  },
+  {
+    "id": "hallmark",
+    "source": "Instagram Reel",
+    "title": "The lovable side character with 20 minutes left",
+    "caption": "",
+    "scene": "A woman in a trench coat, cheerful. On-screen text: \"The lovable side character in every movie who has approximately 20 minutes left to live\"",
+    "comments": [
+      {
+        "id": "c1",
+        "text": "She visits Dr. Sherman and tells him she doesn't want to hear the words out loud; to put them in a document she can read in private. Then she puts the papers in her purse and promptly tells the family that the doctor said it was a false alarm and they should all go to Positano to celebrate! [...] She's been doubly blessed. Double Blessing on Hallmark coming soon!"
+      },
+      {
+        "id": "c2",
+        "text": "Rite in time for the holiday Christmas magic😭😂😂🤣🎄🥳"
+      },
+      {
+        "id": "c3",
+        "text": "Aunt malika is always the coolest. She must live 😂"
+      }
+    ],
+    "result": {
+      "items": [
+        {
+          "comment_id": "c1",
+          "quote": "Double Blessing on Hallmark coming soon!",
+          "question": "reference",
+          "answer": "Hallmark is a US TV channel famous for cheesy, feel-good (especially Christmas) romance movies with predictable plots. The commenter is joking that this made-up sad-but-uplifting story sounds exactly like one of those movies.",
+          "emoji": null,
+          "origin": "Hallmark Channel is known for formulaic, sentimental made-for-TV movies, especially around the holidays.",
+          "closest": "",
+          "confidence": 0.9
+        },
+        {
+          "comment_id": "c2",
+          "quote": "Rite in time for the holiday Christmas magic",
+          "question": "tone",
+          "answer": "This is sarcastic. 'Christmas magic' is a cliché of sappy holiday movies, and the commenter is teasing that the doomed side character fits perfectly into that sentimental formula. The crying and laughing emojis show it's dark humor, not real sadness.",
+          "emoji": null,
+          "origin": "",
+          "closest": "",
+          "confidence": 0.6
+        },
+        {
+          "comment_id": "c3",
+          "quote": "She must live",
+          "question": "tone",
+          "answer": "This is a hopeful joke going against the video's premise. The commenter says she's so lovable that she should be spared, even though in movies this kind of cheerful side character usually dies.",
+          "emoji": null,
+          "origin": "",
+          "closest": "",
+          "confidence": 0.75
+        }
+      ]
+    }
+  },
   {
     id: "gift-swap",
     source: "Instagram Reel",
