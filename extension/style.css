@@ -159,7 +159,7 @@ button.pill.pop{animation:nykflash .9s ease-out}
 .saved-h em{font-style:normal;display:block}
 .saved-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin:26px 4px 10px}
 .saved-list{list-style:none;margin:0;padding:0}
-.srow{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;background:#fff;border-radius:18px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.srow{display:block;background:#fff;border-radius:18px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
 .sphrase{font-family:'Inter Tight';font-weight:800;font-size:17px;margin:0 0 4px}
 .sans{font-size:14px;line-height:1.45;color:var(--sub);margin:0}
 .stag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;background:#F0F0EE;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:2px;color:var(--sub)}
@@ -174,6 +174,9 @@ button.pill.pop{animation:nykflash .9s ease-out}
 /* Now you know: link to the original post, and the quiet "Hidden for you" shelf */
 .slink{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--sub);text-decoration:underline;text-underline-offset:3px}
 .slink:hover{color:var(--ink)}
+.sfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+.sfoot .slink{margin-top:0}
+.sfoot .link{margin-left:auto;font-size:12.5px}
 .hid{margin:22px 4px 0}
 .hid summary{cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.06em}
 .hchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -182,3 +185,6 @@ button.pill.pop{animation:nykflash .9s ease-out}
 .hchip button:hover{background:var(--lime);color:var(--ink)}
 .hhint{font-size:12.5px;color:var(--sub);margin:12px 0 0}
 .hid{margin-top:28px}
+
+/* demo mode: the panel shown inside the live demo page has no close button */
+body.demo #close-btn{display:none}

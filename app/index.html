@@ -16,11 +16,7 @@
 
 <header class="top">
   <a class="logo" href="#" aria-label="iykyk home">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16" aria-hidden="true"><use href="#ast"/></svg></a>
-  <p class="demo-note">Demo with sample comments. The extension does this on Instagram. <button class="link" id="start-over" type="button">Start over</button></p>
-  <div class="top-actions">
-    <button class="pill" id="country-pill" type="button">🌐 Outside the US</button>
-    <button class="pill" id="nyk-pill" type="button">Now you know <b id="nyk-count">0</b></button>
-  </div>
+  <p class="demo-note">Live demo. The panel on the right is the real extension, reading a sample post.</p>
 </header>
 
 <div class="layout">
@@ -40,40 +36,15 @@
     </div>
   </section>
 
-  <!-- Right: the IYKYK panel -->
+  <!-- Right: the real extension panel, in demo mode -->
   <aside class="panel" aria-label="IYKYK panel">
-    <div class="panel-scroll" id="panel-scroll">
-      <div id="panel-start" class="start">
-        <p class="start-title">See what you might miss in these comments.</p>
-        <button class="primary" id="read-btn" type="button">Read these comments</button>
-        <p class="start-sub">IYKYK only reads the words, never who wrote them.</p>
-      </div>
-      <div id="panel-loading" class="loading" hidden>
-        <span class="dot"></span><span id="loading-text">Reading like someone who didn't grow up here…</span>
-      </div>
-      <div id="panel-results" hidden>
-        <div class="tune" id="tune" hidden>
-          <p class="t1">Explaining for anyone raised outside the US.</p>
-          <p class="t2">Grew up in 🇰🇷 Korea? <span>I'll tune what I flag.</span></p>
-          <div class="tune-btns"><button class="primary sm" id="tune-yes" type="button">Yes, tune it</button><button class="secondary sm" id="tune-no" type="button">Somewhere else</button></div>
-        </div>
-        <p class="live-note" id="live-note" hidden>Showing a saved example. Live AI is taking a nap.</p>
-        <div class="banner">
-          <span class="big" id="count-big">0</span>
-          <div><p class="btxt" id="count-text"></p><p class="bsub" id="hidden-text"></p></div>
-        </div>
-        <div class="ph"><h2 id="panel-title">Things in this post</h2><span class="hint"><kbd>↑</kbd><kbd>↓</kbd> to move</span></div>
-        <div class="cards" id="cards"></div>
-        <div class="hidden-card" id="hidden-card" hidden></div>
-        <p class="done" id="done" hidden>That's all for this post. Scroll on.</p>
-      </div>
-    </div>
+    <iframe id="panel-frame" title="IYKYK panel" src="/extension/sidepanel.html?demo"></iframe>
   </aside>
 </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="ask-btn" id="ask-btn" type="button" hidden>Ask IYKYK</button>
 
 <script src="/app/samples.js"></script>
-<script src="/app/app.js"></script>
+<script src="/app/demo.js"></script>
 </body>
 </html>

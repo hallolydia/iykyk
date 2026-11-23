@@ -35,11 +35,29 @@
   function show(which) { ["panel-country", "panel-start", "panel-loading", "panel-results", "panel-saved"].forEach((id) => ($(id).hidden = id !== which)); }
   function error(msg) { show("panel-start"); $("err").hidden = false; $("err").textContent = msg; }
 
+  // Demo mode: the live demo page shows this same panel in a frame (sidepanel.html?demo) next to a sample post.
+  // The demo page plays the part of the Instagram page, and the two talk through postMessage.
+  const DEMO = !(window.chrome && chrome.runtime && chrome.runtime.id) && location.search.includes("demo");
+  let demoUrl = "https://www.instagram.com/p/demo/";
+  const demoPending = new Map();
+  let demoSeq = 0;
+  function demoCall(msg) {
+    return new Promise((resolve) => {
+      const id = ++demoSeq;
+      demoPending.set(id, resolve);
+      parent.postMessage({ iykyk: "panel", id, msg }, "*");
+      setTimeout(() => { if (demoPending.delete(id)) resolve(null); }, 3000);
+    });
+  }
+  if (DEMO) document.body.classList.add("demo");
+
   async function tab() {
+    if (DEMO) return { id: 1, windowId: 1, url: demoUrl };
     const [t] = await chrome.tabs.query({ active: true, currentWindow: true });
     return t;
   }
   async function toPage(msg) {
+    if (DEMO) return demoCall(msg);
     try { return await chrome.tabs.sendMessage(state.tabId, msg); } catch { return null; }
   }
 
@@ -249,7 +267,7 @@
     }
     it.done = kind; it.confusedOn = false; c.classList.add("handled");
     if (kind === "got") { save(it, "got"); say("✓ Added to Now you know" + undoBtn); toast("Now you know."); }
-    if (kind === "knew") { state.known.add(norm(it.quote)); store.set("known", [...state.known]); save(it, "knew"); say("✓ Hidden from now on" + undoBtn); toast("Look at you. I'll skip this next time."); toPage({ type: "highlight", items: state.items, focus: state.focus }); }
+    if (kind === "knew") { state.known.add(norm(it.quote)); store.set("known", [...state.known]); save(it, "knew"); say("✓ Skipping from now on" + undoBtn); toast("Look at you. I'll skip this next time."); toPage({ type: "highlight", items: state.items, focus: state.focus }); }
     let nx = -1; for (let k = i + 1; k < state.items.length; k++) if (!state.items[k].done) { nx = k; break; }
     if (nx === -1) $("done").hidden = false; else setFocus(nx);
   }
@@ -259,7 +277,7 @@
   function renderSaved() {
     const good = state.saved.filter((x) => x.status === "got"), knew = state.saved.filter((x) => x.status === "knew"), bad = state.saved.filter((x) => x.status === "confused");
     const link = (x) => /^https:\/\//.test(x.url || "") ? `<a class="slink" href="${esc(x.url)}" target="_blank" rel="noopener">View the source ↗</a>` : "";
-    const row = (x) => `<li class="srow"><div><p class="sphrase">${esc(x.phrase)}</p><p class="sans">${esc(x.answer || "")}</p>${link(x)}</div><button class="link" data-s="${state.saved.indexOf(x)}" type="button">Remove</button></li>`;
+    const row = (x) => `<li class="srow"><p class="sphrase">${esc(x.phrase)}</p><p class="sans">${esc(x.answer || "")}</p><div class="sfoot">${link(x)}<button class="link" data-s="${state.saved.indexOf(x)}" type="button">Remove</button></div></li>`;
     const chip = (x) => `<span class="hchip">${esc(x.phrase)}<button data-s="${state.saved.indexOf(x)}" type="button" title="Show this again" aria-label="Show ${esc(x.phrase)} again">×</button></span>`;
     $("saved-count").textContent = good.length;
     $("saved-list").innerHTML = good.length ? good.map(row).join("") : `<li class="sempty"><b>Nothing here yet.</b><br>Press <b>Got it</b> on a card and it lands here.</li>`;
@@ -313,7 +331,7 @@
     $("start-title").innerHTML = COPY[k][0];
     $("read-btn").textContent = COPY[k][1];
   }
-  if (window.chrome && chrome.tabs) tab().then((t) => paintStart(t && t.url)).catch(() => {});
+  if (DEMO || (window.chrome && chrome.tabs)) tab().then((t) => paintStart(t && t.url)).catch(() => {});
   $("read-btn").addEventListener("click", read);
   $("close-btn").addEventListener("click", async () => { const t = await tab(); if (t) chrome.tabs.sendMessage(t.id, { type: "close" }).catch(() => {}); });
   // Read again on the same post: keep every answer we already have and read only the comments that are new.
@@ -464,7 +482,7 @@
   });
 
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
-  if (IS_EXT) chrome.runtime.onMessage.addListener((msg) => {
+  function onPageMessage(msg) {
     if (msg.type === "ask") { askAbout(msg); return; }
     if (msg.type === "more" && !$("panel-results").hidden && autoOn()) { readMore(msg.comments); return; }
     if (msg.type === "navigated") {
@@ -478,13 +496,20 @@
         clearTimeout(autoTimer); autoTimer = setTimeout(() => read({ patient: true }), 700); // wait for the new comments instead of giving up
       }
     }
+  }
+  if (IS_EXT) chrome.runtime.onMessage.addListener(onPageMessage);
+  if (DEMO) window.addEventListener("message", (e) => {
+    const d = e.data;
+    if (!d || !d.iykyk) return;
+    if (d.iykyk === "reply") { const r = demoPending.get(d.id); if (r) { demoPending.delete(d.id); r(d.data); } }
+    else if (d.iykyk === "page") { if (d.url) demoUrl = d.url; onPageMessage(d.msg); }
   });
 
   updateTop();
 
   // ---- auto-read: on by default while the panel is open ----
   let autoTimer;
-  function autoOn() { return store.get("autoRead", true); }
+  function autoOn() { return DEMO ? false : store.get("autoRead", true); }
   $("auto-read").checked = autoOn();
   $("auto-read").addEventListener("change", (e) => { store.set("autoRead", e.target.checked); toast(e.target.checked ? "I'll read each post for you." : "Okay, I'll wait for you."); });
   (async () => {
