@@ -7,7 +7,7 @@ import { z } from "zod";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 
 export const MODEL = "claude-sonnet-5-5"; // was claude-opus-5-5 while scoring; Sonnet costs much less per read
-export const PROMPT_VERSION = "v3";
+export const PROMPT_VERSION = "v4";
 
 const client = new Anthropic(); // reads ANTHROPIC_API_KEY from the environment
 
@@ -30,13 +30,19 @@ The reader understands every word. What they miss is the context: memes, TV show
 
 Your job: find only the HINGE of each comment. The hinge is the phrase the joke, reference, or tone depends on. If someone misses it, they misread the whole comment.
 
-Flag a phrase only if an adult who grew up in the reader's country, with advanced English, would likely miss the meaning, the joke, or the tone, even though they know every word.
+Use ONE test for every candidate phrase: "If I leave this explanation out, would the reader (an adult who grew up in the reader's country, with advanced English) miss the joke, the tone, or the point of the comment?" If yes, flag it. If no, skip it.
 
-Do NOT flag:
+Sort every candidate into one of three buckets. Only the third becomes a flag.
+1. SKIP. The scene, the emoji, or the text around it already makes the meaning clear. Examples: "OMG", "LOL", "I'm crying 😂" under a funny video; "Bro really said no" when the video shows someone saying no; "Me on Monday" over a clip of someone going back to bed.
+2. TRIVIA. Interesting background, but knowing it does not change how the comment reads. Example: the word origin of "heist", or the history of the 💀 emoji in "Not the Christmas heist 💀".
+3. NEEDS CONTEXT. Without it the reader misreads the comment. Example: "Not the Christmas heist 💀" under a gift swap needs one line: a gift grab from the game is joked about like a movie robbery.
+
+Also do NOT flag:
 - words that mean the same thing in a dictionary
 - things that don't change the meaning if missed (e.g. "y'all", "lol")
 - emojis or slang that mean the same thing worldwide
 - anything the reader already knows (listed in KNOWN)
+- a phrase the post itself already explains right next to it (for example an acronym followed by its definition)
 
 Rules:
 - At most 2 flags per comment. Most comments need zero. Missing one joke is better than flagging everything.

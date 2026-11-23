@@ -59,12 +59,12 @@ my_guess:
 notes:
 
 === c06 ===
-group: easy
+group: didnt-get
 source: Instagram Reel (instagram.com/reels/De1pKe0yvP_). A Japanese man in a suit and tie runs across a field, grimacing; deer in the background. Caption: "day5 / stop smoking"
 comment: Not you guys waiting in the train😂😂😂
-my_gaps:
+my_gaps: Not you guys
 my_guess: 너네들 기차에서 기다리고 있지 않네 (부정으로 읽음)
-notes:
+notes: Relabeled after seeing results: I said I did not know this ("Not you ..." as a teasing phrase) and had read it as a negation.
 
 === c07 ===
 group: didnt-get
@@ -115,12 +115,12 @@ my_guess:
 notes:
 
 === c13 ===
-group: easy
+group: unclear
 source: Instagram post (instagram.com/p/DfXHe8kvQzw). Comedy sketch in an office. On-screen text: "POV: Your office is all-women" / "Is anyone else in their follicular phase?" Caption: "BUT HE LOOKS LIKE JACOB ELORDI!!! #girloffice #comedy #theoffice #girlgroup"
 comment: We have "the dog days of summer", that turned into the dog days of fall, winter, spring. It's just where we sign up to bring our dogs to work to bring joy to the office. 10/10!
-my_gaps:
+my_gaps: the dog days of summer
 my_guess:
-notes:
+notes: Relabeled after seeing results: I said I did not know the phrase "dog days of summer".
 
 === c14 ===
 group: unclear
@@ -307,12 +307,12 @@ my_guess:
 notes:
 
 === c37 ===
-group: easy
+group: didnt-get
 source: SYNTHETIC (written by Claude to cover sarcasm; not a real comment). A coworker says they'll 'definitely' finish the project by Friday.
 comment: Sure, Jan.
-my_gaps:
+my_gaps: Sure, Jan.
 my_guess:
-notes:
+notes: Relabeled after seeing results: I said I did not know this phrase.
 
 === c38 ===
 group: unclear

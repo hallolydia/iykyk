@@ -4,11 +4,22 @@
 
 IYKYK finds the cultural context you're missing in English comments, explains just enough, and remembers what you already know.
 
-[Live demo](https://iykyk-eta.vercel.app) · [Pitch video](#) · [PRD](PRD.md) · [Design](DESIGN.md) · [Decisions](decisions.md)
+[Live demo](https://iykyk-eta.vercel.app) · [Pitch video](#) · [PRD](docs/PRD.md) · [Design](docs/DESIGN.md) · [Decisions](docs/decisions.md)
 
 <!-- TODO: hero screenshot or GIF -->
 
 ---
+
+## Repo map
+
+```
+extension/   Chrome extension (the real product: reads the page, shows the panel)
+api/         The AI server: finds the hinge of each comment, translates cards
+app/         The live demo page (works without installing anything)
+eval/        My hand-labeled test set (comments.txt), the scorer, and the results
+docs/        Thinking behind it: PRD, design, user journey, decisions, build log
+docs/mockups/  Design iterations before the build
+```
 
 ## Why I built this
 
@@ -49,8 +60,9 @@ I can't ask an AI to be 80% accurate. So I split the job:
 
 ### Test set
 
-27 comments, labeled by hand before I looked at any AI output: 6 I didn't get, 12 half got, 8 easy, 1 sensitive (a grief comment, to check the tone).
-14 are real Instagram comments, 2 are sentences from news articles, and 11 are short examples I wrote with Claude to cover sports, politics, money and sarcasm. Those 11 are marked `SYNTHETIC` in [`comments.txt`](comments.txt), and I labeled them myself like the rest.
+27 comments, labeled by hand: 8 I didn't get, 13 half got, 5 easy, 1 sensitive (a grief comment, to check the tone).
+**One correction, made after I saw the results:** three comments I had first marked "easy" ("Sure, Jan.", "the dog days of summer", "Not you guys waiting in the train") were ones the AI underlined. When I looked again I did not actually know them, so I relabeled them. This is why every version scores higher below than in my first scoring (v3 was 68% right at first). The relabel is noted in each comment in `eval/comments.txt`.
+14 are real Instagram comments, 2 are sentences from news articles, and 11 are short examples I wrote with Claude to cover sports, politics, money and sarcasm. Those 11 are marked `SYNTHETIC` in [`eval/comments.txt`](eval/comments.txt), and I labeled them myself like the rest.
 
 How it is scored ([`eval/score.mjs`](eval/score.mjs), results in [`eval/results.md`](eval/results.md)):
 - **Underline is right** when the AI's quote overlaps a phrase I marked as a gap in that comment.
@@ -59,19 +71,20 @@ How it is scored ([`eval/score.mjs`](eval/score.mjs), results in [`eval/results.
 
 | Prompt version | Underlines that were right | My gaps it found | What changed |
 |---|---|---|---|
-| v1 | 61% (14 of 23) | 65% (15 of 23) | First prompt: what counts as a gap, how to explain it |
-| v2 | 64% (14 of 22) | 65% (15 of 23) | General rules: brand, channel and show names can be the hinge; punchlines sit at the end of long comments |
-| v3 | 68% (15 of 22) | 65% (15 of 23) | Added the sound and video frames as input, and several home countries |
+| v1 | 74% (17 of 23) | 69% (18 of 26) | First prompt: what counts as a gap, how to explain it |
+| v2 | 77% (17 of 22) | 69% (18 of 26) | General rules: brand, channel and show names can be the hinge; punchlines sit at the end of long comments |
+| v3 | 82% (18 of 22) | 69% (18 of 26) | Added the sound and video frames as input, and several home countries |
+| v4 (Opus) | 82% (18 of 22) | 77% (20 of 26) | One test for every phrase: would the reader miss the joke, tone or point without it? Skip, trivia, or needs context |
+| v4 (Sonnet, live) | 77% (17 of 22) | 73% (19 of 26) | Same prompt as v4, on the model the live product uses |
 
 Targets: 80% or more of underlines right (most important), 60% or more of my gaps found.
-**Where it stands:** gaps found meets the target. Underlines right does not (68%, target 80%).
+**Where it stands:** after the relabel, v3 and v4 (Opus) meet both targets, and every version meets the gaps target. The live product runs v4 on Sonnet, which is at 77% right, just under the 80% target.
 
-Read this table with care. This test sends only the comment text, so v3's new inputs (sound, frames) were not used. With 27 comments and one run each, a few points between versions is noise, not progress. The honest result is that all three prompts are about the same on this set, and the next gain has to come from somewhere else.
+Read this table with care. This test sends only the comment text, so v3's new inputs (sound, frames) were not used. With 27 comments and one run each, a few points between versions is noise, not progress. The honest result is that the prompts are close on this set. v4 finds a few more of my gaps, but one or two comments is within noise.
 
-**Most common errors (v3):**
-- **Underlining what I said was easy (6 of 7 wrong underlines).** "Sure, Jan.", "Love that for you.", "401(k)", "seconds", "the dog days of summer".
-- **Missing plain English I did not know (8 missed gaps).** "freeway", "manchild", "take it back", "misogynistic cliché", "bond investors", "saving it". These are not culture, they are vocabulary and finance words, which the prompt does not look for.
-- **Missing fan-talk.** A comment about a TV couple ("Rory and..Logan?") needed knowing the show, and was missed.
+**What v3 still got wrong (after the relabel):**
+- **4 wrong underlines.** Three were comments I had labeled easy: "seconds", "401(k)", "Love that for you." The fourth was "we make some fire Mac n cheese".
+- **8 missed gaps.** "freeway", "manchild", "take it back", "misogynistic cliché", "bond investors", "saving it", and two in the comment about a TV couple ("Rory and..Logan?"). These are mostly plain vocabulary and finance words, plus fan-talk that needs knowing the show.
 - **The grief comment got no underline and no joke**, which is the behavior I wanted.
 
 ### Comment only vs. comment + scene
@@ -80,8 +93,8 @@ Same 27 comments, with and without a one-line description of the scene (text onl
 
 | Input | Underlines that were right | My gaps it found |
 |---|---|---|
-| Comment only (v3) | 68% | 65% |
-| Comment + scene text (v3) | 61% | 65% |
+| Comment only (v3) | 82% | 69% |
+| Comment + scene text (v3) | 74% | 69% |
 
 What I decided: I'm not claiming the scene helps, because this test did not show it. The live product still sends two video frames and the sound name, since they cost little and sometimes carry the joke, but that was not part of this test and I have no number for it yet.
 
@@ -111,7 +124,7 @@ I did not use one big model for everything. Each job got the model and effort it
 What I did around the model, so I could trust it:
 - **Checks in code, not in the prompt.** Every underline must quote the comment exactly. Low-confidence answers are dropped, and in-between ones say "Needs checking".
 - **A test before the prompt.** I labeled the answers myself, then scored three prompt versions. I report the result even where I missed my own target.
-- **A log of what broke.** [`challenges.txt`](challenges.txt) has every real problem and the fix, including ones where the AI was wrong and I caught it.
+- **A log of what broke.** [`docs/challenges.txt`](docs/challenges.txt) has every real problem and the fix, including ones where the AI was wrong and I caught it.
 - **Rules about where AI should stay out.** It does not decide what I already know (a button does), and it does not touch a grief comment with a joke.
 
 ## Challenges I hit
@@ -128,6 +141,7 @@ What I did around the model, so I could trust it:
 - Bring back what I got a few days later, like a friend asking "remember this one?". Not a test.
 - Make "Still confused" a second try: ask again and get it explained a simpler way
 - Plain English words too, not only culture. My test showed the misses are words like "manchild" and "bond investors"
+- Read image memes in comments too. Today it reads only the words, and many jokes live in the picture
 - Fix what friends trip over while using it
 - Test whether other international students reach for it on their own the next time a joke goes over their head
 
@@ -153,7 +167,7 @@ To try the extension: open `chrome://extensions`, turn on Developer mode, click 
 
 ## AI appendix
 
-The build log of everything that went wrong is in [`challenges.txt`](challenges.txt), every product decision is in [`decisions.md`](decisions.md), and the test set and scoring code are in [`comments.txt`](comments.txt) and [`eval/`](eval).
+The build log of everything that went wrong is in [`docs/challenges.txt`](docs/challenges.txt), every product decision is in [`docs/decisions.md`](docs/decisions.md), and the test set and scoring code are in [`eval/comments.txt`](eval/comments.txt) and [`eval/`](eval).
 
 ---
 

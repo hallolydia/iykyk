@@ -1,5 +1,5 @@
 .env
 .env.*
 node_modules
-mockups
+docs/mockups
 .DS_Store

@@ -1,7 +1,7 @@
 # Context notes (read AFTER labeling)
 
 These are my notes on what someone raised outside the US might need for each comment.
-They are **not** the answer key. Lydia labels `my_gaps` in comments.txt first, then reads this to compare.
+They are **not** the answer key. Lydia labels `my_gaps` in eval/comments.txt first, then reads this to compare.
 
 ---
 
@@ -52,7 +52,7 @@ They are **not** the answer key. Lydia labels `my_gaps` in comments.txt first, t
 
 ## Synthetic items (c28 to c39, written by Claude)
 
-Marked SYNTHETIC in comments.txt. Score them separately from the real comments, and never mix them into the headline number.
+Marked SYNTHETIC in eval/comments.txt. Score them separately from the real comments, and never mix them into the headline number.
 
 **c28** *Hail Mary* = a long, desperate last-second pass in American football; used for any last-chance attempt.
 **c29** *Jets energy* = the New York Jets, an NFL team known for long losing streaks. Being compared to them is an insult.

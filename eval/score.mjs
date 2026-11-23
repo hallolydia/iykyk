@@ -1,4 +1,4 @@
-// Scores each prompt version against MY hand labels in comments.txt.
+// Scores each prompt version against MY hand labels in eval/comments.txt.
 // Run: node --env-file=.env eval/score.mjs
 // "right underline"  = the AI's quote overlaps one of my_gaps for that comment
 // "gap found"        = one of my_gaps overlaps at least one AI quote
@@ -10,7 +10,7 @@ const norm = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N} ]+/gu, " ").re
 const overlap = (a, b) => { a = norm(a); b = norm(b); return a && b && (a.includes(b) || b.includes(a)); };
 
 // ---- read the labeled items ----
-const raw = fs.readFileSync("comments.txt", "utf8");
+const raw = fs.readFileSync("eval/comments.txt", "utf8");
 const items = [];
 for (const part of raw.split(/\n=== (c\d+) ===\n/).slice(1).reduce((acc, x, i, arr) => (i % 2 === 0 ? [...acc, [x, arr[i + 1]]] : acc), [])) {
   const [id, body] = part;

@@ -2,7 +2,7 @@
 
 Every product call I made, what I considered, and why. ★ = worth telling in the pitch.
 
-Related: [README](README.md) · [PRD](PRD.md) · [Design](DESIGN.md)
+Related: [README](../README.md) · [PRD](PRD.md) · [Design](DESIGN.md)
 
 Status: **Decided** · **To test** (the build or test set will settle it)
 

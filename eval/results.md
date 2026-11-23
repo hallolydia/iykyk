@@ -4,10 +4,14 @@ Scored against 27 hand-labeled comments (sensitive ones left out of the numbers)
 
 | Version | Underlines that were right | My gaps it found | Underlines | Errors |
 |---|---|---|---|---|
-| v1 | 61% (14/23) | 65% (15/23) | 23 | 0 |
-| v2 | 64% (14/22) | 65% (15/23) | 22 | 0 |
-| v3 | 68% (15/22) | 65% (15/23) | 22 | 0 |
-| v3+scene | 61% (14/23) | 65% (15/23) | 23 | 0 |
+| v1 | 74% (17/23) | 69% (18/26) | 23 | 0 |
+| v2 | 77% (17/22) | 69% (18/26) | 22 | 0 |
+| v3 | 82% (18/22) | 69% (18/26) | 22 | 0 |
+| v3+scene | 74% (17/23) | 69% (18/26) | 23 | 0 |
+| v4 (Opus) | 82% (18/22) | 77% (20/26) | 22 | 0 |
+| v4 (Sonnet) | 77% (17/22) | 73% (19/26) | 22 | 0 |
+
+Scores use my labels after one correction: three comments first marked easy (c06, c13, c37) were relabeled after I saw the results, because I did not know them. The "Where it went wrong" list below is from the first scoring and still shows them as easy.
 
 ## Where it went wrong
 

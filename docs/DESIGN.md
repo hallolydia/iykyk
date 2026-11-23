@@ -2,7 +2,7 @@
 
 How IYKYK looks, sounds, and behaves. Draft v0.1. Values marked *(proposal)* are starting points, to be tuned during the build.
 
-Related: [README](README.md) · [PRD](PRD.md)
+Related: [README](../README.md) · [PRD](PRD.md)
 
 ---
 
