@@ -6,6 +6,11 @@
   if (window.__iykyk) return;
   window.__iykyk = true;
 
+  // After the extension is reloaded, an earlier copy of this script may have left its panel, hints and
+  // styles on the page. Remove them so a reload never stacks a second copy on top of the first.
+  ["iykyk-panel", "iykyk-point", "iykyk-point-hl", "iykyk-ask", "iykyk-room", "iykyk-style", "iykyk-pop-style"].forEach((id) => document.getElementById(id)?.remove());
+  if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k));
+
   // Instagram's own UI labels (English and Korean) that are not comments
   const UI = /^(reply|replies|see translation|see original|view replies.*|view all \d+ replies|hide replies|like|likes|\d[\d,.]* likes?|follow|following|more|original audio|edited|verified|답글 달기|번역 보기|원본 보기|답글 보기.*|답글 \d+개 모두 보기|좋아요.*|팔로우|팔로잉|더 보기|댓글|게시|오리지널 오디오|수정됨|인증됨)$/i;
   const TIME = /^(\d+\s?(s|m|h|d|w|y|초|분|시간|일|주|년)( 전)?)(\s?·\s?(수정됨|edited))?$/i;
@@ -137,6 +142,7 @@
 
   // ---- highlights (CSS Custom Highlight API: draws over text, no DOM changes) ----
   const style = document.createElement("style");
+  style.id = "iykyk-style";
   style.textContent = `
     ::highlight(iykyk){background-color:#D4FF3A;color:#111}
     ::highlight(iykyk-check){background-color:#FFF4D6;color:#111;text-decoration:underline dashed 2px #E0A100}
@@ -247,6 +253,7 @@
       askBtn.id = "iykyk-ask"; askBtn.type = "button"; askBtn.textContent = "Ask IYKYK";
       askBtn.style.cssText = "position:fixed;z-index:2147483646;background:#D4FF3A;color:#111;border:1.5px solid #111;border-radius:999px;padding:6px 13px;font:800 13px 'Inter Tight',system-ui,sans-serif;cursor:pointer;transform:rotate(-3deg);box-shadow:2px 2px 0 #111;animation:iykyk-pop .18s cubic-bezier(.3,1.6,.5,1)";
       const st = document.createElement("style");
+      st.id = "iykyk-pop-style";
       st.textContent = "@keyframes iykyk-pop{from{opacity:0;transform:rotate(-3deg) scale(.6)}to{opacity:1;transform:rotate(-3deg) scale(1)}}";
       document.documentElement.appendChild(st);
       askBtn.addEventListener("mousedown", (e) => e.preventDefault()); // keep the selection
