@@ -437,11 +437,19 @@
     store.set("countryAsked", true); savePlaces(); show("panel-known");
   });
   // Start over: forget the country, what you know and the saved list, then open the first screen again
-  document.querySelectorAll("[data-start-over]").forEach((b) => b.addEventListener("click", () => {
-    if (!confirm("Start over? This clears your country, what you already know, and your Now you know list.")) return;
-    ["country", "countries", "countryAsked", "known", "knownAsked", "saved", "askTipSeen"].forEach((k) => { try { localStorage.removeItem("iykyk." + k); } catch {} });
-    location.reload();
-  }));
+  // The panel sits in an iframe on the page, and Chrome blocks confirm() there, so ask with a second tap instead.
+  document.querySelectorAll("[data-start-over]").forEach((b) => {
+    let armed = null;
+    b.addEventListener("click", () => {
+      if (!armed) {
+        b.textContent = "Tap again to clear everything";
+        armed = setTimeout(() => { b.textContent = "Start over"; armed = null; }, 4000);
+        return;
+      }
+      ["country", "countries", "countryAsked", "known", "knownAsked", "saved", "askTipSeen"].forEach((k) => { try { localStorage.removeItem("iykyk." + k); } catch {} });
+      location.reload();
+    });
+  });
   paintPickers();
   show(!(store.get("countryAsked", false) || places().length) ? "panel-country" : store.get("knownAsked", false) ? "panel-start" : "panel-known");
 
