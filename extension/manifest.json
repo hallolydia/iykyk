@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "iykyk",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "If you know, you know. Now you know. Finds the cultural context you're missing in English comments and articles.",
   "icons": {
     "16": "icons/icon16.png",
