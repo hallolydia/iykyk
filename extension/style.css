@@ -92,6 +92,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .card:before{content:"";position:absolute;left:0;right:0;top:0;height:340px;background:linear-gradient(180deg,rgba(212,255,58,.26) 0%,rgba(212,255,58,.08) 28%,rgba(212,255,58,0) 55%);pointer-events:none;z-index:0;opacity:0;transition:opacity .2s}
 .card > *{position:relative;z-index:1}
 .card:focus-visible{outline:none}
+.card.chk:before{background:linear-gradient(180deg,rgba(255,176,64,.26) 0%,rgba(255,176,64,.09) 28%,rgba(255,176,64,0) 55%)}
 .card.on{box-shadow:0 0 0 1.5px var(--ink),0 8px 24px rgba(0,0,0,.06)}
 .card.on:before,.card.hover:before{opacity:1}
 .card.handled>*:not(.status){opacity:.5}

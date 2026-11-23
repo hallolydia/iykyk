@@ -190,6 +190,26 @@
     if (m && scroll) m.range.startContainer.parentElement?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
+  // comment ids in the order they appear on the page, top to bottom
+  function pageOrder() {
+    const live = found.filter((f) => f.el && f.el.isConnected);
+    live.sort((a, b) => (a.el.compareDocumentPosition(b.el) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    return live.map((f) => f.id);
+  }
+
+  // click a highlighted phrase: tell the panel which card it belongs to
+  document.addEventListener("click", (e) => {
+    if (!marks.length || e.target.closest && e.target.closest("#iykyk-panel")) return;
+    for (const m of marks) {
+      for (const r of m.range.getClientRects()) {
+        if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+          chrome.runtime.sendMessage({ type: "pick", i: m.i }).catch(() => {});
+          return;
+        }
+      }
+    }
+  }, true);
+
   function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
 
   // ---- point at Instagram's comment icon when the comments are closed ----
@@ -375,6 +395,7 @@
     else if (msg.type === "close") { closePanel(); reply({ ok: true }); }
     else if (msg.type === "read") reply({ comments: readComments(msg.fresh !== false), url: location.href, skipped: skipped.size, kind: KIND, site: SITE });
     else if (msg.type === "highlight") reply({ drawn: highlight(msg.items, msg.focus) });
+    else if (msg.type === "order") reply({ order: pageOrder() });
     else if (msg.type === "focus") { focus(msg.i, msg.scroll); reply({ ok: true }); }
     else if (msg.type === "point") { reply({ pointed: pointAtComments() }); }
     else if (msg.type === "clear") { clear(); reply({ ok: true }); }

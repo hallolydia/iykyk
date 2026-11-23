@@ -114,6 +114,7 @@
         const watching = state.items[state.focus];
         applyRules(data, batch, true);
         state.items.sort((x, y) => order.indexOf(x.comment_id) - order.indexOf(y.comment_id));
+        await pageSort();
         const k = state.items.indexOf(watching);
         const keep = k > -1 ? k : 0;
         finished++;
@@ -155,8 +156,11 @@
         const data = await res.json();
         state.comments = state.comments.concat(batch);
         const before = state.items.length;
+        const watching = state.items[state.focus];
         applyRules(data, batch, true);
-        const keep = state.focus;
+        await pageSort();
+        const k = state.items.indexOf(watching);
+        const keep = k > -1 ? k : 0; state.focus = keep;
         const box = document.querySelector(".panel-scroll"), y = box ? box.scrollTop : 0;
         quietScroll = true; render(); setFocus(keep, false); quietScroll = false;
         if (box) box.scrollTop = y; // stay exactly where the reader was
@@ -189,6 +193,16 @@
       setFocus(last, true);
       live("Card added ↓", 2200);
     } catch { live("Couldn't explain that one.", 3000); }
+  }
+
+  // cards follow the order of the comments on the page, not the order they were found in
+  async function pageSort() {
+    const r = await toPage({ type: "order" });
+    const order = r && r.order; if (!order || !order.length) return;
+    const watching = state.items[state.focus];
+    const at = (x) => { const k = order.indexOf(x.comment_id); return k < 0 ? 1e9 : k; };
+    state.items.sort((a, b) => at(a) - at(b));
+    const k = state.items.indexOf(watching); state.focus = k > -1 ? k : 0;
   }
 
   function applyRules(result, comments = state.comments, append = false) {
@@ -248,7 +262,7 @@
     if (it.origin) det.push(`<div class="det"><p class="lab">Where it comes from</p><p>${esc(it.origin)}</p></div>`);
     if (it.closest && places().length) det.push(`<div class="det"><p class="lab">Closest thing in ${esc(countryName())} <span class="cm">closest match</span></p><p>${esc(it.closest)}</p></div>`);
     const more = `<div class="morerow">${det.length ? '<button class="more" type="button" data-more>More ▾</button>' : "<span></span>"}<button class="link" data-act="confused" type="button">Still confused</button></div>${det.length ? `<div class="details" hidden>${det.join("")}</div>` : ""}`;
-    return `<article class="card" data-i="${i}" tabindex="-1">
+    return `<article class="card${it.check ? " chk" : ""}" data-i="${i}" tabindex="-1">
       <div class="row1"><span class="badge ${it.check ? "check" : ""}">${i + 1}</span><span class="qtag">${QUESTION[it.question] || QUESTION.reference}</span>${it.check ? '<span class="qtag check">⚠ Needs checking</span>' : ""}</div>
       <h3 class="phrase">${esc(it.quote)}</h3>${it.comment_ids && it.comment_ids.length > 1 ? `<p class="also">In ${it.comment_ids.length} comments</p>` : ""}<p class="answer">${esc(it.answer)}</p>${emo}${more}
       <div class="acts"><button class="primary" data-act="got" type="button">Got it <kbd>space</kbd></button><button class="secondary" data-act="knew" type="button">I knew this</button></div>
@@ -514,6 +528,7 @@
   const IS_EXT = !!(window.chrome && chrome.runtime && chrome.runtime.id);
   function onPageMessage(msg) {
     if (msg.type === "ask") { askAbout(msg); return; }
+    if (msg.type === "pick") { if (!$("panel-results").hidden) setFocus(msg.i, false); cardEl(msg.i)?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     if (msg.type === "more" && !$("panel-results").hidden && autoOn()) { readMore(msg.comments); return; }
     if (msg.type === "navigated") {
       paintStart(msg.url);

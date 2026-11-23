@@ -26,9 +26,14 @@
   }
 
   // Highlights are drawn over the text without changing it, exactly like the extension does on Instagram.
+  let hits = [];
+  document.addEventListener("click", (e) => {
+    for (const h of hits) for (const q of h.r.getClientRects())
+      if (e.clientX >= q.left && e.clientX <= q.right && e.clientY >= q.top && e.clientY <= q.bottom) { toPanel({ type: "pick", i: h.i }); return; }
+  });
   function paint() {
     if (!("highlights" in CSS)) return;
-    const normal = [], check = [], on = [];
+    const normal = [], check = [], on = []; hits = [];
     items.forEach((it, i) => {
       if (it.done === "knew") return;
       (it.comment_ids || [it.comment_id]).forEach((cid) => {
@@ -37,7 +42,7 @@
         const at = node ? node.nodeValue.indexOf(it.quote) : -1;
         if (at < 0) return;
         const r = new Range(); r.setStart(node, at); r.setEnd(node, at + it.quote.length);
-        (i === focus ? on : it.check ? check : normal).push(r);
+        (i === focus ? on : it.check ? check : normal).push(r); hits.push({ i, r });
       });
     });
     CSS.highlights.set("iykyk", new Highlight(...normal));
