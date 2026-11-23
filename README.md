@@ -39,6 +39,8 @@ On a Gilmore Girls post I read this comment: "Rory and..Logan?" "Rory and Logan!
 2. **Explain.** One click opens a card that answers the question you'd actually have: *Why is this funny? What's the reference? Is this rude or friendly?*
 3. **Remember.** Tap *I knew this* and it stays hidden next time. The more you use it, the quieter it gets.
 
+**Languages in this version:** explanations are in English, with a switch to Korean (EN | 한). You can pick any country you grew up in, and the AI uses it to decide what you are likely to miss, but Korean is the only language besides English that the explanations can be written in.
+
 ## Design decisions
 
 | Decision | Why |
@@ -141,6 +143,7 @@ What I did around the model, so I could trust it:
 - Bring back what I got a few days later, like a friend asking "remember this one?". Not a test.
 - Make "Still confused" a second try: ask again and get it explained a simpler way
 - Plain English words too, not only culture. My test showed the misses are words like "manchild" and "bond investors"
+- Explain in more languages (Japanese, Chinese, Spanish and others), not only English and Korean
 - Read image memes in comments too. Today it reads only the words, and many jokes live in the picture
 - Fix what friends trip over while using it
 - Test whether other international students reach for it on their own the next time a joke goes over their head
