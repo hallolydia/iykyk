@@ -9,7 +9,7 @@
   // After the extension is reloaded, an earlier copy of this script may have left its panel, hints and
   // styles on the page. Remove them so a reload never stacks a second copy on top of the first.
   ["iykyk-panel", "iykyk-point", "iykyk-point-hl", "iykyk-ask", "iykyk-room", "iykyk-style", "iykyk-pop-style"].forEach((id) => document.getElementById(id)?.remove());
-  if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k));
+  if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on", "iykyk-check-on"].forEach((k) => CSS.highlights.delete(k));
 
   // Instagram's own UI labels (English and Korean) that are not comments
   const UI = /^(reply|replies|see translation|see original|view replies.*|view all \d+ replies|hide replies|like|likes|\d[\d,.]* likes?|follow|following|more|original audio|edited|verified|답글 달기|번역 보기|원본 보기|답글 보기.*|답글 \d+개 모두 보기|좋아요.*|팔로우|팔로잉|더 보기|댓글|게시|오리지널 오디오|수정됨|인증됨)$/i;
@@ -146,6 +146,7 @@
   style.textContent = `
     ::highlight(iykyk){background-color:#D4FF3A;color:#111}
     ::highlight(iykyk-check){background-color:#FFF4D6;color:#111;text-decoration:underline dashed 2px #E0A100}
+    ::highlight(iykyk-check-on){background-color:#FFD98A;color:#111;text-decoration:underline solid 2px #111;text-underline-offset:3px}
     ::highlight(iykyk-on){background-color:#D4FF3A;color:#111;text-decoration:underline solid 2px #111;text-underline-offset:3px}`;
   document.documentElement.appendChild(style);
 
@@ -163,11 +164,12 @@
 
   function paint(focusIndex) {
     if (!("highlights" in CSS)) return;
-    const normal = [], check = [], on = [];
-    marks.forEach((m) => (m.i === focusIndex ? on : m.check ? check : normal).push(m.range));
+    const normal = [], check = [], on = [], checkOn = [];
+    marks.forEach((m) => (m.i === focusIndex ? (m.check ? checkOn : on) : m.check ? check : normal).push(m.range));
     CSS.highlights.set("iykyk", new Highlight(...normal));
     CSS.highlights.set("iykyk-check", new Highlight(...check));
     CSS.highlights.set("iykyk-on", new Highlight(...on));
+    CSS.highlights.set("iykyk-check-on", new Highlight(...checkOn));
   }
 
   function highlight(items, focusIndex) {
@@ -210,7 +212,7 @@
     }
   }, true);
 
-  function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on"].forEach((k) => CSS.highlights.delete(k)); }
+  function clear() { marks = []; if ("highlights" in CSS) ["iykyk", "iykyk-check", "iykyk-on", "iykyk-check-on"].forEach((k) => CSS.highlights.delete(k)); }
 
   // ---- point at Instagram's comment icon when the comments are closed ----
   let pointEl = null, pointHl = null, pointRaf = 0, pointTimer = 0;

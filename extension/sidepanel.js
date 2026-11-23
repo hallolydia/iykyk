@@ -253,7 +253,7 @@
     $("read-sum").textContent = `What I read (${state.comments.length})` + (state.skipped ? ` · skipped ${state.skipped} not in English` : "");
     $("read-items").innerHTML = state.comments.map((c) => `<li>${esc(c.text)}</li>`).join("");
     setFocus(0, false);
-    if (n && !store.get("askTipSeen", false)) { store.set("askTipSeen", true); setTimeout(() => toast("Missed one? Select it.", 3200), 1200); }
+    if (n && !store.get("askTipSeen", false)) { store.set("askTipSeen", true); setTimeout(() => toast("Missed one? Highlight it.", 3200), 1200); }
   }
 
   function card(it, i) {

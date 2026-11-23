@@ -179,6 +179,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 /* the page you are on: its own look, like Instagram or Reddit. IYKYK only draws the highlight. */
 ::highlight(iykyk){background-color:#D4FF3A;color:#111}
 ::highlight(iykyk-check){background-color:#FFF4D6;color:#111;text-decoration:underline dashed 2px #E0A100}
+::highlight(iykyk-check-on){background-color:#FFD98A;color:#111;text-decoration:underline solid 2px #111;text-underline-offset:3px}
 ::highlight(iykyk-on){background-color:#D4FF3A;color:#111;text-decoration:underline solid 2px #111;text-underline-offset:3px}
 .pcard{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;letter-spacing:0}
 .pcard .caption{font-size:14px;line-height:18px}

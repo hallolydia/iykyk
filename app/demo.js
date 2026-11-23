@@ -33,7 +33,7 @@
   });
   function paint() {
     if (!("highlights" in CSS)) return;
-    const normal = [], check = [], on = []; hits = [];
+    const normal = [], check = [], on = [], checkOn = []; hits = [];
     items.forEach((it, i) => {
       if (it.done === "knew") return;
       (it.comment_ids || [it.comment_id]).forEach((cid) => {
@@ -42,12 +42,13 @@
         const at = node ? node.nodeValue.indexOf(it.quote) : -1;
         if (at < 0) return;
         const r = new Range(); r.setStart(node, at); r.setEnd(node, at + it.quote.length);
-        (i === focus ? on : it.check ? check : normal).push(r); hits.push({ i, r });
+        (i === focus ? (it.check ? checkOn : on) : it.check ? check : normal).push(r); hits.push({ i, r });
       });
     });
     CSS.highlights.set("iykyk", new Highlight(...normal));
     CSS.highlights.set("iykyk-check", new Highlight(...check));
     CSS.highlights.set("iykyk-on", new Highlight(...on));
+    CSS.highlights.set("iykyk-check-on", new Highlight(...checkOn));
   }
 
   function renderPost() {
