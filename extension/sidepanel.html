@@ -54,7 +54,7 @@
   .auto{display:flex;align-items:center;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;line-height:1.4;color:var(--sub)}
   #panel-start .start-sub{margin-top:6px;padding-left:22px;line-height:1.4}
   .auto input{accent-color:#111;width:14px;height:14px}
-  #start-over{margin-top:8px;font-size:12.5px;display:block}
+  [data-start-over]{margin-top:8px;font-size:12.5px;display:block}
   .other-form{display:flex;gap:6px;margin-top:12px}
   .other-form input{flex:1;min-width:0;height:32px;border-radius:999px;border:1px solid var(--line);background:#fff;padding:0 12px;font:inherit;font-size:12.5px;color:var(--ink)}
   .other-form input:focus{outline:1.5px solid var(--ink);outline-offset:0}
@@ -69,7 +69,7 @@
   .ph{display:none}
 
   /* cards */
-  .cards{gap:8px}
+  .cards{gap:14px}
   .card{padding:18px 18px 16px;border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.04)}
   .card.on{box-shadow:0 0 0 1.25px var(--ink),0 4px 14px rgba(0,0,0,.05)}
   .row1{gap:6px;margin-bottom:12px}
@@ -174,7 +174,7 @@
     <button class="primary" id="read-btn" type="button">Read these comments</button>
     <label class="auto"><input type="checkbox" id="auto-read"> Read each post automatically while I'm open</label>
     <p class="start-sub">I only read the words, never who wrote them.</p>
-    <button class="link" id="start-over" type="button">Start over</button>
+    <button class="link" id="start-over" data-start-over type="button">Start over</button>
     <p class="err" id="err" hidden></p>
   </div>
   <div id="panel-loading" class="loading" hidden>
@@ -194,6 +194,7 @@
       <p class="hhint">I skip these on new posts. Tap × to bring one back.</p>
       <div class="hchips" id="knew-list"></div>
     </details>
+    <button class="link" id="start-over-saved" data-start-over type="button">Start over</button>
   </section>
   <div id="panel-results" hidden>
     <div class="tune" id="tune">
