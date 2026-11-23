@@ -5,12 +5,13 @@
   const SAMPLES = window.IYKYK_SAMPLES;
   const $ = (id) => document.getElementById(id);
   const frame = $("panel-frame");
+  let opened = false;
   let idx = 0, items = [], focus = 0;
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const post = () => SAMPLES[idx];
   const url = () => post().kind === "reddit" ? "https://www.reddit.com/r/Fauxmoi/comments/" + post().id + "/" : "https://www.instagram.com/p/" + post().id + "/";
-  const toPanel = (msg) => frame.contentWindow && frame.contentWindow.postMessage({ iykyk: "page", url: url(), msg }, "*");
+  const toPanel = (msg) => opened && frame.contentWindow && frame.contentWindow.postMessage({ iykyk: "page", url: url(), msg }, "*");
 
   function renderComments() {
     const p = post();
@@ -41,6 +42,10 @@
     $("pcard").className = "pcard " + p.kind;
     $("prev-post").disabled = idx === 0;
     $("next-post").disabled = idx === SAMPLES.length - 1;
+    $("addr-text").textContent = url().replace(/^https:\/\/(www\.)?/, "");
+    const m = $("pmedia");
+    if (p.embed) { m.hidden = false; if (m.dataset.id !== p.embed) { m.dataset.id = p.embed; m.innerHTML = `<iframe title="Instagram post" src="https://www.instagram.com/p/${p.embed}/embed/" scrolling="no" allowtransparency="true"></iframe>`; } }
+    else { m.hidden = true; m.dataset.id = ""; m.innerHTML = ""; }
     renderComments();
   }
 
@@ -93,6 +98,17 @@
   });
   askBtn.addEventListener("mousedown", (e) => e.preventDefault());
   askBtn.addEventListener("click", () => { if (pick) toPanel({ type: "ask", id: pick.id, comment: pick.comment, quote: pick.quote }); window.getSelection().removeAllRanges(); hideAsk(); });
+
+  // the extension icon opens and closes the panel, like the real one. Closed by default.
+  const bhint = $("bhint");
+  $("ext-btn").addEventListener("click", () => {
+    const panel = $("panel");
+    if (!opened) { frame.src = "/extension/sidepanel.html?demo"; opened = true; }
+    panel.hidden = !panel.hidden;
+    $("layout").classList.toggle("open", !panel.hidden);
+    bhint.hidden = true;
+    if (panel.hidden) { items = []; renderComments(); }
+  });
 
   // when the panel reloads (Start over), clear the marks
   frame.addEventListener("load", () => { items = []; focus = 0; renderComments(); });

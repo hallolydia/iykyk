@@ -22,7 +22,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .pill b{font-family:'Inter Tight';font-weight:700}
 
 /* layout */
-.layout{display:grid;grid-template-columns:1fr 400px;height:calc(100vh - 72px)}
+.layout{display:grid;grid-template-columns:1fr;height:calc(100vh - 56px)}
+.layout.open{grid-template-columns:1fr 400px}
 .feed{overflow:auto;padding:32px 40px}
 .post{display:grid;grid-template-columns:300px 1fr;gap:32px;max-width:980px}
 .reel{aspect-ratio:9/16;border-radius:18px;background:linear-gradient(160deg,#2b2b2b,#111);color:#fff;position:sticky;top:0;overflow:hidden}
@@ -139,7 +140,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 
 /* sample post card (stands in for Instagram or Reddit) */
 .feed{display:flex;justify-content:center}
-.pcard{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px 16px;align-self:flex-start}
+.pcard{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px 16px;align-self:center}
 .pc-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--sub);margin-bottom:10px}
 .pcard.reddit .pc-head{display:block}
 .pcard.reddit .tag{display:inline-block;margin-bottom:8px;background:#F4F4F4}
@@ -154,3 +155,23 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .pcard .comment .av{width:32px;height:32px}
 .pcard .comment .vote{display:flex;flex-direction:column;gap:2px;color:#B8B8B3;font-size:12px;line-height:1;flex:none;width:20px;text-align:center;padding-top:4px}
 .post-nav{margin-top:8px}
+
+/* a plain browser bar: the demo is a page you are on, with the extension icon in the toolbar */
+.bbar{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#fff;border-bottom:1px solid var(--line)}
+.addr{flex:1;max-width:640px;margin:0 auto;height:34px;border-radius:999px;background:#F0F0EE;display:flex;align-items:center;gap:8px;padding:0 14px;font-size:13px;color:var(--sub)}
+.bhint{font-size:12.5px;font-weight:600;background:var(--ink);color:#fff;border-radius:999px;padding:5px 12px;animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+@media (prefers-reduced-motion:reduce){.bhint{animation:none}}
+.ext{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;flex:none}
+.ext:hover{background:#F0F0EE}
+.ext img{display:block}
+.bhint:not([hidden]) + .ext:after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--lime);animation:ring 1.4s ease-out infinite}
+@keyframes ring{from{transform:scale(.9);opacity:1}to{transform:scale(1.5);opacity:0}}
+.pcard{display:grid;grid-template-columns:1fr;gap:0}
+.pcard .pmedia{grid-column:1}
+.pmedia iframe{width:100%;height:560px;border:0;display:block;border-radius:12px}
+.pmedia{margin-bottom:16px}
+.pmedia:not([hidden]) ~ .pthread{}
+.feed{flex-direction:column;align-items:center;overflow:auto}
+.feed .post-nav{width:100%;max-width:560px;align-items:center}
+.feed .demo-note{margin:0;font-size:12px;color:var(--muted)}

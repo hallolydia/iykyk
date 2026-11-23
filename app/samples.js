@@ -4,6 +4,7 @@ window.IYKYK_SAMPLES = [
   {
     "id": "gilmore",
     "kind": "instagram",
+    "embed": "Df5AuY8oZWj",
     "source": "Instagram Reel",
     "title": "Friend who finally watched Gilmore Girls",
     "caption": "letting her love dean is the hardest thing i've ever done as a friend",

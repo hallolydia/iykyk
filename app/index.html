@@ -14,30 +14,36 @@
   <g id="ast"><g fill="#111"><rect x="-15" y="-50" width="30" height="100" rx="15"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(60)"/><rect x="-15" y="-50" width="30" height="100" rx="15" transform="rotate(120)"/></g><g fill="#D4FF3A"><rect x="-10" y="-45" width="20" height="90" rx="10"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(60)"/><rect x="-10" y="-45" width="20" height="90" rx="10" transform="rotate(120)"/></g></g>
 </defs></svg>
 
-<header class="top">
-  <a class="logo" href="#" aria-label="iykyk home">iykyk<svg viewBox="-55 -55 110 110" width="16" height="16" aria-hidden="true"><use href="#ast"/></svg></a>
-  <p class="demo-note">Live demo. The panel on the right is the real extension, reading a sample post.</p>
-</header>
-
-<div class="layout">
-  <!-- Left: a sample post, standing in for Instagram or Reddit -->
-  <section class="feed" aria-label="Sample post">
-    <article class="pcard" id="pcard">
-      <header class="pc-head"><span class="tag" id="post-source"></span><span class="pc-sub" id="post-title"></span></header>
-      <p class="caption" id="post-caption"></p>
-      <p class="pc-scene" id="reel-scene"></p>
-      <ol class="comments" id="comments"></ol>
+<div class="browser">
+  <div class="bbar">
+    <div class="addr"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#5E5E5E" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span id="addr-text"></span></div>
+    <span class="bhint" id="bhint">Click the IYKYK icon →</span>
+    <button class="ext" id="ext-btn" type="button" aria-label="IYKYK extension: open or close" title="IYKYK"><img src="/extension/icons/icon32.png" alt="" width="22" height="22"></button>
+  </div>
+  <div class="layout" id="layout">
+    <!-- Left: the page you are on (a sample post) -->
+    <section class="feed" aria-label="Sample page">
+      <article class="pcard" id="pcard">
+        <div class="pmedia" id="pmedia" hidden></div>
+        <div class="pthread">
+          <header class="pc-head"><span class="tag" id="post-source"></span><span class="pc-sub" id="post-title"></span></header>
+          <p class="caption" id="post-caption"></p>
+          <p class="pc-scene" id="reel-scene"></p>
+          <ol class="comments" id="comments"></ol>
+        </div>
+      </article>
       <div class="post-nav">
-        <button class="ghost" id="prev-post" type="button">← Previous post</button>
-        <button class="ghost strong" id="next-post" type="button">Next post →</button>
+        <button class="ghost" id="prev-post" type="button">← Previous page</button>
+        <span class="demo-note">Sample pages for the demo</span>
+        <button class="ghost strong" id="next-post" type="button">Next page →</button>
       </div>
-    </article>
-  </section>
+    </section>
 
-  <!-- Right: the real extension panel, in demo mode -->
-  <aside class="panel" aria-label="IYKYK panel">
-    <iframe id="panel-frame" title="IYKYK panel" src="/extension/sidepanel.html?demo"></iframe>
-  </aside>
+    <!-- Right: the extension's own panel, opened by its icon -->
+    <aside class="panel" id="panel" aria-label="IYKYK panel" hidden>
+      <iframe id="panel-frame" title="IYKYK panel"></iframe>
+    </aside>
+  </div>
 </div>
 
 <button class="ask-btn" id="ask-btn" type="button" hidden>Ask IYKYK</button>
