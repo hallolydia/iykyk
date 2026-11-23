@@ -80,7 +80,7 @@
   // messages from the panel
   function handle(msg) {
     switch (msg.type) {
-      case "read": return { comments: post().comments.map(({ id, text }) => ({ id, text })), url: url(), skipped: 0, kind: post().kind, site: post().kind === "reddit" ? "Reddit" : "Instagram" };
+      case "read": return { comments: post().comments.map(({ id, text }) => ({ id, text })), url: url(), skipped: 0, fixed: post().result || null, kind: post().kind, site: post().kind === "reddit" ? "Reddit" : "Instagram" };
       case "highlight": items = msg.items || []; focus = msg.focus || 0; paint(); return { drawn: items.length };
       case "focus": focus = msg.i || 0; paint(); return { ok: true };
       case "audio": return { audio: "" };

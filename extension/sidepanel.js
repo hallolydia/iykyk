@@ -80,6 +80,8 @@
     }
     state.comments = got.comments;
     state.url = got.url; state.skipped = got.skipped || 0; state.site = got.site || "Instagram";
+    // demo only: a post with a saved result always shows the same cards, so a walkthrough never changes
+    if (DEMO && got.fixed) { applyRules(JSON.parse(JSON.stringify(got.fixed))); render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); return; }
     const cached = cache.get(got.url + "|" + lang());
     if (cached) { applyRules(cached); render(); await toPage({ type: "highlight", items: state.items, focus: 0 }); return; }
     show("panel-loading");

@@ -9,6 +9,30 @@ window.IYKYK_SAMPLES = [
     "title": "Friend who finally watched Gilmore Girls",
     "caption": "letting her love dean is the hardest thing i've ever done as a friend",
     "scene": "On-screen text: \"Your friend who finally watched Gilmore Girls\" / \"Lorelai and Luke.\"",
+    "result": {
+        "items": [
+            {
+                "comment_id": "c1",
+                "quote": "\"Rory and..Logan?\" \"Rory and Logan! 👌\" \"Rory and NOT LOGAN?\"",
+                "question": "reference",
+                "answer": "In Gilmore Girls, fans are split into teams over Rory's boyfriends: Dean, Jess, and Logan. The commenter is acting out their own back-and-forth feelings as the show pushed Rory toward Logan and then away from him, and they're still upset about it.",
+                "emoji": null,
+                "origin": "Gilmore Girls (US TV show, 2000-2007), where Rory's love life with Dean, Jess and Logan is a famous fan debate.",
+                "closest": "",
+                "confidence": 0.8
+            },
+            {
+                "comment_id": "c2",
+                "quote": "modern day Luke",
+                "question": "reference",
+                "answer": "Luke is the grumpy, flannel-wearing diner owner in Gilmore Girls' small town Stars Hollow. The commenter is jokingly casting themselves as that gruff, small-town guy while promoting their meme.",
+                "emoji": null,
+                "origin": "Luke Danes, the diner owner and Lorelai's love interest in Gilmore Girls.",
+                "closest": "",
+                "confidence": 0.75
+            }
+        ]
+    },
     "comments": [
       {
         "id": "c1",

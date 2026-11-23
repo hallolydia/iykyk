@@ -152,12 +152,33 @@
 
   let marks = []; // [{ i, range, check }]
 
+  // finds the quote even when it is split across several text pieces inside the comment
   function rangeFor(el, quote) {
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) {
-      const at = node.nodeValue.indexOf(quote);
-      if (at > -1) { const r = new Range(); r.setStart(node, at); r.setEnd(node, at + quote.length); return r; }
+    const nodes = [], walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let n, all = "";
+    while ((n = walker.nextNode())) { nodes.push({ n, start: all.length }); all += n.nodeValue; }
+    const at = all.indexOf(quote);
+    if (at < 0) return null;
+    const end = at + quote.length;
+    const pos = (off, atEnd) => {
+      for (const x of nodes) { const len = x.n.nodeValue.length; if (atEnd ? off <= x.start + len && off > x.start : off < x.start + len && off >= x.start) return [x.n, off - x.start]; }
+      return null;
+    };
+    const a = pos(at, false), b = pos(end, true);
+    if (!a || !b) return null;
+    const r = new Range(); r.setStart(a[0], a[1]); r.setEnd(b[0], b[1]);
+    return r;
+  }
+
+  // Instagram redraws comments as you scroll: if the one we remembered was replaced, find it again by its text
+  function elFor(f) {
+    if (f.el && f.el.isConnected) return f.el;
+    const root = KIND === "instagram" ? container() : document;
+    const pool = KIND === "instagram" ? root.querySelectorAll('span[dir="auto"], h1[dir="auto"], span, div') : document.querySelectorAll((SELECTORS[KIND] || SELECTORS.page).join(","));
+    for (const el of pool) {
+      if (el.closest("#iykyk-panel")) continue;
+      const t = KIND === "instagram" ? ownText(el) : (el.innerText || "").replace(/\s+/g, " ").trim();
+      if (t && t === f.text) { f.el = el; return el; }
     }
     return null;
   }
@@ -172,13 +193,15 @@
     CSS.highlights.set("iykyk-check-on", new Highlight(...checkOn));
   }
 
+  let lastItems = [];
   function highlight(items, focusIndex) {
-    marks = [];
+    lastItems = items; marks = [];
     items.forEach((it, i) => {
       if (it.done === "knew") return;
       (it.comment_ids || [it.comment_id]).forEach((cid) => {
         const f = found.find((c) => c.id === cid);
-        const range = f && rangeFor(f.el, it.quote);
+        const el = f && elFor(f);
+        const range = el && rangeFor(el, it.quote);
         if (range) marks.push({ i, range, check: !!it.check });
       });
     });
@@ -187,6 +210,8 @@
   }
 
   function focus(i, scroll) {
+    // marks gone stale (Instagram redrew the comment)? build them again before jumping
+    if (marks.some((x) => x.i === i && !x.range.startContainer.isConnected) || (!marks.some((x) => x.i === i) && lastItems[i])) highlight(lastItems, i);
     paint(i);
     const m = marks.find((x) => x.i === i);
     if (m && scroll) m.range.startContainer.parentElement?.scrollIntoView({ behavior: "smooth", block: "center" });
