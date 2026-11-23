@@ -502,7 +502,8 @@
   });
   // Start over: forget the country, what you know and the saved list, then open the first screen again
   // Start over: one tap clears the country, what you know and the saved list, then opens the first screen again
-  document.querySelectorAll("[data-start-over]").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll("[data-start-over]").forEach((b) => b.addEventListener("click", async () => {
+    try { await toPage({ type: "clear" }); } catch {} // take the highlights off the page too
     ["country", "countries", "countryAsked", "known", "knownAsked", "saved", "askTipSeen"].forEach((k) => { try { localStorage.removeItem("iykyk." + k); } catch {} });
     location.reload();
   }));
