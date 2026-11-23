@@ -20,20 +20,18 @@
 </header>
 
 <div class="layout">
-  <!-- Left: a neutral sample post, standing in for Instagram -->
+  <!-- Left: a sample post, standing in for Instagram or Reddit -->
   <section class="feed" aria-label="Sample post">
-    <div class="post">
-      <div class="reel" aria-hidden="true"><div class="reel-inner"><span class="reel-label">Reel</span><p class="reel-scene" id="reel-scene"></p></div></div>
-      <div class="thread">
-        <div class="post-meta"><span class="tag" id="post-source"></span><span id="post-title"></span></div>
-        <p class="caption" id="post-caption"></p>
-        <ol class="comments" id="comments"></ol>
-        <div class="post-nav">
-          <button class="ghost" id="prev-post" type="button">← Previous post</button>
-          <button class="ghost strong" id="next-post" type="button">Next post →</button>
-        </div>
+    <article class="pcard" id="pcard">
+      <header class="pc-head"><span class="tag" id="post-source"></span><span class="pc-sub" id="post-title"></span></header>
+      <p class="caption" id="post-caption"></p>
+      <p class="pc-scene" id="reel-scene"></p>
+      <ol class="comments" id="comments"></ol>
+      <div class="post-nav">
+        <button class="ghost" id="prev-post" type="button">← Previous post</button>
+        <button class="ghost strong" id="next-post" type="button">Next post →</button>
       </div>
-    </div>
+    </article>
   </section>
 
   <!-- Right: the real extension panel, in demo mode -->

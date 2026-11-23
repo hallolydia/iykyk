@@ -136,3 +136,21 @@ kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px
 .panel iframe{width:100%;height:100%;border:0;display:block;background:var(--paper)}
 .ask-btn{position:fixed;z-index:10;background:var(--lime);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 13px;font:800 13px 'Inter Tight',system-ui,sans-serif;transform:rotate(-3deg);box-shadow:0 4px 14px rgba(0,0,0,.15)}
 .comment .text .m{cursor:default}
+
+/* sample post card (stands in for Instagram or Reddit) */
+.feed{display:flex;justify-content:center}
+.pcard{width:100%;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 24px 16px;align-self:flex-start}
+.pc-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--sub);margin-bottom:10px}
+.pcard.reddit .pc-head{display:block}
+.pcard.reddit .tag{display:inline-block;margin-bottom:8px;background:#F4F4F4}
+.pcard.reddit .pc-sub{display:block;font-family:'Inter Tight';font-weight:700;font-size:20px;line-height:1.25;color:var(--ink)}
+.pc-scene{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.45}
+.pcard .caption{font-size:15px;color:var(--ink);margin-bottom:8px}
+.pcard .comment{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line);align-items:flex-start}
+.pcard .comment .cbody{flex:1;min-width:0}
+.pcard .comment .text{font-size:15px;line-height:1.75;letter-spacing:-0.005em;white-space:pre-wrap}
+.pcard .comment .meta{font-size:12px;color:var(--muted);margin-top:6px}
+.pcard .comment .heart{flex:none;margin-top:6px}
+.pcard .comment .av{width:32px;height:32px}
+.pcard .comment .vote{display:flex;flex-direction:column;gap:2px;color:#B8B8B3;font-size:12px;line-height:1;flex:none;width:20px;text-align:center;padding-top:4px}
+.post-nav{margin-top:8px}

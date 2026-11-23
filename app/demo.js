@@ -9,7 +9,7 @@
 
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const post = () => SAMPLES[idx];
-  const url = () => "https://www.instagram.com/p/" + post().id + "/";
+  const url = () => post().kind === "reddit" ? "https://www.reddit.com/r/Fauxmoi/comments/" + post().id + "/" : "https://www.instagram.com/p/" + post().id + "/";
   const toPanel = (msg) => frame.contentWindow && frame.contentWindow.postMessage({ iykyk: "page", url: url(), msg }, "*");
 
   function renderComments() {
@@ -24,17 +24,21 @@
         const cls = "m" + (it.check ? " check" : "") + (i === focus ? " on" : "");
         html = html.slice(0, at) + `<span class="${cls}" data-i="${i}"><span class="n">${i + 1}</span>${q}</span>` + html.slice(at + q.length);
       });
-      return `<li class="comment" data-cid="${esc(c.id)}"><div class="av"></div><div><p class="who">Comment ${ci + 1}</p>
-        <p class="text">${html}</p>${c.likes ? `<p class="meta">♡ ${esc(c.likes)}</p>` : ""}</div></li>`;
+      const heart = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#9A9A95" stroke-width="2"><path d="M12 21s-7-4.6-9.3-9A5.3 5.3 0 0 1 12 6.5 5.3 5.3 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg>';
+      const body = post().kind === "reddit"
+        ? `<div class="vote" aria-hidden="true"><span>▲</span><span>▼</span></div><div class="cbody"><p class="text">${html}</p><p class="meta">Reply · Share</p></div>`
+        : `<div class="av"></div><div class="cbody"><p class="text">${html}</p><p class="meta">Reply</p></div><span class="heart" aria-hidden="true">${heart}</span>`;
+      return `<li class="comment ${post().kind}" data-cid="${esc(c.id)}">${body}</li>`;
     }).join("");
   }
 
   function renderPost() {
     const p = post();
-    $("reel-scene").textContent = p.scene;
+    $("reel-scene").textContent = p.scene ? "In the post: " + p.scene : "";
     $("post-source").textContent = p.source;
-    $("post-title").textContent = p.title + " · " + p.comments.length + " comments";
+    $("post-title").textContent = p.kind === "reddit" ? p.title : p.title + " · " + p.comments.length + " comments";
     $("post-caption").textContent = p.caption;
+    $("pcard").className = "pcard " + p.kind;
     $("prev-post").disabled = idx === 0;
     $("next-post").disabled = idx === SAMPLES.length - 1;
     renderComments();
@@ -53,7 +57,7 @@
   // messages from the panel
   function handle(msg) {
     switch (msg.type) {
-      case "read": return { comments: post().comments.map(({ id, text }) => ({ id, text })), url: url(), skipped: 0, kind: "instagram", site: "Instagram" };
+      case "read": return { comments: post().comments.map(({ id, text }) => ({ id, text })), url: url(), skipped: 0, kind: post().kind, site: post().kind === "reddit" ? "Reddit" : "Instagram" };
       case "highlight": items = msg.items || []; focus = msg.focus || 0; renderComments(); return { drawn: items.length };
       case "focus": focus = msg.i || 0; renderComments(); { const m = document.querySelector(".m.on"); if (m && msg.scroll) m.scrollIntoView({ block: "center", behavior: "smooth" }); } return { ok: true };
       case "audio": return { audio: "" };
