@@ -9,6 +9,7 @@
     get(k, f) { try { const v = localStorage.getItem("iykyk." + k); return v ? JSON.parse(v) : f; } catch { return f; } },
     set(k, v) { try { localStorage.setItem("iykyk." + k, JSON.stringify(v)); } catch {} }
   };
+  store.set("lang", "en"); // every fresh open starts in English; EN | 한 is a switch for the current session
   const lang = () => store.get("lang", "en"); // explanation language: en | ko
   const norm = (s) => String(s || "").trim().toLowerCase();
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -218,7 +219,7 @@
 
   function save(it, status) {
     state.saved = state.saved.filter((s) => norm(s.phrase) !== norm(it.quote));
-    state.saved.unshift({ phrase: it.quote, answer: it.answer, question: it.question, status, source: state.site || "Instagram", url: state.url || "", date: new Date().toISOString() });
+    state.saved.unshift({ phrase: it.quote, answer: (it.tx && it.tx.en && it.tx.en.answer) || it.answer, question: it.question, status, source: state.site || "Instagram", url: state.url || "", date: new Date().toISOString() });
     store.set("saved", state.saved); updateTop();
   }
 
@@ -272,6 +273,19 @@
     const cur = ["panel-country", "panel-known", "panel-start", "panel-loading", "panel-results"].find((id) => !$(id).hidden);
     if (cur) prevScreen = cur;
     renderSaved(); show("panel-saved");
+    englishSaved();
+  }
+  // the list is English only: anything saved while the cards were in Korean is translated back once, then kept
+  async function englishSaved() {
+    const need = state.saved.map((x, i) => ({ x, i })).filter(({ x }) => /[가-힣]/.test(x.answer || ""));
+    if (!need.length) return;
+    try {
+      const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ translate: { to: "en", items: need.map(({ x, i }) => ({ id: String(i), answer: x.answer, origin: "", closest: "" })) } }) });
+      const data = await res.json().catch(() => ({}));
+      let changed = false;
+      (data.items || []).forEach((t) => { const x = state.saved[+t.id]; if (x && t.answer && !/[가-힣]/.test(t.answer)) { x.answer = t.answer; changed = true; } });
+      if (changed) { store.set("saved", state.saved); renderSaved(); }
+    } catch {}
   }
   $("nyk-btn").addEventListener("click", () => { $("panel-saved").hidden ? openSaved() : show(prevScreen); });
   $("saved-back").addEventListener("click", () => show(prevScreen));
